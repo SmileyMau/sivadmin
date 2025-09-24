@@ -1,0 +1,177 @@
+.tr-asist th{
+    font-size: 40px;
+    text-align: center;
+
+}
+
+.card-body{
+    padding: 3px;
+}
+
+.content-header{
+    padding: 5px;
+}
+
+.cont-total-asist{
+    padding-right: 15px;
+    text-align: end;
+}
+
+.tr-asist td{
+    font-size:  42px;
+    text-align: center;
+
+}
+
+.total-span{
+    font-size: 50px;
+}
+
+.margin-b{
+    padding-bottom: 50px;
+}
+
+.cont-img{
+    text-align: center;
+}
+
+.cont-img img{
+    width: 35%;
+}
+
+#pieChart{
+    animation: none;
+    transition: none;
+}
+
+.cont-total-v{
+    text-align: center;
+    height: 545px;
+}
+
+.total-span-num{
+    font-size: 170px;
+}
+
+.hr-favor{
+    width: 30px;
+    border: 20px solid #00a65a;
+    border-radius: 5px;
+}
+.hr-encontra{
+    width: 30px;
+    border: 20px solid #f56954;
+    border-radius: 5px;
+}
+.hr-abstencion{
+    width: 30px;
+    border: 20px solid #f39c12;
+    border-radius: 5px;
+}
+
+.cont-voto-a{
+    margin-top: 9px;
+    margin-right: 5px;
+    background-color: #ffffff00;
+    border-radius: 8px;
+    font-size: 37px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.cont-voto-n{
+    margin-top: 9px;
+    margin-right: 5px;
+    background-color: #ffffff00;
+    border-radius: 8px;
+    font-size: 37px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.cont-voto-s{
+    margin-top: 9px;
+    margin-right: 5px;
+    background-color: #ffffff00;
+    border-radius: 8px;
+    font-size: 37px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.td-nombre{
+    text-align: start;
+    font-size: 27px;
+}
+
+.cont-hr{
+    margin: 100px;
+}
+
+body {
+    overflow-x: hidden
+}
+
+.cuadro-voto-s{
+    text-align: center;
+    padding-left: 0px;
+    padding-right: 0px;
+    background-color: #e87902;
+    border-radius: 8px;
+    font-size: 37px;
+    font-weight: bold;
+    color: #ffffff;
+    width: 20%;
+}
+
+.cuadro-voto-a{
+    text-align: center;
+    padding-left: 0px;
+    padding-right: 0px;
+    background-color: #1aa51b;
+    border-radius: 8px;
+    font-size: 37px;
+    font-weight: bold;
+    color: #ffffff;
+    width: 20%;
+}
+
+.cuadro-voto-n{
+    text-align: center;
+    padding-left: 0px;
+    padding-right: 0px;
+    background-color: #e95257;
+    border-radius: 8px;
+    font-size: 37px;
+    font-weight: bold;
+    color: #ffffff;
+    width: 20%;
+}
+
+.card-celsh {
+    border-top: solid 2px transparent;
+     background-image: repeating-linear-gradient(
+        to right,
+        #5c1535 0, #5c1535 12.5%,
+        #00a3b1 12.5%, #00a3b1 25%,
+        #6ebe43 25%, #6ebe43 37.5%,
+        #da2627 37.5%, #da2627 50%,
+        #0da74a 50%, #0da74a 62.5%,
+        #f07c1f 62.5%, #f07c1f 75%,
+        #204ea3 75%, #204ea3 87.5%,
+        #fcec17 87.5%, #fcec17 100%
+    );
+}
+
+.color-solemne{
+    background: linear-gradient(to bottom right,rgb(93 56 18) ,rgb(200 150 41),rgb(218, 210, 122), rgb(200 150 41), rgb(93 56 18) );
+    -webkit-background-clip: text;
+    color: transparent; 
+}
+.btn-actualizar{
+    color: linear-gradient(to bottom right,rgb(93 56 18) ,rgb(200 150 41),rgb(218, 210, 122), rgb(200 150 41), rgb(93 56 18) );
+    box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
+  }
+.btn-actualizar:hover{
+    box-shadow: 0 4px 8px 0 rgb(200 150 41), 0 6px 20px 0  rgb(200 150 41),;
+  }

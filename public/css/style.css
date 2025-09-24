@@ -1,0 +1,161 @@
+.input-archivo {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    
+  
+}
+
+.input-archivo input[type="file"] {
+    opacity: 0;
+    width: 200px;
+    height: 32px;
+    display: inline-block;
+
+
+  }
+
+  .input-archivo::before {
+    background-color: #ffffff;
+    color: #6c757d;
+    font-weight: 600;
+    border-left: #2974ff 3px solid;
+    border-right: #cecece 1px solid;
+    border-top-right-radius: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    content: 'Seleccionar archivo'; /* testo por defecto */
+    position: absolute;
+    width: 160px;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    transition: all  0.3s;
+
+
+  }
+
+  .input-archivo:hover::before {
+    background-color: #f7f7f7;
+    box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
+	  border-left: solid  #0059ff;
+
+  }
+
+  .alerta-success{
+    border: solid 1px;
+    background-color: #d1e7dd; 
+    border-color: #badbcc;
+    border-radius: 4px;
+  }
+
+  .alerta-error{
+    border: solid 1px;
+    background-color: #e7d1d1; 
+    border-color: #dbbaba;
+    border-radius: 4px;
+  }
+
+  .alerta-primary{
+    border: solid 1px;
+    background-color: #cfe2ff;
+    border-color: #b6d4fe;
+    border-radius: 4px;
+  }
+
+  .btn-reasig{
+    font-size: 17px;
+    text-align: center;
+    border-radius: 0px;
+    border-left: solid 5px #8cc7f7;
+    border-bottom-right-radius: 7px;
+    border-top-right-radius: 7px;
+    background-color: #f7f7f7;
+    width: 13%;
+    transition: all ease 0.7s;
+    min-width: 103px;
+  }
+
+  .btn-reasig:hover{
+    box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
+    border-left: solid 5px #0c5acf;
+  }
+
+  .btn-baja{
+    font-size: 17px;
+    text-align: center;
+    border-radius: 0px;
+    border-left: solid 5px #f78c8c;
+    border-bottom-right-radius: 7px;
+    border-top-right-radius: 7px;
+    background-color: #f7f7f7;
+    width: 13%;
+    transition: all ease 0.7s;
+    min-width: 103px;
+  }
+
+  .btn-baja:hover{
+    box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
+    border-left: solid 5px #cf0c1c;
+  }
+
+  .card-celsh {
+    border-top: solid 2px transparent;
+    border-image: linear-gradient(to right,#e7db8a,#765b21, #e7db8a) 1;
+  }
+
+.btn-off{
+  font-size: 17px;
+  text-align: center;
+  border-radius: 0px;
+  border-left: solid 5px #da6666de;
+  border-bottom-right-radius: 7px;
+  border-top-right-radius: 7px;
+  background-color: #f7f7f7;
+  width: 13%;
+  transition: all ease 0.7s;
+  min-width: 103px;
+}
+
+.btn-off:hover{
+  box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
+  border-left: solid 5px #bb0000;
+}
+
+.btn-on{
+  font-size: 17px;
+  text-align: center;
+  border-radius: 0px;
+  border-left: solid 5px #69d177;
+  border-bottom-right-radius: 7px;
+  border-top-right-radius: 7px;
+  background-color: #f7f7f7;
+  width: 13%;
+  transition: all ease 0.7s;
+  min-width: 103px;
+}
+
+.btn-on:hover{
+  box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
+  border-left: solid 5px #00bb1f;
+}
+
+.btn-ret{
+  font-size: 17px;
+  text-align: center;
+  border-radius: 0px;
+  border-left: solid 5px #c1d169;
+  border-bottom-right-radius: 7px;
+  border-top-right-radius: 7px;
+  background-color: #f7f7f7;
+  width: 13%;
+  transition: all ease 0.7s;
+  min-width: 103px;
+}
+
+.btn-ret:hover{
+  box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
+  border-left: solid 5px #b8bb00;
+}
+
