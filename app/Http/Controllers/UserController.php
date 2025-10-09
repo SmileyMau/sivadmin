@@ -36,15 +36,18 @@ class UserController extends Controller
             $date = Carbon::now();
             $year = $date->year;
             $date = $date->format('Y-m-d');
+            $fecha = Carbon::parse($date);
+            $inicio = Carbon::createFromDate($year, 10, 20);
+            $fin = Carbon::createFromDate($year, 11, 10);
             
-            if ($date >= $year.'-10-5' && $date <= $year.'-11-10' ) {
+            if ($fecha->between($inicio, $fin)) {
                 $style_card = 'card-dmuertos';
                 $color_card = 'color-dmuertos';
                 $style_input = 'input-dmuertos';
                 $style_btn = 'btn-dmuertos';
                 $style_a = 'a-dmuertos';
                 $img = '/img/login_dia_muertos.jpg';
-            }/*else{
+            }else{
                 $style_card = 'card-celsh';
                 $color_card = '';
                 $style_input = '';
@@ -52,14 +55,7 @@ class UserController extends Controller
                 $style_a = '';
                 $img = "";
 
-            }*/
-
-                      $style_card = 'card-dmuertos';
-                $color_card = 'color-dmuertos';
-                $style_input = 'input-dmuertos';
-                $style_btn = 'btn-dmuertos';
-                $style_a = 'a-dmuertos';
-                $img = '/img/login_dia_muertos.jpg';
+            }
             //dd( $date,$year,$year.'-10-5');
             return view('login', compact('style_card','color_card','style_input','style_btn','style_a','img'));
         } catch (\Throwable $th) {
