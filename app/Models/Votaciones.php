@@ -14,4 +14,10 @@ class Votaciones extends Model
         'fecha',
         'votacion',
     ];
+
+    public function usuario()
+    {
+        return $this->belongsTo(User::class, 'id_user', 'id');
+    }
+    
 }

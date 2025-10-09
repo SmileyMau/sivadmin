@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class UserController extends Controller
 {
@@ -31,7 +32,39 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            $date = Carbon::now();
+            $year = $date->year;
+            $date = $date->format('Y-m-d');
+            
+            if ($date >= $year.'-10-5' && $date <= $year.'-11-10' ) {
+                $style_card = 'card-dmuertos';
+                $color_card = 'color-dmuertos';
+                $style_input = 'input-dmuertos';
+                $style_btn = 'btn-dmuertos';
+                $style_a = 'a-dmuertos';
+                $img = '/img/login_dia_muertos.jpg';
+            }/*else{
+                $style_card = 'card-celsh';
+                $color_card = '';
+                $style_input = '';
+                $style_btn = '';
+                $style_a = '';
+                $img = "";
+
+            }*/
+
+                      $style_card = 'card-dmuertos';
+                $color_card = 'color-dmuertos';
+                $style_input = 'input-dmuertos';
+                $style_btn = 'btn-dmuertos';
+                $style_a = 'a-dmuertos';
+                $img = '/img/login_dia_muertos.jpg';
+            //dd( $date,$year,$year.'-10-5');
+            return view('login', compact('style_card','color_card','style_input','style_btn','style_a','img'));
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 
     /**

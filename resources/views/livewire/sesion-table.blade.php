@@ -31,10 +31,10 @@
                             @csrf
                             <button type="submit" class="btn 
                                 @if ($sesion->status == 'A')
-                                    btn-info
+                                    btn-reasig
                                 @endif
                                 @if ($sesion->status == 'N')
-                                    btn-danger
+                                    btn-off
                                 @endif ">
                                 <i>
                                     @if ($sesion->status == 'A')
@@ -49,25 +49,25 @@
                     </td>
                         <td  class="text-center">
                             <div class="dropdown"> 
-                                <button type="button" class="btn btn-info" data-toggle="dropdown">
+                                <button type="button" class="btn btn-option" data-toggle="dropdown">
                                     <i class="fas fa-align-center"></i>
                                 </button>
-                                <div class="dropdown-menu" role="menu">
+                                <div class="dropdown-menu p-2" role="menu">
+                                    <a class="dropdown-item btn-ver mb-1" href="{{ route('sesiones.show', $sesion->id) }}">Ver</a>
                                     @if ($sesion->status == 'A')
-                                        <a class="dropdown-item" href="{{ route('sesiones.edit', $sesion->id) }}">Editar</a>
+                                        <a class="dropdown-item btn-editar mb-1" href="{{ route('sesiones.edit', $sesion->id) }}">Editar</a>
                                     @endif
-                                   
-                                    <a class="dropdown-item" href="{{ route('sesiones.show', $sesion->id) }}">Ver</a>
                                     <form method="post" action="{{ route('sesiones.asistencia', $sesion->id) }}" class="">
                                         @method('post')
                                         @csrf
-                                        <button class="dropdown-item">Asistencias</button>
+                                        <button class="dropdown-item btn-report mb-1">Asistencias</button>
                                     </form>
+                                    <hr>
                                     @if ($sesion->status == 'A')
                                         <form method="post" action="{{ route('sesiones.destroy', $sesion->id) }}" class="form_cancelar">
                                             @method('delete')
                                             @csrf
-                                            <button class="dropdown-item">Eliminar</button>
+                                            <button class="dropdown-item btn-eliminar mb-1">Eliminar</button>
                                         </form>
                                     @endif
                                 </div>

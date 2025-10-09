@@ -18,4 +18,9 @@ class Asistencias extends Model
         'hora',
         'status',
     ];
+
+    public function usuario()
+{
+    return $this->belongsTo(User::class, 'id_user', 'id');
+}
 }

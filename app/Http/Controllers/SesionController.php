@@ -11,7 +11,8 @@ use App\Models\Votaciones;
 use Illuminate\Support\Facades\DB;
 use Storage;
 use Carbon\Carbon;
-
+use File;
+use PDF;
 
 
 class SesionController extends Controller
@@ -68,10 +69,14 @@ class SesionController extends Controller
                 $titulo = 'titulo'. $i;
                 $titulo = $request->$titulo;
 
+                $tipo = 'tipo'. $i;
+                $tipo = $request->$tipo;
+
                 $sesion_det = SesionDet::create([
                     'id_sesion' => $sesion->id,
                     'no_dictamen' => $no_dictamen,
                     'titulo' => $titulo,
+                    'tipo' => $tipo,
                     'descripcion' => $descripcion,
                     'total' => 0,
                     'status' => 'N',
@@ -100,10 +105,14 @@ class SesionController extends Controller
                 $titulo = 'titulo'. $i;
                 $titulo = $request->$titulo;
 
+                $tipo = 'tipo'. $i;
+                $tipo = $request->$tipo;
+
                 $sesion_det = SesionDet::create([
                     'id_sesion' => $id,
                     'no_dictamen' => $no_dictamen,
                     'titulo' => $titulo,
+                    'tipo' => $tipo,
                     'descripcion' => $descripcion,
                     'total' => 0,
                     'status' => 'N',
@@ -122,7 +131,7 @@ class SesionController extends Controller
     public function show($id)
     {
         try {
-            $sesion = Sesiones::find($id);
+            $sesion = Sesiones::withCount('asistencias')->find($id);
             //dd($sesion);
             $sesion_dets = SesionDet::where('id_sesion','=',$sesion->id)->orderBy('no_dictamen','ASC')->get();
             return view('sesiones.show', compact('sesion','sesion_dets'));
@@ -172,11 +181,21 @@ class SesionController extends Controller
     public function update(Request $request, $id)
     {
         try {
+            $fileDestroy = Sesiones::findOrFail($id); 
+
+            //dd($request);
             $sesion = Sesiones::find($id);
             $sesion->id_tipo = $request->id_tipo;
             $sesion->no_sesion = $request->no_sesion;
             $sesion->descripcion = $request->titulo;
             $sesion->fecha = $request->fecha;
+
+            $pathAnex = storage_path('app/').$fileDestroy->orden_pdf;
+            if(File::exists($pathAnex)){
+                //dd($pathAnex);
+                unlink($pathAnex); 
+            }
+            $sesion->orden_pdf = $request->file('orden_pdf')->store('public/Ordenes');
             $sesion->save();
             return back()->with('success','La sesión se modificó correctamente.');
         } catch (\Throwable $th) {
@@ -194,7 +213,10 @@ class SesionController extends Controller
         $sesion_det = SesionDet::find($id);
         $sesion_det->no_dictamen = $request->no_dictamen;
         $sesion_det->descripcion = $request->descripcion;
+
+
         $sesion_det->save();
+        
         return back()->with('success','El dictamen se modificó correctamente.');
     } catch (\Throwable $th) {
         throw $th;
@@ -363,6 +385,22 @@ class SesionController extends Controller
             $sesion->save();
             return back()->with('success','Se cerró la asistencia para la sesión.');
 
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
+    function report_part($id) {
+        try {
+            $participaciones = DB::table('votaciones')
+            ->join('users','users.id','votaciones.id_user')
+            ->select('users.name','users.appaterno','users.apmaterno','votaciones.*')
+            ->where('votaciones.id_dictamen','=',$id)
+            ->get();
+            //dd($participaciones);
+            //return view('reportes.participaciones', compact('participaciones'));
+            $pdf = PDF::loadView('reportes.participaciones', compact('participaciones'));
+            return $pdf->stream();
         } catch (\Throwable $th) {
             throw $th;
         }

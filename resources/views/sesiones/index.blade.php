@@ -18,7 +18,7 @@
   <div class="card card-outline card-celsh">
     <div class="card-header">
       <h3 class="card-title">Lista de Sesiones</h3>
-      <button type="button" class="btn btn-sm btn-primary float-right m-1" data-toggle="modal" data-target="#exampleModal">
+      <button type="button" class="btn btn-reasig float-right m-1" data-toggle="modal" data-target="#exampleModal">
         Añadir
       </button>
       <!--<form action="" method="post">
@@ -114,7 +114,7 @@
                       <div class="input-group-prepend">
                         <span class="input-group-text"><i class="nav-icon fas fa-copy"> Orden del dia</i></span>
                       </div>
-                        <input type="file" class="form-control" accept="application/pdf" name="orden_pdf" id="" placeholder="Orden del dia" required>
+                      <input type="file" class="form-control" accept="application/pdf" name="orden_pdf" id="" placeholder="Orden del dia" required>
                     </div>
                   </div>
                 </div>
@@ -123,7 +123,7 @@
                   <div id="form_det" defer>
                     <div class="" id="groupform0"defer>
                       <div class="row g-2" >
-                        <div class="col-3">
+                        <div class="col-2">
                           <div class="input-group mb-3">
                             <div class="input-group-prepend">
                               <span class="input-group-text">No.</span>
@@ -131,11 +131,16 @@
                             <input type="number" class="form-control" placeholder="Punto" name="no_dictamen0" id="no_inventario" aria-describedby="dictamenHelp" required>
                           </div>  
                         </div>
-                        <div class="col-9">
+                        <div class="col-10">
                           <div class="input-group">
                             <div class="input-group-prepend">
                               <span class="input-group-text"><i class="nav-icon fas fa-copy"></i></span>
                             </div>
+                            <select name="tipo0" id=""  class="form-control" required>
+                              <option value="">Seleccionar tipo...</option>
+                              <option value="1">Votacion</option>
+                              <option value="2">Participacion</option>
+                            </select>
                             <input type="text" class="form-control" name="titulo0" id="" placeholder="Titulo." required>
                             <input style="width: 30%;" type="text" class="form-control" name="descripcion0" id="" placeholder="Descripción del punto a votar." required>
                           </div>
@@ -181,7 +186,7 @@
   function newInput()
   {
     c+=1;
-    document.getElementById("form_det").insertAdjacentHTML('beforeend',' <div class="" id="div_'+c+'"defer><div class="row g-2" ><div class="col-3"><div class="input-group mb-3"><div class="input-group-prepend"><span class="input-group-text">No.</span></div><input type="number" class="form-control" placeholder="Punto" name="no_dictamen'+c+'" id="" aria-describedby="dictamenHelp" required></div>  </div><div class="col-9"><div class="input-group"><div class="input-group-prepend"><span class="input-group-text"><i class="nav-icon fas fa-copy"></i></span></div><input  type="text" class="form-control" name="titulo' + c + '" id="" placeholder="Titulo." required><input style="width: 30%;" type="text" class="form-control" name="descripcion'+c+'" id="" placeholder="Descripción del dictamen." required></div></div></div></div>');
+    document.getElementById("form_det").insertAdjacentHTML('beforeend',' <div class="" id="div_'+c+'"defer><div class="row g-2" ><div class="col-2"><div class="input-group mb-3"><div class="input-group-prepend"><span class="input-group-text">No.</span></div><input type="number" class="form-control" placeholder="Punto" name="no_dictamen'+c+'" id="" aria-describedby="dictamenHelp" required></div>  </div><div class="col-9"><div class="input-group"><div class="input-group-prepend"><span class="input-group-text"><i class="nav-icon fas fa-copy"></i></span></div><select name="tipo'+c+'" id=""  class="form-control" required><option value="">Seleccionar tipo...</option><option value="1">Votacion</option><option value="2">Participacion</option></select><input  type="text" class="form-control" name="titulo' + c + '" id="" placeholder="Titulo." required><input style="width: 30%;" type="text" class="form-control" name="descripcion'+c+'" id="" placeholder="Descripción del dictamen." required></div></div></div></div>');
 
     $("#idcount").val(c);
     $("#btn_deleteinput").show();

@@ -14,19 +14,19 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::get('/', function () {
-    return view('admin');
-})->middleware('auth');
 
-Route::get('login', function () {
+/*Route::get('login', function () {
     return view('login');
-})->name('login')->middleware('guest');
+})->name('login')->middleware('guest');*/
+Route::get('login', 'App\Http\Controllers\UserController@index')->name('login')->middleware('guest');
 
 Route::get('logout', function () {
    Auth::logout();
 })->name('logout')->middleware('auth');
 
 Route::post('login', [UserController::class,'login']);
+
+Route::get('/', 'App\Http\Controllers\DashboardController@index')->name('dashboard.index')->middleware('auth');
 
 
 Route::resource('/sesiones', 'App\Http\Controllers\SesionController')->middleware('auth');
@@ -42,6 +42,7 @@ Route::get('/sesiones/{id}/descargar', 'App\Http\Controllers\SesionController@de
 Route::post('/sesiones/{id}/onasist', 'App\Http\Controllers\SesionController@on_asist')->name('sesiones.onasist')->middleware('auth');
 Route::post('/sesiones/{id}/offasist', 'App\Http\Controllers\SesionController@off_asist')->name('sesiones.offasist')->middleware('auth');
 Route::post('/sesiones/{id}/closeasist', 'App\Http\Controllers\SesionController@close_asist')->name('sesiones.closeasist')->middleware('auth');
+Route::post('/sesiones/{id}/report_part', 'App\Http\Controllers\SesionController@report_part')->name('sesiones.report_part')->middleware('auth');
 
 
 Route::get('Asistencias', 'App\Http\Controllers\AsistenciaController@show_asis')->name('Asistencia.Asistencias');
@@ -60,6 +61,7 @@ Route::patch('VotacionOff', 'App\Http\Controllers\VotacionController@offvotacion
 Route::get('VotacionPDF', 'App\Http\Controllers\VotacionController@report')->name('Votaciones.report')->middleware('auth');
 Route::get('/totalvotos', 'App\Http\Controllers\VotacionController@total_vota')->name('sesiones.total_vota');
 Route::get('/autoall', 'App\Http\Controllers\VotacionController@autoall')->name('sesiones.autoall');
+Route::get('/faltantes', 'App\Http\Controllers\VotacionController@faltantes')->name('sesiones.faltantes');
 
 Route::resource('Tipo', 'App\Http\Controllers\TipoController')->middleware('auth');
 

@@ -19,4 +19,9 @@ class Sesiones extends Model
         'orden_pdf',
         'status',
     ];
+
+    public function asistencias()
+    {
+        return $this->hasMany(Asistencias::class, 'id_sesion', 'id');
+    }
 }

@@ -1,0 +1,43 @@
+.img-login{
+    position: absolute;
+    width: 100%;
+}
+
+.card-dmuertos {
+    border-top: solid 3px ;
+    border-radius: 5px;
+    border-image: linear-gradient(to right,#ffd800,#ff5300) 1;
+}
+
+.body-dmuertos{
+    background: linear-gradient(to bottom,#5f1334,#430129) ;
+}
+
+.color-dmuertos{
+    border-radius: 5px;
+    background: linear-gradient(to right,#ff00ef,#8500ff) ;
+    box-shadow: 0 4px 8px 0 rgba(177, 94, 1, 0.2), 0 6px 20px 0 rgba(255, 252, 52, 0.19);
+}
+
+.a-dmuertos a{
+    color: #ffd800;
+}
+
+.input-dmuertos{
+    background: #ffefd8;
+}
+
+.btn-dmuertos{
+    color: #4f062c;
+    border: solid 0px;
+    background: linear-gradient(to right,#ffd800,#ff5300) ;
+    transition: all ease 0.7s
+}
+
+.btn-dmuertos:hover{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgb(0 0 0 / 19%);
+}
+
+.nav-dmuertos{
+    background: linear-gradient(to bottom,#cd3321,#ff7c46) ;
+}

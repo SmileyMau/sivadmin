@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Votaciones;
 use App\Models\SesionDet;
 use App\Models\Sesiones;
+use App\Models\Asistencias;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use PDF;
@@ -110,6 +112,41 @@ class VotacionController extends Controller
         }
     }
 
+    function faltantes(){
+        try {
+            $sesion = Sesiones::where('status','=','A')->first();
+            $dictamen = SesionDet::where('status','=','A')->first();
+            $id_sesion = $sesion->id;
+            //dd($dictamen->id);
+            if ($dictamen !== null) {
+                $faltantes = Asistencias::where('id_sesion', $sesion->id)
+                ->whereNotIn('id_user', function ($query) use($dictamen){
+
+                    $query->select('id_user')
+                        ->from('votaciones')
+                        ->where('id_dictamen', $dictamen->id);
+                })
+                //->with('usuario')
+                ->get();
+            }
+
+            if ($sesion->asistencia == 'A' ) {
+                $faltantes = User::where('status', 'A')
+                ->whereNotIn('id', function ($query) use ($id_sesion) {
+                    $query->select('id_user')
+                        ->from('asistencias')
+                        ->where('id_sesion', $id_sesion);
+                })
+                //->with('usuario')
+                ->get();
+            }
+            //dd($faltantes);
+            return view('faltantes', compact('faltantes'));
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
     public function autoall()
     {
         try {
@@ -125,7 +162,7 @@ class VotacionController extends Controller
                 ->select('users.name','users.appaterno','users.apmaterno','users.id','partidos.partido','users.img','votaciones.votacion')
                 ->join('votaciones','votaciones.id_user','=', 'users.id')
                 ->join('partidos','partidos.id','=','users.id_partido')
-                ->orderBy('votaciones.id', 'desc')
+                ->orderBy('votaciones.id', 'asc')
                 ->where('votaciones.id_dictamen','=',$dictamen->id)
                 ->get();
                 //dd($afavor,$encontra,$abstencion,$total);

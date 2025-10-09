@@ -16,6 +16,7 @@ class CreateSesionDetsTable extends Migration
         Schema::create('sesion_dets', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('id_sesion')->unsigned()->notnull();
+            $table->string('tipo')->notnull();
             $table->string('no_dictamen')->notnull();
             $table->string('titulo')->notnull();
             $table->string('descripcion')->notnull();

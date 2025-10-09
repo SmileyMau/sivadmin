@@ -131,6 +131,12 @@
           with font-awesome or any other icon font library -->
 
           <li class="nav-item">
+            <a href="{{route('dashboard.index')}}" class="nav-link">
+              <i class="nav-icon fas fa-chart-pie"></i>
+              <p>Panel Administrativo</p>
+            </a>
+          </li>
+          <li class="nav-item">
             <a href="{{route('Tipo.index')}}" class="nav-link">
               <i class="nav-icon fas fa-copy"></i>
               <p>Tipos</p>
@@ -186,7 +192,6 @@
 <!-- Bootstrap 4 -->
 <script src="{{asset('admintle/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <script src="{{asset('admintle/plugins/sweetalert2/sweetalert2.min.js')}}"></script>
-
 <script src="{{asset('admintle/plugins/datatables/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('admintle/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
 <script src="{{asset('admintle/plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
@@ -200,6 +205,7 @@
 <script src="{{asset('admintle/plugins/datatables-buttons/js/buttons.print.min.js')}}"></script>
 <script src="{{asset('admintle/plugins/datatables-buttons/js/buttons.colVis.min.js')}}"></script>
 <script src="{{ asset('/vendor/ckeditor/ckeditor.js') }}"></script>
+<script src="{{ asset('admintle/plugins/bs-custom-file-input/bs-custom-file-input.min.js')}}"></script>
 
 @yield('userjs')
 

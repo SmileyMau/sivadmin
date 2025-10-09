@@ -33,7 +33,7 @@
                 <div class="card-body">
                     <div class="tab-content" id="custom-tabs-two-tabContent">
                         <div class="tab-pane fade show active" id="custom-tabs-two-home" role="tabpanel" aria-labelledby="custom-tabs-two-home-tab">
-                            <form method="post" action="{{ route('sesiones.update', $edit->id) }}">
+                            <form method="post" action="{{ route('sesiones.update', $edit->id) }}" enctype="multipart/form-data">
                                 @method('patch')
                                 @csrf
                                 <div class="mb-3">
@@ -73,6 +73,14 @@
                                             <span class="input-group-text"><i class="nav-icon fas fa-copy"></i></span>
                                         </div>
                                         <input type="text" class="form-control" name="titulo" id="" value="{{$edit->descripcion}}" placeholder="Titulo de la Sesión." required>
+                                    </div>
+                                </div>
+                                <div class="mt-3">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="nav-icon fas fa-copy"> Orden del dia</i></span>
+                                        </div>
+                                        <input type="file" class="form-control" accept="application/pdf" name="orden_pdf" id="" placeholder="Orden del dia" required>
                                     </div>
                                 </div>
                                 <div class="modal-footer">

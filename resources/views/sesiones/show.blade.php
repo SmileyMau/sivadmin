@@ -22,7 +22,14 @@
     <div class="card-body text-muted">
       <div class="card card-outline card-celsh">
         <div class="card-header">
-          <h1 class="card-title"></h1>
+          <h3 class="card-title">Sesion 
+            @if ($sesion->status == 'A')
+              <span class="badge badge-success">Activa</span>
+            @endif
+            @if ($sesion->status == 'N')
+              <span class="badge badge-danger">Cerrada</span>
+            @endif
+          </h3>
           <div class="form-group">
             <button type="button" class="btn btn-reasig float-right m-1 " data-toggle="modal" data-target="#añadirModal">
               Añadir
@@ -62,13 +69,16 @@
                 <div class="p-3 " ><p class=""><b>Sesion:</b> {{$sesion->no_sesion}} - {{$sesion->descripcion}}</p></div>
               </div>
               <div class="col-6">
+                <div class="p-3  "><b>TOTAL DE ASISTENCIAS:</b> {{$sesion->asistencias_count }}</div>
+              </div>
+              <div class="col-6">
                 <div class="p-3  "><b>Fecha:</b> {{$sesion->fecha}}</div>
               </div>
               <div class="col-6">
                 <div class="p-3  ">
                   <b>Orden del dia:</b> 
-                  <a  class="btn btn-danger" href="{{url('storage/'.substr($sesion->orden_pdf,7))}}" target="_blank">PDF</a> 
-                  <a  class="btn btn-danger" href="{{route('sesiones.descargar',$sesion->id)}}" target="_blank">Descargar</a>
+                  <a  class="btn btn-off" href="{{url('storage/'.substr($sesion->orden_pdf,7))}}" target="_blank">PDF</a> 
+                  <a  class="btn btn-off" href="{{route('sesiones.descargar',$sesion->id)}}" target="_blank">Descargar</a>
                 </div>
               </div>
             </div>
@@ -132,6 +142,11 @@
                           <div class="input-group-prepend">
                             <span class="input-group-text"><i class="nav-icon fas fa-copy"></i></span>
                           </div>
+                           <select name="tipo0" id=""  class="form-control" required>
+                              <option value="">Seleccionar tipo...</option>
+                              <option value="1">Votacion</option>
+                              <option value="2">Participacion</option>
+                            </select>
                           <input type="text" class="form-control" name="titulo0" id="" placeholder="Titulo." required>
                           <input type="text" class="form-control" name="descripcion0" id="" placeholder="Descripción del dictamen." required>
                         </div>
@@ -161,6 +176,7 @@
     </div>
   </div>
 
+
 @endsection
 
 
@@ -171,7 +187,7 @@
   function newInput()
   {
     c+=1;
-    document.getElementById("form_det").insertAdjacentHTML('beforeend',' <div class="" id="div_'+c+'"defer><div class="row g-2" ><div class="col-3"><div class="input-group mb-3"><div class="input-group-prepend"><span class="input-group-text">No.</span></div><input type="number" class="form-control" placeholder="Dictamen" name="no_dictamen'+c+'" id="" aria-describedby="dictamenHelp" required></div>  </div><div class="col-9"><div class="input-group"><div class="input-group-prepend"><span class="input-group-text"><i class="nav-icon fas fa-copy"></i></span></div><input  type="text" class="form-control" name="titulo' + c + '" id="" placeholder="Titulo." required><input type="text" class="form-control" name="descripcion'+c+'" id="" placeholder="Descripción del dictamen." required></div></div></div></div>');
+    document.getElementById("form_det").insertAdjacentHTML('beforeend',' <div class="" id="div_'+c+'"defer><div class="row g-2" ><div class="col-3"><div class="input-group mb-3"><div class="input-group-prepend"><span class="input-group-text">No.</span></div><input type="number" class="form-control" placeholder="Dictamen" name="no_dictamen'+c+'" id="" aria-describedby="dictamenHelp" required></div>  </div><div class="col-9"><div class="input-group"><div class="input-group-prepend"><span class="input-group-text"><i class="nav-icon fas fa-copy"></i></span></div><select name="tipo'+c+'" id=""  class="form-control" required><option value="">Seleccionar tipo...</option><option value="1">Votacion</option><option value="2">Participacion</option></select><input  type="text" class="form-control" name="titulo' + c + '" id="" placeholder="Titulo." required><input type="text" class="form-control" name="descripcion'+c+'" id="" placeholder="Descripción del dictamen." required></div></div></div></div>');
 
     $("#idcount").val(c);
     $("#btn_deleteinput").show();
