@@ -439,7 +439,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     }
 
     // Consulta el estado cada 5 segundos
-    //setInterval(fetchServiceStatus, 5000);
+    setInterval(fetchServiceStatus, 5000);
     $(function () {
         //setInterval("location.reload()",5000);
     });
