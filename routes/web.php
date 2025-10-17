@@ -71,3 +71,4 @@ Route::get('Guion/texto/guion', 'App\Http\Controllers\GionController@texto')->na
 Route::post('Reporte/{id}/asistencias', 'App\Http\Controllers\AsistenciaController@report')->name('Reporte.asistencias')->middleware('auth');
 Route::post('Reporte/{id}/votaciones', 'App\Http\Controllers\VotacionController@report')->name('Reporte.votaciones')->middleware('auth');
 
+Route::resource('Asuntos', 'App\Http\Controllers\AsuntoController')->middleware('auth');

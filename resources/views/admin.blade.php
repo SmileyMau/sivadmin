@@ -115,7 +115,7 @@
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
 
         <div class="info">
-          <a href="#" class="d-block">Usuario</a>
+          <a href="#" class="d-block">{{auth()->user()->name}}</a>
         </div>
       </div>
 
@@ -130,16 +130,43 @@
           <!-- Add icons to the links using the .nav-icon class
           with font-awesome or any other icon font library -->
 
-          <li class="nav-item">
+          <li class="nav-item user-panel ">
             <a href="{{route('dashboard.index')}}" class="nav-link">
               <i class="nav-icon fas fa-chart-pie"></i>
               <p>Panel Administrativo</p>
             </a>
           </li>
+          <li class="nav-header">CATALOGOS</li>
+
           <li class="nav-item">
             <a href="{{route('Tipo.index')}}" class="nav-link">
               <i class="nav-icon fas fa-copy"></i>
-              <p>Tipos</p>
+              <p>Cargos</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{route('Asuntos.index')}}" class="nav-link">
+              <i class="nav-icon fas fa-copy"></i>
+              <p>Tipo de Asunto</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{route('Tipo.index')}}" class="nav-link">
+              <i class="nav-icon fas fa-copy"></i>
+              <p>Comisiones</p>
+            </a>
+          </li>
+          <li class="nav-item user-panel">
+            <a href="{{route('Tipo.index')}}" class="nav-link">
+              <i class="nav-icon fas fa-copy"></i>
+              <p>Tipos de Sesion</p>
+            </a>
+          </li>
+          <li class="nav-header ">SL</li>
+          <li class="nav-item">
+            <a href="{{route('Asuntos.index')}}" class="nav-link">
+              <i class="nav-icon fas fa-table"></i>
+              <p>Asuntos</p>
             </a>
           </li>
           <li class="nav-item">

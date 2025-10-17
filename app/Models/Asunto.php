@@ -5,18 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Asistencias extends Model
+class Asunto extends Model
 {
     use HasFactory;
-
     protected $fillable = [
         'id_user',
-        'id_sesion',
-        'descripcion',
-        'asistencia',
+        'id_tipo',
         'fecha',
-        'hora',
+        'descripcion',
+        'no_oficio',
+        'observacion',
         'status',
+        'user_modifi',
     ];
 
     public function usuario()
@@ -24,8 +24,8 @@ class Asistencias extends Model
         return $this->belongsTo(User::class, 'id_user', 'id');
     }
 
-      public function sesion()
+    public function tipo()
     {
-        return $this->belongsTo(Sesiones::class, 'id_Sesion', 'id');
+        return $this->belongsTo(TipoAsunto::class, 'id_tipo', 'id');
     }
 }
