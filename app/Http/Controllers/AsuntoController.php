@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Asunto;
+use App\Models\AsuntoDetalle;
 use App\Models\Errores;
 use App\Models\User;
+use App\Models\TipoAsunto;
 use Carbon\Carbon;
 class AsuntoController extends Controller
 {
@@ -18,7 +20,8 @@ class AsuntoController extends Controller
     {
         try {
             $users = User::all();
-            return view('asuntos.index',compact('users'));
+            $tipo_asuntos = TipoAsunto::all();
+            return view('asuntos.index',compact('users','tipo_asuntos'));
         } catch (\Throwable $th) {
             $errorMessage = 'Error en funcion index del controlador AsuntoController';
             $error = Errores::create([
@@ -55,7 +58,25 @@ class AsuntoController extends Controller
     public function store(Request $request)
     {
         try {
-            $asunto = Asunto::create($request->all());
+            //dd($request->all());
+            $asunto = Asunto::create([
+                'id_user' => $request->id_user,
+                'id_tipo' => $request->id_tipo,
+                'fecha' => $request->fecha,
+                'descripcion' => $request->descripcion,
+                'no_oficio' => $request->no_oficio,
+                'observacion' => $request->observacion,
+                'status' => 'A',
+                'user_modifi' => auth()->user()->id,
+            ]);
+            foreach ($request->id_users as $id_user) {
+                AsuntoDetalle::create([
+                    'id_asunto' => $asunto->id,
+                    'id_user' => $id_user,
+                    'status' => 'A',
+                    'user_modifi' => auth()->user()->id,
+                ]);
+            }
             return back()->with('success', 'Asunto creado con exito');
         } catch (\Throwable $th) {
             $errorMessage = 'Error en funcion store del controlador AsuntoController';

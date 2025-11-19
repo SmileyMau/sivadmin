@@ -10,6 +10,7 @@ class AsuntoDetalle extends Model
     use HasFactory;
     protected $fillable = [
         'id_asunto',
+        'id_user',
         'status',
         'user_modifi',
     ];

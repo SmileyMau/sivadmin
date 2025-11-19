@@ -1,4 +1,10 @@
 @extends('admin')
+@section('css')
+  <link rel="stylesheet" href="{{asset('admintle/plugins/select2/css/select2.min.css')}}">
+  <link rel="stylesheet" href="{{asset('admintle/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
+  <link rel="stylesheet" href="{{asset('admintle/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css')}}">
+@endsection
+
 @section ('content')
 
 
@@ -60,20 +66,30 @@
               </ul>
             </div>
           <div class="card-body">
-          <form method="post" action="{{route('sesiones.store')}}" enctype="multipart/form-data">
+          <form method="post" action="{{route('Asuntos.store')}}" enctype="multipart/form-data">
             @method('post')
               @csrf
               <div class="tab-content" id="custom-tabs-two-tabContent">
                 <div class="tab-pane fade show active" id="custom-tabs-two-home" role="tabpanel" aria-labelledby="custom-tabs-two-home-tab">
 
-                  <div class="mb-3">
-                    <div class="input-group">
-                      <select name="id_tipo" id="" class="form-control" required>
-                        <option value="">Seleccionar Diputada/o...</option>
-                        @foreach ($users as $user)
-                          <option value="{{$user->id}}">{{$user->name}}</option>
-                        @endforeach
-                      </select>
+                  <div class="row g-2">
+                    <div class="col-6">
+                      <div class="input-group mb-3">
+                        <select name="id_user" id="" class="form-control" required>
+                          <option value="">Seleccionar Diputada/o...</option>
+                          @foreach ($users as $user)
+                            <option value="{{$user->id}}">{{$user->name}}</option>
+                          @endforeach
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">No. Oficio</span>
+                        </div>
+                        <input type="text" class="form-control" name="no_oficio" id="" aria-describedby="fechaHelp" placeholder="CELSH789" required>
+                      </div>
                     </div>
                   </div>
 
@@ -81,9 +97,14 @@
                     <div class="col-6">
                       <div class="input-group mb-3">
                         <div class="input-group-prepend">
-                          <span class="input-group-text"> </span>
+                          <span class="input-group-text">Asunto</span>
                         </div>
-                        <input type="number" placeholder="Número de Sesión" class="form-control" name="no_sesion" id="" aria-describedby="sesionHelp" required>
+                        <select name="id_tipo" id="" class="form-control" required>
+                          <option value="">Seleccionar...</option>
+                          @foreach ($tipo_asuntos as $tipo)
+                            <option value="{{$tipo->id}}">{{$tipo->descripcion}}</option>
+                          @endforeach
+                        </select>
                       </div>
                     </div>
                     <div class="col-6">
@@ -101,17 +122,12 @@
                       <div class="input-group-prepend">
                         <span class="input-group-text"><i class="nav-icon fas fa-copy"></i></span>
                       </div>
-                        <input type="text" class="form-control" name="titulo" id="" placeholder="Titulo de la Sesión." required>
+                      <textarea class="form-control" name="descripcion" id="" cols="30" rows="3" required value="">Nombre del asunto..</textarea>
                     </div>
                   </div>
-
-                  <div class="mt-3">
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="nav-icon fas fa-copy"> Orden del dia</i></span>
-                      </div>
-                      <input type="file" class="form-control" accept="application/pdf" name="orden_pdf" id="" placeholder="Orden del dia" required>
-                    </div>
+                  <br>
+                  <div class="input-group">
+                    <input type="text" class="form-control" name="observacion" id="" aria-describedby="" placeholder="Observacion" required>
                   </div>
                 </div>
 
@@ -119,48 +135,23 @@
                   <div id="form_det" defer>
                     <div class="" id="groupform0"defer>
                       <div class="row g-2" >
-                        <div class="col-2">
-                          <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text">No.</span>
-                            </div>
-                            <input type="number" class="form-control" placeholder="Punto" name="no_dictamen0" id="no_inventario" aria-describedby="dictamenHelp" required>
-                          </div>  
-                        </div>
-                        <div class="col-10">
-                          <div class="input-group">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="nav-icon fas fa-copy"></i></span>
-                            </div>
-                            <select name="tipo0" id=""  class="form-control" required>
-                              <option value="">Seleccionar tipo...</option>
-                              <option value="1">Votacion</option>
-                              <option value="2">Participacion</option>
-                            </select>
-                            <input type="text" class="form-control" name="titulo0" id="" placeholder="Titulo." required>
-                            <input style="width: 30%;" type="text" class="form-control" name="descripcion0" id="" placeholder="Descripción del punto a votar." required>
-                          </div>
-                        </div>
+                        <label>Diputada/o</label>
+                        <select name="id_users[]" class="select2" multiple="multiple" data-placeholder="Seleccionar..." row="3" style="width: 100%;">
+                          @foreach ($users as $user)
+                          <option value="{{$user->id}}">{{$user->name}}</option>
+                          @endforeach
+                        </select>
                       </div>
                     </div>
                   </div>
-                  <br>
-                  <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-                    <a href="javascript:deleteInput()" class="btn btn-danger m-2" id="btn_deleteinput"><i class="fas fa-minus"></i></a>
-                    <a href=""></a>
-                    <a href="javascript:newInput()" class="btn btn-primary m-2"> <i class="fas fa-plus"></i></a>
-                  </div>
-                  <div class="form-group" style="display: none;">
-                    <input type="hidden" id="idcount" name="count" required  readonly onmousedown="return false;" >
-                  </div>
-                  <div class="modal-footer">
+
+                   <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
                     <button type="submit" class="btn btn-success">Guardar</button>
                   </div>
                 </div>
-
+                <br>
               </div>
-
             </form>
           </div>
           <!-- /.card -->
@@ -175,9 +166,12 @@
 
 @endsection
 
-@section ('js')
-    <script>
-
-    </script>
-
+@section ('userjs')
+  <script src="{{asset('admintle/plugins/select2/js/select2.full.min.js')}}"></script>
+  <script>
+    $(function () {
+      //Initialize Select2 Elements
+      $('.select2').select2()
+    });
+  </script>
 @endsection

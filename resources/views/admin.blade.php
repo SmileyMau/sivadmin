@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="{{asset('css/style.css')}}">
 
   <link rel="stylesheet" href="{{asset('admintle/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css')}}">
-
+  @yield('css')
   
   @livewireStyles
 
@@ -136,51 +136,74 @@
               <p>Panel Administrativo</p>
             </a>
           </li>
-          <li class="nav-header">CATALOGOS</li>
 
           <li class="nav-item">
-            <a href="{{route('Tipo.index')}}" class="nav-link">
-              <i class="nav-icon fas fa-copy"></i>
-              <p>Cargos</p>
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-table"></i>
+              <p>
+                CATALOGOS
+                <i class="right fas fa-angle-left"></i>
+              </p>
             </a>
-          </li>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{route('Tipo.index')}}" class="nav-link">
+                  <i class="nav-icon fas fa-copy"></i>
+                  <p>Cargos</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('Asuntos.index')}}" class="nav-link">
+                  <i class="nav-icon fas fa-copy"></i>
+                  <p>Tipo de Asunto</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('Tipo.index')}}" class="nav-link">
+                  <i class="nav-icon fas fa-copy"></i>
+                  <p>Comisiones</p>
+                </a>
+              </li>
+              <li class="nav-item user-panel">
+                <a href="{{route('Tipo.index')}}" class="nav-link">
+                  <i class="nav-icon fas fa-copy"></i>
+                  <p>Tipos de Sesion</p>
+                </a>
+              </li>
+            </li>
+          </ul>
+
           <li class="nav-item">
-            <a href="{{route('Asuntos.index')}}" class="nav-link">
-              <i class="nav-icon fas fa-copy"></i>
-              <p>Tipo de Asunto</p>
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-edit"></i>
+              <p>
+                REGISTROS
+                <i class="right fas fa-angle-left"></i>
+              </p>
             </a>
-          </li>
-          <li class="nav-item">
-            <a href="{{route('Tipo.index')}}" class="nav-link">
-              <i class="nav-icon fas fa-copy"></i>
-              <p>Comisiones</p>
-            </a>
-          </li>
-          <li class="nav-item user-panel">
-            <a href="{{route('Tipo.index')}}" class="nav-link">
-              <i class="nav-icon fas fa-copy"></i>
-              <p>Tipos de Sesion</p>
-            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{route('Asuntos.index')}}" class="nav-link">
+                  <i class="nav-icon fas fa-table"></i>
+                  <p>Asuntos</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('sesiones.index')}}" class="nav-link">
+                  <i class="nav-icon fas fa-table"></i>
+                  <p>Sesiones</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('Guion.index')}}" class="nav-link">
+                  <i class="nav-icon fas fa-book"></i>
+                  <p>Guion</p>
+                </a>
+              </li>
+            </ul>
           </li>
           <li class="nav-header ">SL</li>
-          <li class="nav-item">
-            <a href="{{route('Asuntos.index')}}" class="nav-link">
-              <i class="nav-icon fas fa-table"></i>
-              <p>Asuntos</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="{{route('sesiones.index')}}" class="nav-link">
-              <i class="nav-icon fas fa-table"></i>
-              <p>Sesiones</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="{{route('Guion.index')}}" class="nav-link">
-              <i class="nav-icon fas fa-book"></i>
-              <p>Guion</p>
-            </a>
-          </li>
+          
 
         </ul>
       </nav>
