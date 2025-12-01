@@ -34,7 +34,7 @@
                 <tbody>
                     
                     @foreach($asistencias as $asistencia)
-                    <tr>
+                    <tr class="border-top">
                         <td style="padding-left: 10px;">{{$asistencia->name}} {{$asistencia->appaterno}} {{$asistencia->apmaterno}}</td>
                         <td style="text-align: center; ">{{$asistencia->hora}}</td>
                         @if($asistencia->asistencia == 'A')
