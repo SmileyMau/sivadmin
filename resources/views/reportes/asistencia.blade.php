@@ -34,18 +34,18 @@
                 <tbody>
                     
                     @foreach($asistencias as $asistencia)
-                    <tr class="border-top">
-                        <td style="padding-left: 10px;">{{$asistencia->name}} {{$asistencia->appaterno}} {{$asistencia->apmaterno}}</td>
-                        <td style="text-align: center; ">{{$asistencia->hora}}</td>
-                        @if($asistencia->asistencia == 'A')
-                            <td style="text-align: center; color:rgb(35, 75, 35);">Asistencia</td>
-                        @endif
-                        @if($asistencia->asistencia == 'N')
-                            <td style="text-align: center; color:rgb(89, 90, 3);">Retardo</td>
-                        @endif
+                        <tr class="border-top">
+                            <td style="padding-left: 10px;">{{$asistencia->name}} {{$asistencia->appaterno}} {{$asistencia->apmaterno}}</td>
+                            <td style="text-align: center; ">{{$asistencia->hora}}</td>
+                            @if($asistencia->asistencia == 'A')
+                                <td style="text-align: center; color:rgb(35, 75, 35);">Asistencia</td>
+                            @endif
+                            @if($asistencia->asistencia == 'N')
+                                <td style="text-align: center; color:rgb(89, 90, 3);">Retardo</td>
+                            @endif
                         </tr>
-                        @endforeach
-                    <tr>
+                    @endforeach
+                    <tr class="border-top">
                         <td> Hora de Apertura: {{$sesion->hora_ini}} y Hora de Cierre: {{$sesion->hora_fin}}</td>
                         <td> Total:</td>
                         <td style="text-align: center; "><b> {{$total}}</b> de <b>30</b></td>
