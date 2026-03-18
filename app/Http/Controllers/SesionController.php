@@ -8,6 +8,8 @@ use App\Models\SesionDet;
 use App\Models\Asistencias;
 use App\Models\Tipo;
 use App\Models\Votaciones;
+use App\Models\User;
+use App\Models\Dictamen;
 use Illuminate\Support\Facades\DB;
 use Storage;
 use Carbon\Carbon;
@@ -401,6 +403,43 @@ class SesionController extends Controller
             //return view('reportes.participaciones', compact('participaciones'));
             $pdf = PDF::loadView('reportes.participaciones', compact('participaciones'));
             return $pdf->stream();
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
+    // Funciones de añadir archivos a la sesión
+    public function add_files($id)
+    {
+        try {
+            $diputados = User::where('rol','=',"D")->where('status','=',"A")-> get();
+            $sesion = Sesiones::find($id);
+            $sesion_dets = SesionDet::where('id_sesion','=',$sesion->id)->orderBy('no_dictamen','ASC')->get();
+            $dictamenes = DB::table('dictamens')
+            ->join('users','users.id','dictamens.id_user')
+            ->join('sesion_dets','sesion_dets.id','dictamens.id_sesion_detalle')
+            ->select('users.name','users.appaterno','users.apmaterno','sesion_dets.titulo','dictamens.*')
+            ->where('sesion_dets.id_sesion','=',$sesion->id)
+            ->get();
+
+            
+            return view('sesiones.add_files', compact('sesion','dictamenes','diputados','sesion_dets'));
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
+    public function store_dictamen(Request $request)
+    {
+        try {
+            $dictamen = Dictamen::create([
+                'id_user' => $request->id_user,
+                'id_sesion_detalle' => $request->id_sesion_detalle,
+                'archivo' => $request->file('archivo')->store('public/Dictamenes'),
+                'status' => 'A',
+                'user_modifi' => auth()->user()->id,
+            ]);
+            return back()->with('success','El dictamen se agregó exitosamente');
         } catch (\Throwable $th) {
             throw $th;
         }

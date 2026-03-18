@@ -63,6 +63,8 @@
                                         <button class="dropdown-item btn-report mb-1">Asistencias</button>
                                     </form>
                                     <hr>
+                                    <a class="dropdown-item mb-1 btn-report" href="{{ route('sesiones.add_files', $sesion->id) }}">Agregar Archivos</a>
+
                                     @if ($sesion->status == 'A')
                                         <form method="post" action="{{ route('sesiones.destroy', $sesion->id) }}" class="form_cancelar">
                                             @method('delete')

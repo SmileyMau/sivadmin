@@ -28,22 +28,24 @@ Route::post('login', [UserController::class,'login']);
 
 Route::get('/', 'App\Http\Controllers\DashboardController@index')->name('dashboard.index')->middleware('auth');
 
-
+//Rutas de Sesiones
 Route::resource('/sesiones', 'App\Http\Controllers\SesionController')->middleware('auth');
 Route::get('/sesiones/editdictamen', 'App\Http\Controllers\SesionController@editdet')->name('sesiones.editdet')->middleware('auth');
 Route::get('/sesiones/verdictamen', 'App\Http\Controllers\SesionController@showdet')->name('sesiones.showdet')->middleware('auth');
-Route::patch('/sesiones/{id}/updictamen', 'App\Http\Controllers\SesionController@updatedet')->name('sesiones.updatedet')->middleware('auth');
-Route::patch('/sesiones/{id}/ac', 'App\Http\Controllers\SesionController@ac')->name('sesiones.ac')->middleware('auth');
-Route::patch('/sesiones/{id}/acsesion', 'App\Http\Controllers\SesionController@acsesion')->name('sesiones.acsesion')->middleware('auth');
-Route::delete('/sesiones/{id}/detdestroy', 'App\Http\Controllers\SesionController@detdestroy')->name('sesiones.detdestroy')->middleware('auth');
+Route::get('/sesiones/{id}/descargar', 'App\Http\Controllers\SesionController@descargar')->name('sesiones.descargar')->middleware('auth');
+Route::get('/sesiones/{id}/add', 'App\Http\Controllers\SesionController@add_files')->name('sesiones.add_files')->middleware('auth');
 Route::post('/sesiones/{id}/detstore', 'App\Http\Controllers\SesionController@detstore')->name('sesiones.detstore')->middleware('auth');
 Route::post('/sesiones/{id}/asistencia', 'App\Http\Controllers\SesionController@asistencia')->name('sesiones.asistencia')->middleware('auth');
-Route::get('/sesiones/{id}/descargar', 'App\Http\Controllers\SesionController@descargar')->name('sesiones.descargar')->middleware('auth');
 Route::post('/sesiones/{id}/onasist', 'App\Http\Controllers\SesionController@on_asist')->name('sesiones.onasist')->middleware('auth');
 Route::post('/sesiones/{id}/offasist', 'App\Http\Controllers\SesionController@off_asist')->name('sesiones.offasist')->middleware('auth');
 Route::post('/sesiones/{id}/closeasist', 'App\Http\Controllers\SesionController@close_asist')->name('sesiones.closeasist')->middleware('auth');
 Route::post('/sesiones/{id}/report_part', 'App\Http\Controllers\SesionController@report_part')->name('sesiones.report_part')->middleware('auth');
-
+Route::post('/sesiones/store-dictamen', 'App\Http\Controllers\SesionController@store_dictamen')->name('sesiones.store_dictamen')->middleware('auth');
+Route::patch('/sesiones/{id}/updictamen', 'App\Http\Controllers\SesionController@updatedet')->name('sesiones.updatedet')->middleware('auth');
+Route::patch('/sesiones/{id}/ac', 'App\Http\Controllers\SesionController@ac')->name('sesiones.ac')->middleware('auth');
+Route::patch('/sesiones/{id}/acsesion', 'App\Http\Controllers\SesionController@acsesion')->name('sesiones.acsesion')->middleware('auth');
+Route::delete('/sesiones/{id}/detdestroy', 'App\Http\Controllers\SesionController@detdestroy')->name('sesiones.detdestroy')->middleware('auth');
+//-------
 
 Route::get('Asistencias', 'App\Http\Controllers\AsistenciaController@show_asis')->name('Asistencia.Asistencias');
 Route::post('Asistencias2/{id}/asistencias', 'App\Http\Controllers\AsistenciaController@show_asis2')->name('Asistencia.Asistencias2');
