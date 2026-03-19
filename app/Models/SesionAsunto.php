@@ -5,10 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class SesionDet extends Model
+class SesionAsunto extends Model
 {
     use HasFactory;
-    protected $fillable = [
+
+     protected $fillable = [
         'id_sesion',
         'id_tipo',
         'no_dictamen',

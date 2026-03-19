@@ -41,6 +41,7 @@ Route::post('/sesiones/{id}/offasist', 'App\Http\Controllers\SesionController@of
 Route::post('/sesiones/{id}/closeasist', 'App\Http\Controllers\SesionController@close_asist')->name('sesiones.closeasist')->middleware('auth');
 Route::post('/sesiones/{id}/report_part', 'App\Http\Controllers\SesionController@report_part')->name('sesiones.report_part')->middleware('auth');
 Route::post('/sesiones/store-dictamen', 'App\Http\Controllers\SesionController@store_dictamen')->name('sesiones.store_dictamen')->middleware('auth');
+Route::post('/sesiones/store-acuerdo', 'App\Http\Controllers\SesionController@store_acuerdo')->name('sesiones.store_acuerdo')->middleware('auth');
 Route::patch('/sesiones/{id}/updictamen', 'App\Http\Controllers\SesionController@updatedet')->name('sesiones.updatedet')->middleware('auth');
 Route::patch('/sesiones/{id}/ac', 'App\Http\Controllers\SesionController@ac')->name('sesiones.ac')->middleware('auth');
 Route::patch('/sesiones/{id}/acsesion', 'App\Http\Controllers\SesionController@acsesion')->name('sesiones.acsesion')->middleware('auth');
@@ -74,3 +75,5 @@ Route::post('Reporte/{id}/asistencias', 'App\Http\Controllers\AsistenciaControll
 Route::post('Reporte/{id}/votaciones', 'App\Http\Controllers\VotacionController@report')->name('Reporte.votaciones')->middleware('auth');
 
 Route::resource('Asuntos', 'App\Http\Controllers\AsuntoController')->middleware('auth');
+Route::patch('Asuntos/{id}/add-diputado', 'App\Http\Controllers\AsuntoController@store_diputado')->name('asuntos.store_diputado')->middleware('auth');
+Route::delete('Asuntos/{id}/destroy-diputado', 'App\Http\Controllers\AsuntoController@destroy_diputado')->name('asuntos.destroy_diputado')->middleware('auth');

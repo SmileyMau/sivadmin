@@ -138,8 +138,9 @@
                             </div>
                             <select name="tipo0" id=""  class="form-control" required>
                               <option value="">Seleccionar tipo...</option>
-                              <option value="1">Votacion</option>
-                              <option value="2">Participacion</option>
+                              @foreach ($tipo_asuntos as $tipo_asunto)
+                                <option value="{{$tipo_asunto->id}}">{{$tipo_asunto->descripcion}}</option>
+                              @endforeach
                             </select>
                             <input type="text" class="form-control" name="titulo0" id="" placeholder="Titulo." required>
                             <input style="width: 30%;" type="text" class="form-control" name="descripcion0" id="" placeholder="Descripción del punto a votar." required>
@@ -186,7 +187,7 @@
   function newInput()
   {
     c+=1;
-    document.getElementById("form_det").insertAdjacentHTML('beforeend',' <div class="" id="div_'+c+'"defer><div class="row g-2" ><div class="col-2"><div class="input-group mb-3"><div class="input-group-prepend"><span class="input-group-text">No.</span></div><input type="number" class="form-control" placeholder="Punto" name="no_dictamen'+c+'" id="" aria-describedby="dictamenHelp" required></div>  </div><div class="col-9"><div class="input-group"><div class="input-group-prepend"><span class="input-group-text"><i class="nav-icon fas fa-copy"></i></span></div><select name="tipo'+c+'" id=""  class="form-control" required><option value="">Seleccionar tipo...</option><option value="1">Votacion</option><option value="2">Participacion</option></select><input  type="text" class="form-control" name="titulo' + c + '" id="" placeholder="Titulo." required><input style="width: 30%;" type="text" class="form-control" name="descripcion'+c+'" id="" placeholder="Descripción del dictamen." required></div></div></div></div>');
+    document.getElementById("form_det").insertAdjacentHTML('beforeend',' <div class="" id="div_'+c+'"defer><div class="row g-2" ><div class="col-2"><div class="input-group mb-3"><div class="input-group-prepend"><span class="input-group-text">No.</span></div><input type="number" class="form-control" placeholder="Punto" name="no_dictamen'+c+'" id="" aria-describedby="dictamenHelp" required></div>  </div><div class="col-10"><div class="input-group"><div class="input-group-prepend"><span class="input-group-text"><i class="nav-icon fas fa-copy"></i></span></div><select name="tipo'+c+'" id=""  class="form-control" required><option value="">Seleccionar tipo...</option>@foreach ($tipo_asuntos as $tipo_asunto)<option value="{{$tipo_asunto->id}}">{{$tipo_asunto->descripcion}}</option>@endforeach</select><input  type="text" class="form-control" name="titulo' + c + '" id="" placeholder="Titulo." required><input style="width: 30%;" type="text" class="form-control" name="descripcion'+c+'" id="" placeholder="Descripción del dictamen." required></div></div></div></div>');
 
     $("#idcount").val(c);
     $("#btn_deleteinput").show();

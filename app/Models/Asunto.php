@@ -12,10 +12,12 @@ class Asunto extends Model
         'id_user',
         'id_tipo',
         'fecha',
+        'titulo',
         'descripcion',
         'no_oficio',
         'observacion',
         'status',
+        'archivo',
         'user_modifi',
     ];
 

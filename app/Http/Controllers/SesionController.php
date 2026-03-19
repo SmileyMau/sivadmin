@@ -10,6 +10,8 @@ use App\Models\Tipo;
 use App\Models\Votaciones;
 use App\Models\User;
 use App\Models\Dictamen;
+use App\Models\AcuerdoEconomico;
+use App\Models\TipoAsunto;
 use Illuminate\Support\Facades\DB;
 use Storage;
 use Carbon\Carbon;
@@ -27,7 +29,8 @@ class SesionController extends Controller
         try {
             $sesiones = Sesiones::orderBy('id','DESC')->paginate(10);
             $tipos = Tipo::all();
-            return view('sesiones.index', compact('sesiones','tipos'));
+            $tipo_asuntos = TipoAsunto::all();
+            return view('sesiones.index', compact('sesiones','tipos','tipo_asuntos'));
         } catch (\Throwable $th) {
             throw $th;
         }
@@ -47,6 +50,8 @@ class SesionController extends Controller
     public function store(Request $request)
     {
         try {
+            //dd($request);
+
             //crea un nuevo regsitro en la tabal de sesiones
             $sesion = Sesiones::create([
                 'id_tipo' => $request->id_tipo,
@@ -77,8 +82,9 @@ class SesionController extends Controller
                 $sesion_det = SesionDet::create([
                     'id_sesion' => $sesion->id,
                     'no_dictamen' => $no_dictamen,
+                    'id_tipo' => $tipo,
                     'titulo' => $titulo,
-                    'tipo' => $tipo,
+                    'tipo' => 1,
                     'descripcion' => $descripcion,
                     'total' => 0,
                     'status' => 'N',
@@ -113,8 +119,9 @@ class SesionController extends Controller
                 $sesion_det = SesionDet::create([
                     'id_sesion' => $id,
                     'no_dictamen' => $no_dictamen,
+                    'id_tipo' => $tipo,
                     'titulo' => $titulo,
-                    'tipo' => $tipo,
+                    'tipo' => 1,
                     'descripcion' => $descripcion,
                     'total' => 0,
                     'status' => 'N',
@@ -414,7 +421,8 @@ class SesionController extends Controller
         try {
             $diputados = User::where('rol','=',"D")->where('status','=',"A")-> get();
             $sesion = Sesiones::find($id);
-            $sesion_dets = SesionDet::where('id_sesion','=',$sesion->id)->orderBy('no_dictamen','ASC')->get();
+            $sesion_dets = SesionDet::where('id_sesion','=',$sesion->id)->where('id_tipo','=',2)->orderBy('no_dictamen','ASC')->get();
+            $sesion_dets_acuerdo = SesionDet::where('id_sesion','=',$sesion->id)->where('id_tipo','=',3)->orderBy('no_dictamen','ASC')->get();
             $dictamenes = DB::table('dictamens')
             ->join('users','users.id','dictamens.id_user')
             ->join('sesion_dets','sesion_dets.id','dictamens.id_sesion_detalle')
@@ -422,8 +430,7 @@ class SesionController extends Controller
             ->where('sesion_dets.id_sesion','=',$sesion->id)
             ->get();
 
-            
-            return view('sesiones.add_files', compact('sesion','dictamenes','diputados','sesion_dets'));
+            return view('sesiones.add_files', compact('sesion','dictamenes','diputados','sesion_dets','sesion_dets_acuerdo'));
         } catch (\Throwable $th) {
             throw $th;
         }
@@ -444,4 +451,6 @@ class SesionController extends Controller
             throw $th;
         }
     }
+
+
 }

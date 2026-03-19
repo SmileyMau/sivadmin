@@ -19,4 +19,8 @@ class AsuntoDetalle extends Model
     {
         return $this->belongsTo(Asunto::class, 'id_asunto', 'id');
     }
+
+    function user() {
+        return $this->belongsTo(User::class, 'id_user', 'id');
+    }
 }

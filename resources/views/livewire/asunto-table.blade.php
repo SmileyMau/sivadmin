@@ -6,8 +6,8 @@
             <tr>
                 <th>#</th>
                 <th class="w-10" >FECHA</th>
-                <th class="">NO. OFICIO</th>
                 <th class="">ASUNTO</th>
+                <th class="">DESCRIPCION</th>
                 <th class="text-right">OPCIONES</th>
             </tr>
         </thead>
@@ -17,7 +17,7 @@
                 <tr class="fs-5">           
                     <td><b><i>{{$asunto->id}}</i></b></td>
                     <td><b><i>{{$asunto->fecha}}</i></b></td>
-                    <td><b><i>{{$asunto->no_oficio}}</i></b></td>
+                    <td><b><i>{{$asunto->titulo}}</i></b></td>
                     <td><b><i>{{$asunto->descripcion}}</i></b></td>
                         <td  class="text-right">
                             <div class="dropdown"> 

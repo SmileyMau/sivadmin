@@ -19,8 +19,10 @@ class CreateAsuntosTable extends Migration
             $table->integer('id_tipo')->unsigned()->notnull();
             $table->date('fecha')->notnull();
             $table->string('descripcion')->notnull();
+            $table->string('titulo')->notnull();
             $table->string('no_oficio')->notnull();
             $table->string('observacion')->notnull();
+            $table->string('archivo')->notnull();
             $table->string('status')->notnull();
             $table->string('user_modifi')->notnull();
             $table->timestamps();

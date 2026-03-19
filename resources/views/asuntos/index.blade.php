@@ -75,10 +75,13 @@
                   <div class="row g-2">
                     <div class="col-6">
                       <div class="input-group mb-3">
+                         <div class="input-group-prepend">
+                          <span class="input-group-text"><b>Diputada/o</b></span>
+                        </div>
                         <select name="id_user" id="" class="form-control" required>
-                          <option value="">Seleccionar Diputada/o...</option>
+                          <option value="">Seleccionar...</option>
                           @foreach ($users as $user)
-                            <option value="{{$user->id}}">{{$user->name}}</option>
+                            <option value="{{$user->id}}">{{strtoupper($user->name . ' ' . $user->appaterno . ' ' . $user->apmaterno)}}</option>
                           @endforeach
                         </select>
                       </div>
@@ -86,7 +89,7 @@
                     <div class="col-6">
                       <div class="input-group">
                         <div class="input-group-prepend">
-                          <span class="input-group-text">No. Oficio</span>
+                          <span class="input-group-text"><b>No. Oficio</b></span>
                         </div>
                         <input type="text" class="form-control" name="no_oficio" id="" aria-describedby="fechaHelp" placeholder="CELSH789" required>
                       </div>
@@ -97,7 +100,7 @@
                     <div class="col-6">
                       <div class="input-group mb-3">
                         <div class="input-group-prepend">
-                          <span class="input-group-text">Asunto</span>
+                          <span class="input-group-text"><b>Asunto</b></span>
                         </div>
                         <select name="id_tipo" id="" class="form-control" required>
                           <option value="">Seleccionar...</option>
@@ -116,15 +119,31 @@
                       </div>
                     </div>
                   </div>
-
-                  <div class="">
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="nav-icon fas fa-copy"></i></span>
-                      </div>
-                      <textarea class="form-control" name="descripcion" id="" cols="30" rows="3" required value="">Nombre del asunto..</textarea>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><b>Titulo del asunto</b></span>
                     </div>
+                    <input class="form-control" name="titulo" id="" cols="" rows="" required value="" placeholder="Ejemplo: Dictamen 601">
                   </div>
+                  <br>
+
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><b>Descripcion del asunto</b></span>
+                    </div>
+                    <input class="form-control" name="descripcion" id="" cols="" rows="" required value="" placeholder="Ejemplo: Dictamen 601 relacionado con el asunto de...">
+                  </div>
+                  <br>
+
+                  
+
+                   <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><b>Archivo</b></span>
+                    </div>
+                    <input type="file" class="form-control" name="archivo"  required value="" placeholder="" accept="application/pdf">
+                  </div>
+                  
                   <br>
                   <div class="input-group">
                     <input type="text" class="form-control" name="observacion" id="" aria-describedby="" placeholder="Observacion" required>
@@ -136,16 +155,16 @@
                     <div class="" id="groupform0"defer>
                       <div class="row g-2" >
                         <label>Diputada/o</label>
-                        <select name="id_users[]" class="select2" multiple="multiple" data-placeholder="Seleccionar..." row="3" style="width: 100%;">
+                        <select name="id_users[]" class="select2 select2-hidden-accessible" multiple="multiple" data-placeholder="Seleccionar..." row="3" style="width: 100%;">
                           @foreach ($users as $user)
-                          <option value="{{$user->id}}">{{$user->name}}</option>
+                          <option value="{{$user->id}}">{{strtoupper($user->name . ' ' . $user->appaterno . ' ' . $user->apmaterno)}}</option>
                           @endforeach
                         </select>
                       </div>
                     </div>
                   </div>
 
-                   <div class="modal-footer">
+                  <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
                     <button type="submit" class="btn btn-success">Guardar</button>
                   </div>
