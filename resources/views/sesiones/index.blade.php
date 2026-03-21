@@ -136,14 +136,19 @@
                             <div class="input-group-prepend">
                               <span class="input-group-text"><i class="nav-icon fas fa-copy"></i></span>
                             </div>
-                            <select name="tipo0" id=""  class="form-control" required>
-                              <option value="">Seleccionar tipo...</option>
-                              @foreach ($tipo_asuntos as $tipo_asunto)
-                                <option value="{{$tipo_asunto->id}}">{{$tipo_asunto->descripcion}}</option>
-                              @endforeach
+                            <select name="tipo0" id="select_tipo_voto0" data-count="0"  class="form-control" required onchange="mostrar_imputs(this)">
+                              <option value="0" data-tipo="0">Seleccionar tipo...</option>
+                              <option value="1" data-tipo="1">Orden del dia</option>
+                              <option value="1" data-tipo="1">Dispensa</option>
+                              <option value="2" data-tipo="2">Dictamen</option>
+                              <option value="3" data-tipo="3">Acuerdo</option>
                             </select>
-                            <input type="text" class="form-control" name="titulo0" id="" placeholder="Titulo." required>
-                            <input style="width: 30%;" type="text" class="form-control" name="descripcion0" id="" placeholder="Descripción del punto a votar." required>
+                            <select name="asunto0" id="select_asunto0"  class="form-control" hidden >
+                              <option value="">Seleccionar asunto...</option>
+                              
+                            </select>
+                            <input type="text" class="form-control " hidden name="titulo0" id="titulo0" placeholder="Titulo." >
+                            <input style="width: 30%;" type="text" hidden class="form-control" name="descripcion0" id="descripcion0" placeholder="Descripción del punto a votar." >
                           </div>
                         </div>
                       </div>
@@ -187,7 +192,7 @@
   function newInput()
   {
     c+=1;
-    document.getElementById("form_det").insertAdjacentHTML('beforeend',' <div class="" id="div_'+c+'"defer><div class="row g-2" ><div class="col-2"><div class="input-group mb-3"><div class="input-group-prepend"><span class="input-group-text">No.</span></div><input type="number" class="form-control" placeholder="Punto" name="no_dictamen'+c+'" id="" aria-describedby="dictamenHelp" required></div>  </div><div class="col-10"><div class="input-group"><div class="input-group-prepend"><span class="input-group-text"><i class="nav-icon fas fa-copy"></i></span></div><select name="tipo'+c+'" id=""  class="form-control" required><option value="">Seleccionar tipo...</option>@foreach ($tipo_asuntos as $tipo_asunto)<option value="{{$tipo_asunto->id}}">{{$tipo_asunto->descripcion}}</option>@endforeach</select><input  type="text" class="form-control" name="titulo' + c + '" id="" placeholder="Titulo." required><input style="width: 30%;" type="text" class="form-control" name="descripcion'+c+'" id="" placeholder="Descripción del dictamen." required></div></div></div></div>');
+    document.getElementById("form_det").insertAdjacentHTML('beforeend',' <div class="" id="div_'+c+'"defer><div class="row g-2" ><div class="col-2"><div class="input-group mb-3"><div class="input-group-prepend"><span class="input-group-text">No.</span></div><input type="number" class="form-control" placeholder="Punto" name="no_dictamen'+c+'" id="" aria-describedby="dictamenHelp" required></div>  </div><div class="col-10"><div class="input-group"><div class="input-group-prepend"><span class="input-group-text"><i class="nav-icon fas fa-copy"></i></span></div><select name="tipo'+c+'" id="select_tipo_voto'+c+'" data-count="'+c+'"  class="form-control" required onchange="mostrar_imputs(this)"><option value="0" data-tipo="0">Seleccionar tipo...</option><option value="1" data-tipo="1">Orden del dia</option><option value="1" data-tipo="1">Dispensa</option><option value="2" data-tipo="2">Dictamen</option><option value="3" data-tipo="3">Acuerdo</option></select><select name="asunto'+c+'" id="select_asunto' + c + '"  class="form-control" hidden ><option value="">Seleccionar asunto...</option></select><input hidden type="text" class="form-control" name="titulo' + c + '" id="titulo'+c+'" placeholder="Titulo."  ><input hidden style="width: 30%;" type="text" class="form-control" name="descripcion'+c+'" id="descripcion'+c+'" placeholder="Descripción del dictamen." ></div></div></div></div>');
 
     $("#idcount").val(c);
     $("#btn_deleteinput").show();
@@ -210,38 +215,44 @@
       $("#btn_deleteinput").hide();
     }
   }
-  function llenar_inventario(opcion){
-    var codigo = $('#select_partida option:selected').attr('data-codigo');
-    var subclase = $('#select_subclase option:selected').attr('value');
-    var subclasif = $('#select_subclasif option:selected').attr('data-clave');
-    var id = $('#select_partida option:selected').attr('value');
-    var invent = codigo.slice(1) + subclase + subclasif;
-    var count = 0;
-    var numinvent = 0;
-    var ceros = '000';
 
-    
-    parseInt(numinvent)
-    numinvent = parseInt(numinvent) + 1;
+  function mostrar_imputs(option){
+      var tipo = $('#' + option.id + ' option:selected').attr('data-tipo');
+      var count = $('#'+option.id).attr('data-count');
+      console.log('select_asunto' + count);
+      if (tipo == 1) {
+        $('#titulo' + count).removeAttr('hidden');
+        $('#descripcion' + count).removeAttr('hidden');
+        $('#select_asunto' + count).attr('hidden',true);
+      }else if(tipo == 2 || tipo == 3){
+        var id = $('#select_partida option:selected').attr('value');
+        $('#select_asunto' + count).empty();
+        
+        //console.log(id);
+        document.getElementById('select_asunto' + count).insertAdjacentHTML('beforeend',' <option selected="selected">Seleccionar asunto...</option>');
+        if (tipo == 2) {
+          @foreach($dictamenes as $dictamen)
+            if ({{$dictamen->id_tipo}} == 2) {
+              document.getElementById('select_asunto' + count).insertAdjacentHTML('beforeend','  <option value="{{$dictamen->id}}" >'+'{{$dictamen->titulo}}'+'</option>');
+            }
+          @endforeach
+        }
 
-    if (numinvent >= 1000) {
-      ceros = '';
-    } else if(numinvent >= 100){
-      ceros = '0';
-    }else if(numinvent >= 10){
-      ceros = '00';
-    }
-    console.log('ceros:' + ceros);
-    console.log('numero nuevo:'+invent);
-    console.log('ultimo numero :'+ numinvent);
-    console.log('cantidad ' + count);
-    
-    
+        if (tipo == 3) {
+          @foreach($acuerdos as $acuerdo)
+          if ({{$acuerdo->id_tipo}} == 3) {
+            document.getElementById('select_asunto' + count).insertAdjacentHTML('beforeend','  <option value="{{$acuerdo->id}}">'+'{{$acuerdo->titulo}}'+'</option>');
+          }
+          @endforeach
+        }
 
-    $('#no_inventario').val(codigo + subclase + subclasif + ceros + numinvent);
-    //document.getElementById("select_subclasif").insertAdjacentHTML('beforeend',' <option selected="selected">Seleccionar...</option>');
+        $('#titulo' + count).attr('hidden',true);
+        $('#descripcion' + count).attr('hidden',true);
+        $('#select_asunto' + count).removeAttr('hidden');
 
+      }
   }
+
 </script>
 
 <script>

@@ -5,13 +5,16 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Sesiones;
 use App\Models\SesionDet;
+use App\Models\SesionAsunto;
 use App\Models\Asistencias;
 use App\Models\Tipo;
 use App\Models\Votaciones;
+use App\Models\VotoAsunto;
 use App\Models\User;
 use App\Models\Dictamen;
 use App\Models\AcuerdoEconomico;
 use App\Models\TipoAsunto;
+use App\Models\Asunto;
 use Illuminate\Support\Facades\DB;
 use Storage;
 use Carbon\Carbon;
@@ -30,7 +33,9 @@ class SesionController extends Controller
             $sesiones = Sesiones::orderBy('id','DESC')->paginate(10);
             $tipos = Tipo::all();
             $tipo_asuntos = TipoAsunto::all();
-            return view('sesiones.index', compact('sesiones','tipos','tipo_asuntos'));
+            $dictamenes = Asunto::where('status','=','N')->where('id_tipo','=','2')->get();
+            $acuerdos = Asunto::where('status','=','N')->where('id_tipo','=','3')->get();
+            return view('sesiones.index', compact('sesiones','tipos','tipo_asuntos','dictamenes','acuerdos'));
         } catch (\Throwable $th) {
             throw $th;
         }
@@ -79,16 +84,31 @@ class SesionController extends Controller
                 $tipo = 'tipo'. $i;
                 $tipo = $request->$tipo;
 
-                $sesion_det = SesionDet::create([
-                    'id_sesion' => $sesion->id,
-                    'no_dictamen' => $no_dictamen,
-                    'id_tipo' => $tipo,
-                    'titulo' => $titulo,
-                    'tipo' => 1,
-                    'descripcion' => $descripcion,
-                    'total' => 0,
-                    'status' => 'N',
-                ]);    
+                $asunto = 'asunto'. $i;
+                $asunto = $request->$asunto;
+
+                if ($tipo == 1) {
+                    $sesion_det = SesionDet::create([
+                        'id_sesion' => $sesion->id,
+                        'no_dictamen' => $no_dictamen,
+                        'id_tipo' => $tipo,
+                        'titulo' => $titulo,
+                        'tipo' => $tipo,
+                        'descripcion' => $descripcion,
+                        'total' => 0,
+                        'status' => 'N',
+                    ]);    
+                }
+                if ($tipo == 2) {
+                    $sesion_det = SesionAsunto::create([
+                        'id_sesion' => $sesion->id,
+                        'id_asunto' => $asunto,
+                        'orden' => $no_dictamen,
+                        'tipo' => $tipo,
+                        'status' => 'N',
+                        'user_modifi' => auth()->user()->id,
+                    ]);
+                }
             }
             return back()->with('success','La sesión se agregó exitosamente');
 
@@ -142,8 +162,52 @@ class SesionController extends Controller
         try {
             $sesion = Sesiones::withCount('asistencias')->find($id);
             //dd($sesion);
-            $sesion_dets = SesionDet::where('id_sesion','=',$sesion->id)->orderBy('no_dictamen','ASC')->get();
-            return view('sesiones.show', compact('sesion','sesion_dets'));
+            $sesion_asuntos = DB::table('sesion_asuntos')
+            ->join('asuntos','asuntos.id','sesion_asuntos.id_asunto')
+            ->select(
+                'sesion_asuntos.id',
+                'sesion_asuntos.id_sesion',
+                DB::raw("'' as no_dictamen"),
+                'asuntos.titulo',
+                'asuntos.descripcion',
+                DB::raw('sesion_asuntos.orden as orden_final'),
+                DB::raw("'asunto' as tipo_registro")
+                )
+            ->where('sesion_asuntos.id_sesion','=',$sesion->id);
+            $sesion_dets = DB::table('sesion_dets')
+            ->select(
+                'id',
+                'id_sesion',
+                'no_dictamen',
+                'titulo',
+                'descripcion',
+                DB::raw('CAST(no_dictamen AS UNSIGNED) as orden_final'),
+                DB::raw("'general' as tipo_registro")
+                )
+            ->where('id_sesion','=',$sesion->id)
+            ->union($sesion_asuntos)
+            ->orderBy('orden_final','ASC')
+            ->get();
+
+            $idsGeneral = $sesion_dets->where('tipo_registro', 'general')->pluck('id');
+            $idsAsuntos = $sesion_dets->where('tipo_registro', 'asunto')->pluck('id');
+
+            // Obtenemos los votos agrupados
+            $votosGeneral = Votaciones::whereIn('id_dictamen', $idsGeneral)->get()->groupBy('id_dictamen');
+            $votosAsunto = VotoAsunto::whereIn('id_sesion_asunto', $idsAsuntos)->get()->groupBy('id_sesion_asunto');
+
+            $sesion_dets->map(function ($item) use ($votosGeneral, $votosAsunto) {
+                if ($item->tipo_registro == 'general') {
+                    // Asignamos la colección de votos directamente a una propiedad 'votaciones'
+                    $item->votaciones = $votosGeneral->get($item->id, collect());
+                } else {
+                    // Lo mismo para los asuntos
+                    $item->votaciones = $votosAsunto->get($item->id, collect()); 
+                }
+                return $item;
+            });
+            //dd($sesion_dets);
+            return view('sesiones.show', compact('sesion','sesion_dets','sesion_asuntos'));
         } catch (\Throwable $th) {
             throw $th;
         }

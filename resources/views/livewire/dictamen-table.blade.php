@@ -4,7 +4,6 @@
     <table id="" class="table m-0 border  text-muted">
         <thead>
             <tr>
-                <th style="width: 4%">#</th>
                 <th style="width: 10%" class="text-center">DICTAMEN</th>
                 <th>TITULO</th>
                 <th>DESCRIPCION</th>
@@ -17,11 +16,10 @@
         <tbody>
             @foreach($sesion_dets as $sesion_det) 
                 <tr class="fs-5">           
-                    <td><b><i>{{$sesion_det->id}}</i></b></td>
-                    <td class="text-center"><b><i>{{$sesion_det->no_dictamen}}</i></b></td>
+                    <td class="text-center"><b><i>{{$sesion_det->orden_final}}</i></b></td>
                     <td ><b><i>{{$sesion_det->titulo}}</i></b></td>
                     <td ><b><i>{{$sesion_det->descripcion}}</i></b></td>
-                    <td class="text-center"><b><i>{{$sesion_det->votos}}</i></b></td>
+                    <td class="text-center"><b><i>{{$sesion_det->votaciones->count()}}</i></b></td>
 
                     <td  class="text-center ">
                         <form method="post" action="{{route ('sesiones.ac', $sesion_det->id)}}" class=" 
@@ -83,18 +81,12 @@
                                         <button class="dropdown-item btn-eliminar mb-1">Eliminar</button>
                                     </form>
                                 @endif
-                                @if ($sesion_det->tipo == '2')
-                                    <form method="post" action="{{ route('sesiones.report_part', $sesion_det->id) }}" class="">
-                                        @method('post')
-                                        @csrf
-                                        <button class="dropdown-item btn-report mb-1">Reporte de participacion</button>
-                                    </form>
-                                @endif
                             </div>
                         </div>
                     </td>
                 </tr>  
             @endforeach
+            
         </tbody>
     </table>
 

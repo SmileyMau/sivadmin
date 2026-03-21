@@ -69,7 +69,7 @@ class AsuntoController extends Controller
                 'no_oficio' => $request->no_oficio,
                 'observacion' => $request->observacion,
                 'archivo' => $request->file('archivo')->store('public/asuntos'),
-                'status' => 'A',
+                'status' => 'N',
                 'user_modifi' => auth()->user()->id,
             ]);
 

@@ -11,17 +11,24 @@ class SesionAsunto extends Model
 
      protected $fillable = [
         'id_sesion',
-        'id_tipo',
-        'no_dictamen',
-        'tipo',
-        'titulo',
-        'descripcion',
-        'total',
+        'id_asunto',
+        'orden',
         'status',
+        'user_modifi',
     ];
+
+    public function sesion()
+    {
+        return $this->belongsTo(Sesiones::class, 'id_sesion');
+    }
+
+    public function asunto()
+    {
+        return $this->belongsTo(Asunto::class, 'id_asunto');
+    }
 
     public function votaciones()
     {
-        return $this->hasMany(Votaciones::class, 'id_dictamen', 'id');
+        return $this->hasMany(VotoAsunto::class, 'id_asunto', 'id');
     }
 }
