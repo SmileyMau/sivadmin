@@ -26,7 +26,7 @@
                                 </button>
                                 <div class="dropdown-menu p-2" role="menu">
                                     <a class="dropdown-item btn-ver mb-1" href="{{ route('Asuntos.show', $asunto->id) }}">Ver</a>
-                                    @if ($asunto->status == 'A')
+                                    @if ($asunto->status == 'N')
                                         <a class="dropdown-item btn-editar mb-1" href="{{ route('Asuntos.edit', $asunto->id) }}">Editar</a>
                                     @endif
                                     <hr>
