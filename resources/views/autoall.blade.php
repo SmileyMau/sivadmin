@@ -35,7 +35,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <!-- Vista de votaciones   -->
 
             @if ($total != null)
-                @if ($dictamen->tipo == 1)
+                @if (1== 1)
                     <div class="content-wrapper" style="background-color: rgb(26, 26, 26)">
                         <!-- Content Header (Page header) -->
                         <div class="content-header">

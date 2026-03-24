@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Votaciones;
+use App\Models\VotoAsunto;
 use App\Models\SesionDet;
+use App\Models\SesionAsunto;
 use App\Models\Sesiones;
 use App\Models\Asistencias;
 use App\Models\User;
@@ -153,6 +155,30 @@ class VotacionController extends Controller
             Carbon::setLocale('es');
             $date = Carbon::now()->locale('es');
 
+            $asunto = SesionAsunto::where('status','=','A')->first();
+            
+            if ($asunto != null) {
+                //$sesion = Sesiones::find($dictamen->id_sesion);
+                Carbon::setLocale('es');
+                $date = Carbon::now()->locale('es');
+                $votaciones = DB::table('users')
+                ->select('users.name','users.appaterno','users.apmaterno','users.id','partidos.partido','users.img','voto_asuntos.votacion')
+                ->join('voto_asuntos','voto_asuntos.id_user','=', 'users.id')
+                ->join('partidos','partidos.id','=','users.id_partido')
+                ->orderBy('voto_asuntos.id', 'asc')
+                ->where('voto_asuntos.id_sesion_asunto','=',$asunto->id)
+                ->get();
+                //dd($afavor,$encontra,$abstencion,$total);
+                $total = $votaciones->count();
+                $afavor = VotoAsunto::where('votacion','=','A')->where('id_sesion_asunto','=',$asunto->id)->count();
+                $encontra = VotoAsunto::where('votacion','=','N')->where('id_sesion_asunto','=',$asunto->id)->count();
+                $abstencion = VotoAsunto::where('votacion','=','S')->where('id_sesion_asunto','=',$asunto->id)->count();
+                //dd($votaciones,$total,$afavor,$encontra,$abstencion);
+
+                //$date = " " . $date->formatLocalized('%d') . " de " . ucfirst($date->formatLocalized('%B') . " del " . $date->formatLocalized('%Y'));
+
+            }
+
             $dictamen = SesionDet::where('status','=','A')->first();
             if ($dictamen != null) {
                 //$sesion = Sesiones::find($dictamen->id_sesion);
@@ -173,17 +199,17 @@ class VotacionController extends Controller
                 $abstencion = Votaciones::where('votacion','=','S')->where('id_dictamen','=',$dictamen->id)->count();
                 //$date = " " . $date->formatLocalized('%d') . " de " . ucfirst($date->formatLocalized('%B') . " del " . $date->formatLocalized('%Y'));
 
-            }else{
+            }
+            if ($dictamen == null && $asunto == null) {
                 $votaciones  = null;
                 $afavor = null;
                 $encontra = null;
                 $abstencion = null;
                 $total = null;
             }
-            
-            //dd($afavor,$encontra,$abstencion,$total);
-            $date = " " . $date->formatLocalized('%d') . " de " . ucfirst($date->formatLocalized('%B') . " de " . $date->formatLocalized('%Y'));
-
+            $date = ucfirst($date->translatedFormat('d \d\e F \d\e Y'));
+            //$date = " " . $date->formatLocalized('%d') . " de " . ucfirst($date->formatLocalized('%B') . " de " . $date->formatLocalized('%Y'));
+            //dd($fechaFormateada);
 
             $sesion = Sesiones::where('status','=','A')->first();
             //dd($sesion);
@@ -210,9 +236,10 @@ class VotacionController extends Controller
             }
            
             if ($sesion->id_tipo == 3) {
+                dd('entro');
                 return view('autoall2', compact('asistencias','afavor','encontra','abstencion','total','dictamen','date','total_asis','sesion','votaciones'));
             }else {
-                return view('autoall', compact('asistencias','afavor','encontra','abstencion','total','dictamen','date','total_asis','sesion','votaciones'));
+                return view('autoall', compact('asistencias','afavor','encontra','abstencion','total','dictamen','date','total_asis','sesion','votaciones','asunto'));
             }
             //return view('autoall', compact('asistencias','afavor','encontra','abstencion','total','dictamen','date','total_asis','sesion','votaciones'));
         } catch (\Throwable $th) {

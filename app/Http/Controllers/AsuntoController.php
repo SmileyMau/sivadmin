@@ -70,6 +70,7 @@ class AsuntoController extends Controller
                 'observacion' => $request->observacion,
                 'archivo' => $request->file('archivo')->store('public/asuntos'),
                 'status' => 'N',
+                'asignado' => 'N',
                 'user_modifi' => auth()->user()->id,
             ]);
 

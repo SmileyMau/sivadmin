@@ -15,14 +15,14 @@
             
         <tbody>
             @foreach($sesion_dets as $sesion_det) 
-                <tr class="fs-5">           
+                <tr class="fs-5" @if ($sesion_det->status == 'A') style="background-color: #8cc7f7;" @endif  @if ($sesion_det->votaciones->count() > 0) style="background-color: rgb(26, 26, 26); color: white;" @endif >           
                     <td class="text-center"><b><i>{{$sesion_det->orden_final}}</i></b></td>
                     <td ><b><i>{{$sesion_det->titulo}}</i></b></td>
                     <td ><b><i>{{$sesion_det->descripcion}}</i></b></td>
                     <td class="text-center"><b><i>{{$sesion_det->votaciones->count()}}</i></b></td>
 
                     <td  class="text-center ">
-                        <form method="post" action="{{route ('sesiones.ac', $sesion_det->id)}}" class=" 
+                        <form method="post" action="{{route ('sesiones.ac', ['id' => $sesion_det->id, 'tipo' => $sesion_det->tipo_registro])}}" class=" 
                             @if ($sesion_det->status == 'A')
                                 form_cerrar
                             @endif

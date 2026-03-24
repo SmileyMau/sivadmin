@@ -64,7 +64,7 @@ class DictamenTable extends Component
                 DB::raw("'' as no_dictamen"),
                 'asuntos.titulo',
                 'asuntos.descripcion',
-                'asuntos.status',
+                'sesion_asuntos.status',
                 DB::raw('sesion_asuntos.orden as orden_final'),
                 DB::raw("'asunto' as tipo_registro")
                 )
@@ -84,7 +84,7 @@ class DictamenTable extends Component
             ->union($sesion_asuntos)
             ->orderBy('orden_final','ASC')
             ->get();
-
+            //dd($sesion_dets);
             $idsGeneral = $sesion_dets->where('tipo_registro', 'general')->pluck('id');
             $idsAsuntos = $sesion_dets->where('tipo_registro', 'asunto')->pluck('id');
 

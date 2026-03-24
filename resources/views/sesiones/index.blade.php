@@ -217,40 +217,40 @@
   }
 
   function mostrar_imputs(option){
-      var tipo = $('#' + option.id + ' option:selected').attr('data-tipo');
-      var count = $('#'+option.id).attr('data-count');
-      console.log('select_asunto' + count);
-      if (tipo == 1) {
-        $('#titulo' + count).removeAttr('hidden');
-        $('#descripcion' + count).removeAttr('hidden');
-        $('#select_asunto' + count).attr('hidden',true);
-      }else if(tipo == 2 || tipo == 3){
-        var id = $('#select_partida option:selected').attr('value');
-        $('#select_asunto' + count).empty();
-        
-        //console.log(id);
-        document.getElementById('select_asunto' + count).insertAdjacentHTML('beforeend',' <option selected="selected">Seleccionar asunto...</option>');
-        if (tipo == 2) {
-          @foreach($dictamenes as $dictamen)
-            if ({{$dictamen->id_tipo}} == 2) {
-              document.getElementById('select_asunto' + count).insertAdjacentHTML('beforeend','  <option value="{{$dictamen->id}}" >'+'{{$dictamen->titulo}}'+'</option>');
-            }
-          @endforeach
-        }
-
-        if (tipo == 3) {
-          @foreach($acuerdos as $acuerdo)
-          if ({{$acuerdo->id_tipo}} == 3) {
-            document.getElementById('select_asunto' + count).insertAdjacentHTML('beforeend','  <option value="{{$acuerdo->id}}">'+'{{$acuerdo->titulo}}'+'</option>');
+    var tipo = $('#' + option.id + ' option:selected').attr('data-tipo');
+    var count = $('#'+option.id).attr('data-count');
+    console.log('select_asunto' + count);
+    if (tipo == 1) {
+      $('#titulo' + count).removeAttr('hidden');
+      $('#descripcion' + count).removeAttr('hidden');
+      $('#select_asunto' + count).attr('hidden',true);
+    }else if(tipo == 2 || tipo == 3){
+      var id = $('#select_partida option:selected').attr('value');
+      $('#select_asunto' + count).empty();
+      
+      //console.log(id);
+      document.getElementById('select_asunto' + count).insertAdjacentHTML('beforeend',' <option selected="selected">Seleccionar asunto...</option>');
+      if (tipo == 2) {
+        @foreach($dictamenes as $dictamen)
+          if ({{$dictamen->id_tipo}} == 2) {
+            document.getElementById('select_asunto' + count).insertAdjacentHTML('beforeend','  <option value="{{$dictamen->id}}" >'+'{{$dictamen->titulo}}'+'</option>');
           }
-          @endforeach
-        }
-
-        $('#titulo' + count).attr('hidden',true);
-        $('#descripcion' + count).attr('hidden',true);
-        $('#select_asunto' + count).removeAttr('hidden');
-
+        @endforeach
       }
+
+      if (tipo == 3) {
+        @foreach($acuerdos as $acuerdo)
+        if ({{$acuerdo->id_tipo}} == 3) {
+          document.getElementById('select_asunto' + count).insertAdjacentHTML('beforeend','  <option value="{{$acuerdo->id}}">'+'{{$acuerdo->titulo}}'+'</option>');
+        }
+        @endforeach
+      }
+
+      $('#titulo' + count).attr('hidden',true);
+      $('#descripcion' + count).attr('hidden',true);
+      $('#select_asunto' + count).removeAttr('hidden');
+
+    }
   }
 
 </script>

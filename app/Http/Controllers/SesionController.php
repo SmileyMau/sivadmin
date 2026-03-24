@@ -33,8 +33,8 @@ class SesionController extends Controller
             $sesiones = Sesiones::orderBy('id','DESC')->paginate(10);
             $tipos = Tipo::all();
             $tipo_asuntos = TipoAsunto::all();
-            $dictamenes = Asunto::where('status','=','N')->where('id_tipo','=','2')->get();
-            $acuerdos = Asunto::where('status','=','N')->where('id_tipo','=','3')->get();
+            $dictamenes = Asunto::where('asignado','=','N')->where('id_tipo','=','2')->get();
+            $acuerdos = Asunto::where('asignado','=','N')->where('id_tipo','=','3')->get();
             return view('sesiones.index', compact('sesiones','tipos','tipo_asuntos','dictamenes','acuerdos'));
         } catch (\Throwable $th) {
             throw $th;
@@ -99,15 +99,18 @@ class SesionController extends Controller
                         'status' => 'N',
                     ]);    
                 }
-                if ($tipo == 2) {
+                if ($tipo == 2 || $tipo == 3) {
                     $sesion_det = SesionAsunto::create([
                         'id_sesion' => $sesion->id,
                         'id_asunto' => $asunto,
                         'orden' => $no_dictamen,
-                        'tipo' => $tipo,
+                        'asignado' => $tipo,
                         'status' => 'N',
                         'user_modifi' => auth()->user()->id,
                     ]);
+                    $asunto = Asunto::find($asunto);
+                    $asunto->status = 'A';
+                    $asunto->save();
                 }
             }
             return back()->with('success','La sesión se agregó exitosamente');
@@ -136,16 +139,34 @@ class SesionController extends Controller
                 $tipo = 'tipo'. $i;
                 $tipo = $request->$tipo;
 
-                $sesion_det = SesionDet::create([
-                    'id_sesion' => $id,
-                    'no_dictamen' => $no_dictamen,
-                    'id_tipo' => $tipo,
-                    'titulo' => $titulo,
-                    'tipo' => 1,
-                    'descripcion' => $descripcion,
-                    'total' => 0,
-                    'status' => 'N',
-                ]);    
+                $asunto = 'asunto'. $i;
+                $asunto = $request->$asunto;
+                //dd($tipo);
+                if ($tipo == 1) {
+                    $sesion_det = SesionDet::create([
+                        'id_sesion' => $id,
+                        'no_dictamen' => $no_dictamen,
+                        'id_tipo' => $tipo,
+                        'titulo' => $titulo,
+                        'tipo' => $tipo,
+                        'descripcion' => $descripcion,
+                        'total' => 0,
+                        'status' => 'N',
+                    ]);    
+                }
+                if ($tipo == 2 || $tipo == 3) {
+                    $sesion_det = SesionAsunto::create([
+                        'id_sesion' => $id,
+                        'id_asunto' => $asunto,
+                        'orden' => $no_dictamen,
+                        'status' => 'N',
+                        'user_modifi' => auth()->user()->id,
+                    ]);
+                    $asunto = Asunto::find($asunto);
+                    //dd($asunto);
+                    $asunto->status = 'A';
+                    $asunto->save();
+                }
             }
             return back()->with('success','La sesión se agregó exitosamente');
 
@@ -160,6 +181,11 @@ class SesionController extends Controller
     public function show($id)
     {
         try {
+
+            $tipo_asuntos = TipoAsunto::all();
+            $dictamenes = Asunto::where('status','=','N')->where('id_tipo','=','2')->get();
+            $acuerdos = Asunto::where('status','=','N')->where('id_tipo','=','3')->get();
+
             $sesion = Sesiones::withCount('asistencias')->find($id);
             //dd($sesion);
             $sesion_asuntos = DB::table('sesion_asuntos')
@@ -207,7 +233,7 @@ class SesionController extends Controller
                 return $item;
             });
             //dd($sesion_dets);
-            return view('sesiones.show', compact('sesion','sesion_dets','sesion_asuntos'));
+            return view('sesiones.show', compact('sesion','sesion_dets','sesion_asuntos','tipo_asuntos','dictamenes','acuerdos'));
         } catch (\Throwable $th) {
             throw $th;
         }
@@ -356,16 +382,27 @@ class SesionController extends Controller
 
 
     
-    public function ac($id)
+    public function ac($id,$tipo)
     {
         try {
-            $sesion_det = SesionDet::find($id);
+            //dd($tipo);
+            if ($tipo == 'general') {
+                $sesion_det = SesionDet::find($id);
+            }
+            if ($tipo == 'asunto') {
+                $sesion_det = SesionAsunto::find($id);
+            }
             switch ($sesion_det->status) {
+                
                 case 'A':
+                //dd($sesion_det ,'N');
+
                     $sesion_det->status = 'N';
                     $sesion_det->save();
                     break;
                 case 'N':
+                //dd($sesion_det,'A');
+
                     $sesion_det->status = 'A';
                     $sesion_det->save();
                     break;
