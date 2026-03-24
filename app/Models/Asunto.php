@@ -17,6 +17,7 @@ class Asunto extends Model
         'no_oficio',
         'observacion',
         'status',
+        'asignado',
         'asunto',
         'archivo',
         'user_modifi',
