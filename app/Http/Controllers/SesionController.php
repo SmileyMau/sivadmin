@@ -33,9 +33,8 @@ class SesionController extends Controller
             $sesiones = Sesiones::orderBy('id','DESC')->paginate(10);
             $tipos = Tipo::all();
             $tipo_asuntos = TipoAsunto::all();
-            $dictamenes = Asunto::where('asignado','=','N')->where('id_tipo','=','2')->get();
-            $acuerdos = Asunto::where('asignado','=','N')->where('id_tipo','=','3')->get();
-            return view('sesiones.index', compact('sesiones','tipos','tipo_asuntos','dictamenes','acuerdos'));
+            $asuntos = Asunto::where('asignado','=','N')->get();
+            return view('sesiones.index', compact('sesiones','tipos','tipo_asuntos','asuntos'));
         } catch (\Throwable $th) {
             throw $th;
         }

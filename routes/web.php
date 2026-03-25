@@ -68,6 +68,9 @@ Route::get('/faltantes', 'App\Http\Controllers\VotacionController@faltantes')->n
 
 Route::resource('Tipo', 'App\Http\Controllers\TipoController')->middleware('auth');
 
+Route::resource('Tipo_Asunto', 'App\Http\Controllers\TipoAsuntoController')->middleware('auth');
+
+
 Route::resource('Guion', 'App\Http\Controllers\GionController')->middleware('auth');
 Route::get('Guion/texto/guion', 'App\Http\Controllers\GionController@texto')->name('Guion.texto')->middleware('auth');
 

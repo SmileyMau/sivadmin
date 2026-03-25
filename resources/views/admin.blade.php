@@ -153,7 +153,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{route('Asuntos.index')}}" class="nav-link">
+                <a href="{{route('Tipo_Asunto.index')}}" class="nav-link">
                   <i class="nav-icon fas fa-copy"></i>
                   <p>Tipo de Asunto</p>
                 </a>

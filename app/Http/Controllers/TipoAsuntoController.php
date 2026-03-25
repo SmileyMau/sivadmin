@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\TipoAsunto;
+
 
 class TipoAsuntoController extends Controller
 {
@@ -13,7 +15,12 @@ class TipoAsuntoController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            $tipos = TipoAsunto::all();
+            return view('tipo_asuntos.index', compact('tipos'));
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
     }
 
     /**
@@ -23,7 +30,7 @@ class TipoAsuntoController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -34,7 +41,17 @@ class TipoAsuntoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $tipo = TipoAsunto::create([
+                'descripcion' => $request->descripcion,
+                'status' => 'A',
+                'user_modifi' => auth()->user()->id,
+            ]);
+            return back()->with('success','Se agrego el tipo correctamente');
+
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 
     /**
@@ -45,7 +62,12 @@ class TipoAsuntoController extends Controller
      */
     public function show($id)
     {
-        //
+        try {
+            $tipo = TipoAsunto::find($id);
+            return view('tipo_asuntos.show');
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 
     /**
@@ -56,7 +78,12 @@ class TipoAsuntoController extends Controller
      */
     public function edit($id)
     {
-        //
+         try {
+            $tipo = TipoAsunto::find($id);
+            return view('tipo_asuntos.edit' ,compact('tipo'));
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 
     /**
@@ -68,7 +95,14 @@ class TipoAsuntoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+            $tipo = TipoAsunto::find($id);
+            $tipo->descripcion = $request->descripcion;
+            $tipo->save();
+            return back()->with('success','Se modifico el tipo correctamente');
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 
     /**
@@ -79,6 +113,11 @@ class TipoAsuntoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $tipo = TipoAsunto::destroy($id);
+            return back()->with('success','Se elimino el tipo correctamente');
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 }

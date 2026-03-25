@@ -16,8 +16,7 @@
         </div>
       </div><!-- /.container-fluid -->
 </section>
-<div class="m-3">
-
+<div class="m-3 card">
     <div class="card-body">
         <div class="tab-content" id="custom-tabs-two-tabContent">
             <div class="tab-pane fade show active" id="custom-tabs-two-home" role="tabpanel" aria-labelledby="custom-tabs-two-home-tab">
@@ -28,15 +27,15 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"> Descripcion</span>
                         </div>
-                        <input type="text" class="form-control" accept="application/pdf" name="descripcion" id="" placeholder="Ejemplo: Orden del dia" required>
+                        <input type="text" class="form-control" accept="application/pdf" value="{{$tipo->descripcion}}" name="descripcion" id="" placeholder="Ejemplo: Orden del dia" required>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">Guardar</button>
                     </div>
                 </form>
-                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-success">Guardar</button>
-                </div>
+                
             </div>
         </div>
     </div>
-
 </div>
 @endsection
