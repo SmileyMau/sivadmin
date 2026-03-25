@@ -219,11 +219,11 @@
     var tipo = $('#' + option.id + ' option:selected').attr('data-tipo');
     var count = $('#'+option.id).attr('data-count');
     console.log('select_asunto' + count);
-    if (tipo == 1) {
+    if (tipo == 5 || tipo == 7 || tipo == 8 || tipo == 9) {
       $('#titulo' + count).removeAttr('hidden');
       $('#descripcion' + count).removeAttr('hidden');
       $('#select_asunto' + count).attr('hidden',true);
-    }else if(tipo == 2 || tipo == 3){
+    }else{
       var id = $('#select_partida option:selected').attr('value');
       $('#select_asunto' + count).empty();
       
