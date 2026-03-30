@@ -86,7 +86,7 @@ class SesionController extends Controller
                 $asunto = 'asunto'. $i;
                 $asunto = $request->$asunto;
 
-                if ($tipo == 1) {
+                if ($tipo == 5 || $tipo == 7 || $tipo == 8 || $tipo == 9) {
                     $sesion_det = SesionDet::create([
                         'id_sesion' => $sesion->id,
                         'no_dictamen' => $no_dictamen,
@@ -98,18 +98,17 @@ class SesionController extends Controller
                         'status' => 'N',
                     ]);    
                 }
-                if ($tipo == 2 || $tipo == 3) {
+                else{
                     $sesion_det = SesionAsunto::create([
                         'id_sesion' => $sesion->id,
                         'id_asunto' => $asunto,
                         'orden' => $no_dictamen,
-                        'asignado' => $tipo,
                         'status' => 'N',
                         'user_modifi' => auth()->user()->id,
                     ]);
-                    $asunto = Asunto::find($asunto);
-                    $asunto->status = 'A';
-                    $asunto->save();
+                    $asunto_update = Asunto::find($asunto);
+                    $asunto_update->asignado = 'A';
+                    $asunto_update->save();
                 }
             }
             return back()->with('success','La sesión se agregó exitosamente');
@@ -141,7 +140,7 @@ class SesionController extends Controller
                 $asunto = 'asunto'. $i;
                 $asunto = $request->$asunto;
                 //dd($tipo);
-                if ($tipo == 1) {
+                if ($tipo == 5 || $tipo == 7 || $tipo == 8 || $tipo == 9) {
                     $sesion_det = SesionDet::create([
                         'id_sesion' => $id,
                         'no_dictamen' => $no_dictamen,
@@ -153,7 +152,7 @@ class SesionController extends Controller
                         'status' => 'N',
                     ]);    
                 }
-                if ($tipo == 2 || $tipo == 3) {
+                else {
                     $sesion_det = SesionAsunto::create([
                         'id_sesion' => $id,
                         'id_asunto' => $asunto,
@@ -161,10 +160,10 @@ class SesionController extends Controller
                         'status' => 'N',
                         'user_modifi' => auth()->user()->id,
                     ]);
-                    $asunto = Asunto::find($asunto);
+                    $asunto_update = Asunto::find($asunto);
                     //dd($asunto);
-                    $asunto->status = 'A';
-                    $asunto->save();
+                    $asunto_update->asignado = 'A';
+                    $asunto_update->save();
                 }
             }
             return back()->with('success','La sesión se agregó exitosamente');
@@ -180,7 +179,7 @@ class SesionController extends Controller
     public function show($id)
     {
         try {
-
+            $asuntos = Asunto::where('asignado','=','N')->get();
             $tipo_asuntos = TipoAsunto::all();
             $dictamenes = Asunto::where('status','=','N')->where('id_tipo','=','2')->get();
             $acuerdos = Asunto::where('status','=','N')->where('id_tipo','=','3')->get();
@@ -232,7 +231,7 @@ class SesionController extends Controller
                 return $item;
             });
             //dd($sesion_dets);
-            return view('sesiones.show', compact('sesion','sesion_dets','sesion_asuntos','tipo_asuntos','dictamenes','acuerdos'));
+            return view('sesiones.show', compact('sesion','sesion_dets','sesion_asuntos','tipo_asuntos','dictamenes','acuerdos','asuntos'));
         } catch (\Throwable $th) {
             throw $th;
         }
