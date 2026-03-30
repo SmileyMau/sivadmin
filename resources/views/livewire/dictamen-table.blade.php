@@ -15,7 +15,7 @@
             
         <tbody>
             @foreach($sesion_dets as $sesion_det) 
-                <tr class="fs-5" @if ($sesion_det->status == 'A') style="background-color: #8cc7f7;" @endif  @if ($sesion_det->votaciones->count() > 0) style="background-color: rgb(26, 26, 26); color: white;" @endif >           
+                <tr class="fs-5" @if ($sesion_det->status == 'A') style="background-color: #3adb35a6;" @endif  @if ($sesion_det->votaciones->count() > 0) style="background-color: rgb(158, 154, 154,1); color: white;" @endif >           
                     <td class="text-center"><b><i>{{$sesion_det->orden_final}}</i></b></td>
                     <td ><b><i>{{$sesion_det->titulo}}</i></b></td>
                     <td ><b><i>{{$sesion_det->descripcion}}</i></b></td>
@@ -57,7 +57,7 @@
                                 <i class="fas fa-align-center"></i>
                             </button>
                             <div class="dropdown-menu p-2" role="menu">
-                                <a class="btn-report mb-1" href="" type="button" data-toggle="modal" data-target="#faltanteModal"  wire:click="verFaltantes({{ $sesion_det->id }})">Faltantes</a>
+                                <a class="btn-report mb-1" href="" type="button" data-toggle="modal" data-target="#faltanteModal"  wire:click="verFaltantes({{ $sesion_det->id }}, '{{ $sesion_det->tipo_registro }}')">Faltantes</a>
                                
                                 <form method="post" action="{{ route('Reporte.votaciones', $sesion_det->id) }}" class="" target="_blank">
                                     @method('post')

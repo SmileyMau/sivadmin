@@ -8,6 +8,7 @@ use App\Models\SesionDet;
 use App\Models\Asistencias;
 use App\Models\Votaciones;
 use App\Models\VotoAsunto;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
 
@@ -23,21 +24,37 @@ class DictamenTable extends Component
     public $id_dictamen = null;
     public $faltantes = [];
 
-    public function verFaltantes($id)
+    public function verFaltantes($id,$tipo)
     {
+
+        //dd($tipo);
         $this->id_dictamen = $id;
         $this->faltantes;
-        $this->faltantes = Asistencias::where('id_sesion', $this->id_sesion)
+        if ($tipo == "general") {
+            $this->faltantes = Asistencias::where('id_sesion', $this->id_sesion)
             ->whereNotIn('id_user', function ($query) use ($id) {
                 $query->select('id_user')
                       ->from('votaciones')
                       ->where('id_dictamen', $id);
             })
-            //->with('usuario') // trae relación con usuario
             ->get();
-            //dd($this->faltantes);
-        // Emitir evento JS para abrir el modal
-        //$this->dispatchBrowserEvent('abrir-modal-faltantes');
+        /*}elseif ($tipo == 'asistencia') {
+            $this->faltantes = User::where('rol', 'D')
+                ->where('status', 'A')
+                ->whereDoesntHave('asistencias', function ($query) {
+                    $query->where('id_sesion', $this->id_sesion);
+                })
+                ->get();*/
+        } elseif ($tipo == 'asunto') {
+            $this->faltantes = Asistencias::where('id_sesion', $this->id_sesion)
+            ->whereNotIn('id_user', function ($query) use ($id) {
+                $query->select('id_user')
+                      ->from('voto_asuntos')
+                      ->where('id_sesion_asunto', $id);
+            })
+            ->get();
+        
+        }
     }
 
     public function refrescarFaltantes()
