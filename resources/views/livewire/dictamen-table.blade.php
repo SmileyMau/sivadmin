@@ -116,9 +116,9 @@
 
                 </div>
                 <div class="text-center ">
-                    <button wire:click="refrescarFaltantes('{{ $sesion_det->tipo_registro }}')" class="btn  btn-reasig">
-                        <span wire:loading.remove wire:target="refrescarFaltantes('{{ $sesion_det->tipo_registro }}')">Refrescar</span>
-                        <span wire:loading wire:target="refrescarFaltantes('{{ $sesion_det->tipo_registro }}')">Cargando...</span>
+                    <button wire:click="refrescarFaltantes" class="btn  btn-reasig">
+                        <span wire:loading.remove wire:target="refrescarFaltantes">Refrescar</span>
+                        <span wire:loading wire:target="refrescarFaltantes">Cargando...</span>
                     </button>
                 </div>
 

@@ -20,6 +20,7 @@ class DictamenTable extends Component
 
     public $search = '';
     public $id_sesion;
+    public $tipo = '';
 
     public $id_dictamen = null;
     public $faltantes = [];
@@ -30,6 +31,7 @@ class DictamenTable extends Component
 
         //dd($tipo);
         $this->id_dictamen = $id;
+        $this->tipo = $tipo;
         $this->faltantes;
         if ($tipo == "general") {
             $this->faltantes = Asistencias::where('id_sesion', $this->id_sesion)
@@ -69,10 +71,11 @@ class DictamenTable extends Component
 
     
 
-    public function refrescarFaltantes($tipo)
+    public function refrescarFaltantes()
     {
-        if ($this->id_dictamen) {
+        if ($this->id_dictamen || $this->tipo) {
             $id = $this->id_dictamen;
+            $tipo = $this->tipo;
              if ($tipo == "general") {
             $this->faltantes = Asistencias::where('id_sesion', $this->id_sesion)
             ->whereNotIn('id_user', function ($query) use ($id) {
