@@ -72,9 +72,9 @@
     border-bottom-right-radius: 7px;
     border-top-right-radius: 7px;
     background-color: #f7f7f7;
-    width: 13%;
+    width: 14%;
     transition: all ease 0.7s;
-    min-width: 103px;
+    min-width: 125px;
   }
 
   .btn-reasig:hover{
@@ -90,7 +90,7 @@
     background-color: #f7f7f7;
     width: 13%;
     transition: all ease 0.7s;
-    min-width: 103px;
+    min-width: 125px;
   }
 
   .btn-option:hover{
@@ -106,7 +106,7 @@
     background-color: #f7f7f7;
     width: 13%;
     transition: all ease 0.7s;
-    min-width: 103px;
+    min-width: 125px;
   }
 
   .btn-baja:hover{
@@ -137,7 +137,7 @@
   background-color: #f7f7f7;
   width: 13%;
   transition: all ease 0.7s;
-  min-width: 103px;
+  min-width: 125px;
 }
 
 .btn-off:hover{
@@ -155,7 +155,7 @@
   background-color: #f7f7f7;
   width: 13%;
   transition: all ease 0.7s;
-  min-width: 103px;
+  min-width: 125px;
 }
 
 .btn-on:hover{
@@ -173,7 +173,7 @@
   background-color: #f7f7f7;
   width: 13%;
   transition: all ease 0.7s;
-  min-width: 103px;
+  min-width: 125px;
 }
 
 .btn-ret:hover{

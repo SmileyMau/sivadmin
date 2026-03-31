@@ -69,7 +69,12 @@
                 <div class="p-3 " ><p class=""><b>Sesion:</b> {{$sesion->no_sesion}} - {{$sesion->descripcion}}</p></div>
               </div>
               <div class="col-6">
-                <div class="p-3  "><b>TOTAL DE ASISTENCIAS:</b> {{$sesion->asistencias_count }}</div>
+                <div class="p-3  ">
+                  <b>TOTAL DE ASISTENCIAS:</b> 
+                  {{$sesion->asistencias_count }}
+
+                </div> 
+
               </div>
               <div class="col-6">
                 <div class="p-3  "><b>Fecha:</b> {{$sesion->fecha}}</div>

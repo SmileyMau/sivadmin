@@ -10,7 +10,7 @@ use App\Models\Votaciones;
 use App\Models\VotoAsunto;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Collection;
 
 class DictamenTable extends Component
 {
@@ -23,6 +23,7 @@ class DictamenTable extends Component
 
     public $id_dictamen = null;
     public $faltantes = [];
+    public $asistencias = [];
 
     public function verFaltantes($id,$tipo)
     {
@@ -38,13 +39,6 @@ class DictamenTable extends Component
                       ->where('id_dictamen', $id);
             })
             ->get();
-        /*}elseif ($tipo == 'asistencia') {
-            $this->faltantes = User::where('rol', 'D')
-                ->where('status', 'A')
-                ->whereDoesntHave('asistencias', function ($query) {
-                    $query->where('id_sesion', $this->id_sesion);
-                })
-                ->get();*/
         } elseif ($tipo == 'asunto') {
             $this->faltantes = Asistencias::where('id_sesion', $this->id_sesion)
             ->whereNotIn('id_user', function ($query) use ($id) {
@@ -55,24 +49,55 @@ class DictamenTable extends Component
             ->get();
         
         }
+        //dd($this->faltantes);
+    }
+  
+    public function verAsistencias()
+    {
+
+        //dd('entro');
+        $this->asistencias;
+
+        $this->asistencias = User::where('rol', 'D')
+            ->where('status', 'A')
+            ->whereDoesntHave('asistencias', function ($query) {
+                $query->where('id_sesion', $this->id_sesion);
+            })
+            ->get();
+        //dd($this->asistencias);
     }
 
-    public function refrescarFaltantes()
+    
+
+    public function refrescarFaltantes($tipo)
     {
         if ($this->id_dictamen) {
+            $id = $this->id_dictamen;
+             if ($tipo == "general") {
             $this->faltantes = Asistencias::where('id_sesion', $this->id_sesion)
-                ->whereNotIn('id_user', function ($query) {
+            ->whereNotIn('id_user', function ($query) use ($id) {
+                $query->select('id_user')
+                      ->from('votaciones')
+                      ->where('id_dictamen', $id);
+            })
+            ->get();
+            } elseif ($tipo == 'asunto') {
+                $this->faltantes = Asistencias::where('id_sesion', $this->id_sesion)
+                ->whereNotIn('id_user', function ($query) use ($id) {
                     $query->select('id_user')
-                        ->from('votaciones')
-                        ->where('id_dictamen', $this->id_dictamen);
+                        ->from('voto_asuntos')
+                        ->where('id_sesion_asunto', $id);
                 })
-                //->with('usuario')
                 ->get();
+            
+            }
         }
+
     }
 
     public function render()
     {
+        
         $sesion_asuntos = DB::table('sesion_asuntos')
             ->join('asuntos','asuntos.id','sesion_asuntos.id_asunto')
             ->select(
@@ -120,7 +145,8 @@ class DictamenTable extends Component
                 return $item;
             });
 
-            
+            //dd($this->asistencias);
+
         return view('livewire.dictamen-table',['faltas' =>  $this->faltantes ,'sesion_dets' => $sesion_dets
             
         ]);

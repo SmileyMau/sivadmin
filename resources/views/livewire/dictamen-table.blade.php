@@ -1,6 +1,8 @@
 <div>
-    <input wire:model="search" type="text" placeholder="Buscar.." class="form-control">
+    <a class="btn btn-reasig  m-1 float-right" href="" type="button" data-toggle="modal" data-target="#asistenciaModal"  wire:click="verAsistencias()"> Var Asistencias</a>
+    <input wire:model="search" type="text" placeholder="Buscar.." class="form-control ">
     <br>
+    
     <table id="" class="table m-0 border  text-muted">
         <thead>
             <tr>
@@ -58,7 +60,7 @@
                             </button>
                             <div class="dropdown-menu p-2" role="menu">
                                 <a class="btn-report mb-1" href="" type="button" data-toggle="modal" data-target="#faltanteModal"  wire:click="verFaltantes({{ $sesion_det->id }}, '{{ $sesion_det->tipo_registro }}')">Faltantes</a>
-                               
+
                                 <form method="post" action="{{ route('Reporte.votaciones', $sesion_det->id) }}" class="" target="_blank">
                                     @method('post')
                                     @csrf
@@ -91,16 +93,16 @@
     </table>
 
 
- <div class="modal fade" id="faltanteModal" tabindex="-1" aria-labelledby="faltanteModalLabel" aria-hidden="true"  wire:ignore.self>
+    <div class="modal fade" id="faltanteModal" tabindex="-1" aria-labelledby="faltanteModalLabel" aria-hidden="true"  wire:ignore.self>
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Diputados que faltan por votar</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                        <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-               
+                
                 <div class="modal-body">
                     @if($faltantes === null)
                         <p>Cargando...</p>
@@ -114,9 +116,9 @@
 
                 </div>
                 <div class="text-center ">
-                    <button wire:click="refrescarFaltantes" class="btn  btn-reasig">
-                        <span wire:loading.remove wire:target="refrescarFaltantes">Refrescar</span>
-                        <span wire:loading wire:target="refrescarFaltantes">Cargando...</span>
+                    <button wire:click="refrescarFaltantes('{{ $sesion_det->tipo_registro }}')" class="btn  btn-reasig">
+                        <span wire:loading.remove wire:target="refrescarFaltantes('{{ $sesion_det->tipo_registro }}')">Refrescar</span>
+                        <span wire:loading wire:target="refrescarFaltantes('{{ $sesion_det->tipo_registro }}')">Cargando...</span>
                     </button>
                 </div>
 
@@ -125,10 +127,52 @@
                 </div>
             </div>
         </div>
+
     </div>
 
-</div>
-
         
-    <!-- Modal -->
+
+    <div class="modal fade" id="asistenciaModal" tabindex="-1" aria-labelledby="asistenciaModalLabel" aria-hidden="true"  wire:ignore.self>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Diputados que faltan por asistir</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                
+                <div class="modal-body">
+
+
+                    @if(empty($asistencias))
+                        <p>No hay faltantes o la lista no se ha cargado.</p>
+                    @else
+                        <ul class="list-group">
+                            @foreach($asistencias as $asistencias)
+                                <li class="list-group-item">
+                                    <b>{{ $asistencias->name }}</b> 
+                                    {{ $asistencias->appaterno }} {{ $asistencias->apmaterno }}
+                                </li>
+                            @endforeach
+                        </ul>
+                    @endif
+
+                </div>
+                <div class="text-center ">
+                    <button wire:click="verAsistencias" class="btn  btn-reasig">
+                        <span wire:loading.remove wire:target="verAsistencias">Refrescar</span>
+                        <span wire:loading wire:target="verAsistencias">Cargando...</span>
+                    </button>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- Modal -->
     
