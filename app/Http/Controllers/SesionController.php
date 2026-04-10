@@ -475,18 +475,56 @@ class SesionController extends Controller
     public function add_files($id)
     {
         try {
-            $diputados = User::where('rol','=',"D")->where('status','=',"A")-> get();
             $sesion = Sesiones::find($id);
             $sesion_dets = SesionDet::where('id_sesion','=',$sesion->id)->where('id_tipo','=',2)->orderBy('no_dictamen','ASC')->get();
             $sesion_dets_acuerdo = SesionDet::where('id_sesion','=',$sesion->id)->where('id_tipo','=',3)->orderBy('no_dictamen','ASC')->get();
-            $dictamenes = DB::table('dictamens')
+            $tipo_asuntos = TipoAsunto::all();
+            $asuntos = Asunto::where('asignado','=','N')->get();
+
+
+            /*$dictamenes = DB::table('asuntos')
             ->join('users','users.id','dictamens.id_user')
             ->join('sesion_dets','sesion_dets.id','dictamens.id_sesion_detalle')
             ->select('users.name','users.appaterno','users.apmaterno','sesion_dets.titulo','dictamens.*')
             ->where('sesion_dets.id_sesion','=',$sesion->id)
+            ->get();*/
+            $dictamenes = DB::table('sesiones')
+            ->join('sesion_asuntos','sesion_asuntos.id_sesion','sesiones.id')
+            ->join('asuntos','asuntos.id','sesion_asuntos.id_asunto')
+            ->join('users','users.id','asuntos.id_user')
+            ->select('users.name','users.appaterno','users.apmaterno','asuntos.titulo','asuntos.descripcion','asuntos.id','asuntos.archivo')
+            ->where('sesiones.id','=',$id)
+            ->where('asuntos.id_tipo','=','2')
             ->get();
 
-            return view('sesiones.add_files', compact('sesion','dictamenes','diputados','sesion_dets','sesion_dets_acuerdo'));
+            $acuerdos = DB::table('sesiones')
+            ->join('sesion_asuntos','sesion_asuntos.id_sesion','sesiones.id')
+            ->join('asuntos','asuntos.id','sesion_asuntos.id_asunto')
+            ->join('users','users.id','asuntos.id_user')
+            ->select('users.name','users.appaterno','users.apmaterno','asuntos.titulo','asuntos.descripcion','asuntos.id','asuntos.archivo')
+            ->where('sesiones.id','=',$id)
+            ->where('asuntos.id_tipo','=','3')
+            ->get();
+
+            $iniciativas = DB::table('sesiones')
+            ->join('sesion_asuntos','sesion_asuntos.id_sesion','sesiones.id')
+            ->join('asuntos','asuntos.id','sesion_asuntos.id_asunto')
+            ->join('users','users.id','asuntos.id_user')
+            ->select('users.name','users.appaterno','users.apmaterno','asuntos.titulo','asuntos.descripcion','asuntos.id','asuntos.archivo')
+            ->where('sesiones.id','=',$id)
+            ->where('asuntos.id_tipo','=','1')
+            ->get();
+
+            $asuntos_generales = DB::table('sesiones')
+            ->join('sesion_asuntos','sesion_asuntos.id_sesion','sesiones.id')
+            ->join('asuntos','asuntos.id','sesion_asuntos.id_asunto')
+            ->join('users','users.id','asuntos.id_user')
+            ->select('users.name','users.appaterno','users.apmaterno','asuntos.titulo','asuntos.descripcion','asuntos.id','asuntos.archivo')
+            ->where('sesiones.id','=',$id)
+            ->where('asuntos.id_tipo','=','10')
+            ->get();
+
+            return view('sesiones.add_files', compact('asuntos','sesion','dictamenes','acuerdos','iniciativas','sesion_dets','sesion_dets_acuerdo','asuntos_generales','tipo_asuntos'));
         } catch (\Throwable $th) {
             throw $th;
         }

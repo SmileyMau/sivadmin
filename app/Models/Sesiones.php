@@ -17,6 +17,11 @@ class Sesiones extends Model
         'hora_fin',
         'asistencia',
         'orden_pdf',
+        'acta_pdf',
+        'diario_pdf',
+        'com_estado_pdf',
+        'com_federal_pdf',
+        'exhortos_pdf',
         'status',
     ];
 
