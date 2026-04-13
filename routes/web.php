@@ -42,6 +42,7 @@ Route::post('/sesiones/{id}/closeasist', 'App\Http\Controllers\SesionController@
 Route::post('/sesiones/{id}/report_part', 'App\Http\Controllers\SesionController@report_part')->name('sesiones.report_part')->middleware('auth');
 Route::post('/sesiones/store-dictamen', 'App\Http\Controllers\SesionController@store_dictamen')->name('sesiones.store_dictamen')->middleware('auth');
 Route::post('/sesiones/store-acuerdo', 'App\Http\Controllers\SesionController@store_acuerdo')->name('sesiones.store_acuerdo')->middleware('auth');
+Route::post('/sesiones/{id}/store-archivo', 'App\Http\Controllers\SesionController@store_archivo')->name('sesiones.store_archivo')->middleware('auth');
 Route::patch('/sesiones/{id}/updictamen', 'App\Http\Controllers\SesionController@updatedet')->name('sesiones.updatedet')->middleware('auth');
 Route::patch('/sesiones/{id}/{tipo}/ac', 'App\Http\Controllers\SesionController@ac')->name('sesiones.ac')->middleware('auth');
 Route::patch('/sesiones/{id}/acsesion', 'App\Http\Controllers\SesionController@acsesion')->name('sesiones.acsesion')->middleware('auth');

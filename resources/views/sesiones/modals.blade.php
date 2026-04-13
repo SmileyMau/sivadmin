@@ -9,22 +9,14 @@
                 </button>
             </div>
             <div class="card-body">
-            <form method="post" action="{{route('sesiones.store')}}" enctype="multipart/form-data">
+            <form method="post" action="{{route('sesiones.detstore',$sesion->id)}}" enctype="multipart/form-data">
                 @method('post')
                 @csrf
 
                 <div id="form_det" defer>
                     <div class="" id="groupform0"defer>
-                        <div class="row g-2" >
-                            <div class="col-2">
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                <span class="input-group-text">No.</span>
-                                </div>
-                                <input type="number" class="form-control" placeholder="Punto" name="no_dictamen0" id="no_inventario" aria-describedby="dictamenHelp" required>
-                            </div>  
-                            </div>
-                            <div class="col-10">
+                        <div class="row g-2 mb-2" >
+                            <div class="col-12 ">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="nav-icon fas fa-copy"></i></span>
@@ -64,47 +56,20 @@
     </div>
 </div>
 
-<!-- Modal Acuerdo Economico-->
-<div class="modal fade card-primary" id="acuerdoModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+<!-- Modal de suber acta de lasesion -->
+<div class="modal fade card-primary" id="archivoModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="">Añadir Acuerdo Economico</h5>
+                <h5 class="modal-title" id="">Añadir acta de la sesiòn anterior</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="card-body">
-                <form method="post" action="{{route('sesiones.store_acuerdo')}}" enctype="multipart/form-data">
+                <form method="post" action="{{route('sesiones.store_archivo',$sesion->id)}}" enctype="multipart/form-data">
                     @method('post')
                     @csrf
-
-                    <div class="mb-3">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><b>Acuerdo Economico</b></span>
-                            </div>
-                            <select name="id_sesion_detalle" id="" class="form-control" required>
-                                <option value="">Seleccionar...</option>
-                                @foreach ($sesion_dets_acuerdo as $sesion_det_acuerdo)
-                                    <option value="{{ $sesion_det_acuerdo->id }}">{{ $sesion_det_acuerdo->titulo }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="mb-3">
-                        <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><b>Diputada/o</b></span>
-                        </div>
-                        <select name="id_user" id="" class="form-control" required>
-                            <option value="">Seleccionar...</option>
-                           
-                        </select>
-                        </div>
-                    </div>
-
                     <div class="mt-3">
                         <div class="input-group">
                             <div class="input-group-prepend">
@@ -113,7 +78,9 @@
                             <input type="file" class="form-control" accept="application/pdf" name="archivo" id="" placeholder="Orden del dia" required>
                         </div>
                     </div>
-
+                    <div class="form-group" style="display: none;">
+                        <input type="hidden" id="input_tipo_archivo" name="tipo_archivo" required  readonly onmousedown="return false;"  value="ACTA">
+                    </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
                         <button type="submit" class="btn btn-success">Guardar</button>
@@ -131,7 +98,7 @@
   function newInput()
   {
     c+=1;
-    document.getElementById("form_det").insertAdjacentHTML('beforeend',' <div class="" id="div_'+c+'"defer><div class="row g-2" ><div class="col-2"><div class="input-group mb-3"><div class="input-group-prepend"><span class="input-group-text">No.</span></div><input type="number" class="form-control" placeholder="Punto" name="no_dictamen'+c+'" id="" aria-describedby="dictamenHelp" required></div>  </div><div class="col-10"><div class="input-group"><div class="input-group-prepend"><span class="input-group-text"><i class="nav-icon fas fa-copy"></i></span></div><select name="tipo'+c+'" id="select_tipo_voto'+c+'" data-count="'+c+'"  class="form-control" required onchange="mostrar_imputs(this)"><option value="0" data-tipo="0">Seleccionar tipo...</option>@foreach ($tipo_asuntos as $tipo_asunto)<option value="{{$tipo_asunto->id}}" data-tipo="{{$tipo_asunto->id}}">{{$tipo_asunto->descripcion}}</option>@endforeach</select><select name="asunto'+c+'" id="select_asunto' + c + '"  class="form-control" hidden ><option value="">Seleccionar asunto...</option></select><input hidden type="text" class="form-control" name="titulo' + c + '" id="titulo'+c+'" placeholder="Titulo."  ><input hidden style="width: 30%;" type="text" class="form-control" name="descripcion'+c+'" id="descripcion'+c+'" placeholder="Descripción del dictamen." ></div></div></div></div>');
+    document.getElementById("form_det").insertAdjacentHTML('beforeend',' <div class="" id="div_'+c+'"defer><div class="row g-2 mb-2" ><div class="col-12"><div class="input-group"><div class="input-group-prepend"><span class="input-group-text"><i class="nav-icon fas fa-copy"></i></span></div><select name="tipo'+c+'" id="select_tipo_voto'+c+'" data-count="'+c+'"  class="form-control" required onchange="mostrar_imputs(this)"><option value="0" data-tipo="0">Seleccionar tipo...</option>@foreach ($tipo_asuntos as $tipo_asunto)<option value="{{$tipo_asunto->id}}" data-tipo="{{$tipo_asunto->id}}">{{$tipo_asunto->descripcion}}</option>@endforeach</select><select name="asunto'+c+'" id="select_asunto' + c + '"  class="form-control" hidden ><option value="">Seleccionar asunto...</option></select><input hidden type="text" class="form-control" name="titulo' + c + '" id="titulo'+c+'" placeholder="Titulo."  ><input hidden style="width: 30%;" type="text" class="form-control" name="descripcion'+c+'" id="descripcion'+c+'" placeholder="Descripción del dictamen." ></div></div></div></div>');
 
     $("#idcount").val(c);
     $("#btn_deleteinput").show();
@@ -153,6 +120,14 @@
     if(c == 0){
       $("#btn_deleteinput").hide();
     }
+  }
+
+  function tipo_archivo(option) {
+    var data_tipo = $('#' + option.id).attr('data-tipo_archivo');
+    console.log(data_tipo);
+    $('#input_tipo_archivo').val(data_tipo);
+    
+
   }
 
   function mostrar_imputs(option){
@@ -182,5 +157,7 @@
 
     }
   }
+
+
 
 </script>

@@ -125,9 +125,14 @@ class SesionController extends Controller
 
             //crea un nuevo regsitro en la tabal de sesiones_dets segun la catidad de dictamenes agregados
             for ($i=0; $i <= $request->count ; $i++) {
-                $no_dictamen = 'no_dictamen'. $i;
-                $no_dictamen = $request->$no_dictamen;
 
+                $no_dictamen = 'no_dictamen'. $i;
+                if (!$request->$no_dictamen) {
+                    $no_dictamen = 0;
+                }else{
+                    $no_dictamen = $request->$no_dictamen;
+                }
+    
                 $descripcion = 'descripcion'. $i;
                 $descripcion = $request->$descripcion;
 
@@ -530,16 +535,29 @@ class SesionController extends Controller
         }
     }
 
-    public function store_dictamen(Request $request)
+    public function store_archivo(Request $request, $id)
     {
         try {
-            $dictamen = Dictamen::create([
-                'id_user' => $request->id_user,
-                'id_sesion_detalle' => $request->id_sesion_detalle,
-                'archivo' => $request->file('archivo')->store('public/Dictamenes'),
-                'status' => 'A',
-                'user_modifi' => auth()->user()->id,
-            ]);
+            //dd($request->tipo_archivo);
+            $sesion = Sesiones::find($id);
+            switch ($request->tipo_archivo) {
+                case "ACTA":
+                    $sesion->acta_pdf = $request->file('archivo')->store('public/actas');
+                    $sesion->save();   
+                    break;
+                case "DIARIO":
+                    $sesion->diario_pdf = $request->file('archivo')->store('public/diarios');
+                    $sesion->save();   
+                    break;
+                case "EXHORTO":
+                    $sesion->exhortos_pdf = $request->file('archivo')->store('public/exhortos');
+                    $sesion->save();   
+                    break;
+                
+                default:
+                    # code...
+                    break;
+           }
             return back()->with('success','El dictamen se agregó exitosamente');
         } catch (\Throwable $th) {
             throw $th;

@@ -69,7 +69,8 @@
                         <div class="card-header border-0 bg-light d-flex justify-content-between align-items-center">
                             <h3 class="card-title text-sm font-weight-bold text-uppercase">INICIATIVAS</h3>
                             <div class="card-tools ml-auto">
-                                <button class="btn btn-sm btn-outline-primary font-weight-bold" type="button">
+                                <button class="btn btn-sm btn-outline-primary font-weight-bold" data-toggle="modal"
+                                    data-target="#dictamenModal" type="button">
                                     <i class="fas fa-plus mr-1"></i> Añadir
                                 </button>
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
@@ -107,7 +108,8 @@
                             <h3 class="card-title text-sm font-weight-bold text-uppercase">Acuerdos de Junta de Gobierno
                             </h3>
                             <div class="card-tools ml-auto">
-                                <button class="btn btn-sm btn-outline-primary font-weight-bold" type="button">
+                                 <button class="btn btn-sm btn-outline-primary font-weight-bold" data-toggle="modal"
+                                    data-target="#dictamenModal" type="button">
                                     <i class="fas fa-plus mr-1"></i> Añadir
                                 </button>
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
@@ -125,7 +127,8 @@
                         <div class="card-header border-0 bg-light d-flex justify-content-between align-items-center">
                             <h3 class="card-title text-sm font-weight-bold text-uppercase">Informes</h3>
                             <div class="card-tools ml-auto">
-                                <button class="btn btn-sm btn-outline-primary font-weight-bold" type="button">
+                                <button class="btn btn-sm btn-outline-primary font-weight-bold" data-toggle="modal"
+                                    data-target="#dictamenModal" type="button">
                                     <i class="fas fa-plus mr-1"></i> Añadir
                                 </button>
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
@@ -156,7 +159,8 @@
                         <div class="card-header border-0 bg-light d-flex justify-content-between align-items-center">
                             <h3 class="card-title text-sm font-weight-bold text-uppercase">Comunicaciones Oficiales</h3>
                             <div class="card-tools ml-auto">
-                                <button class="btn btn-sm btn-outline-primary font-weight-bold" type="button">
+                                <button class="btn btn-sm btn-outline-primary font-weight-bold" data-toggle="modal"
+                                    data-target="#dictamenModal" type="button">
                                     <i class="fas fa-plus mr-1"></i> Añadir
                                 </button>
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
@@ -204,8 +208,8 @@
                         <div class="card-header border-0 bg-light d-flex justify-content-between align-items-center">
                             <h3 class="card-title text-sm font-weight-bold text-uppercase">Acuerdos Económicos</h3>
                             <div class="card-tools ml-auto">
-                                <button class="btn btn-sm btn-outline-primary font-weight-bold" type="button"
-                                    data-toggle="modal" data-target="#acuerdoModal">
+                                <button class="btn btn-sm btn-outline-primary font-weight-bold" data-toggle="modal"
+                                    data-target="#dictamenModal" type="button">
                                     <i class="fas fa-plus mr-1"></i> Añadir
                                 </button>
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
@@ -242,7 +246,8 @@
                         <div class="card-header border-0 bg-light d-flex justify-content-between align-items-center">
                             <h3 class="card-title text-sm font-weight-bold text-uppercase">Asuntos Generales</h3>
                             <div class="card-tools ml-auto">
-                                <button class="btn btn-sm btn-outline-primary font-weight-bold" type="button">
+                                <button class="btn btn-sm btn-outline-primary font-weight-bold" data-toggle="modal"
+                                    data-target="#dictamenModal" type="button">
                                     <i class="fas fa-plus mr-1"></i> Añadir
                                 </button>
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
@@ -280,7 +285,8 @@
                         <div class="card-header border-0 bg-light d-flex justify-content-between align-items-center">
                             <h3 class="card-title text-sm font-weight-bold text-uppercase">Acta de la sesión</h3>
                             <div class="card-tools ml-auto">
-                                <button class="btn btn-sm btn-outline-primary font-weight-bold" type="button">
+                                <button class="btn btn-sm btn-outline-primary font-weight-bold" data-toggle="modal"
+                                    data-target="#archivoModal" data-tipo_archivo="ACTA" type="button" id="btn_acta" onclick="tipo_archivo(this)">
                                     <i class="fas fa-plus mr-1"></i> Añadir
                                 </button>
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
@@ -288,20 +294,23 @@
                             </div>
                         </div>
                         <div class="card-body px-3 py-3">
-                            <!-- Item Card 1 -->
-                            <div class="card p-3 list-card">
-                                <div class="d-flex justify-content-between align-items-start mb-2">
-                                    <div class="text-xs text-danger font-weight-bold">
-                                        <i class="fas fa-file-pdf mr-2"></i> Acta de la sesión.pdf
-                                    </div>
-                                    <div class="btn-group">
-                                        <button class="btn btn-link btn-xs text-muted" type="button"><i
-                                                class="fas fa-edit"></i></button>
-                                        <button class="btn btn-link btn-xs text-muted" type="button"><i
-                                                class="fas fa-trash"></i></button>
+                            @if ($sesion->acta_pdf)
+                                <div class="card p-3 list-card">
+                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                        <div class="text-xs text-danger font-weight-bold">
+                                            <a href="{{url('storage/'.substr($sesion->acta_pdf,7))}}" target="_blank"><i class="fas fa-file-pdf mr-2"></i> Acta de la sesión.pdf</a>
+                                            
+                                        </div>
+                                        <div class="btn-group">
+                                            <button class="btn btn-link btn-xs text-muted" type="button"><i
+                                                    class="fas fa-edit"></i></button>
+                                            <button class="btn btn-link btn-xs text-muted" type="button"><i
+                                                    class="fas fa-trash"></i></button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            @endif
+                            
                         </div>
                         
                     </div>
@@ -310,7 +319,8 @@
                         <div class="card-header border-0 bg-light d-flex justify-content-between align-items-center">
                             <h3 class="card-title text-sm font-weight-bold text-uppercase">Diario de debates</h3>
                             <div class="card-tools ml-auto">
-                                <button class="btn btn-sm btn-outline-primary font-weight-bold" type="button">
+                                <button class="btn btn-sm btn-outline-primary font-weight-bold" data-toggle="modal"
+                                    data-target="#archivoModal" data-tipo_archivo="DIARIO" type="button" id="btn_diario" onclick="tipo_archivo(this)">
                                     <i class="fas fa-plus mr-1"></i> Añadir
                                 </button>
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
@@ -319,19 +329,22 @@
                         </div>
                         <div class="card-body px-3 py-3">
                             <!-- Item Card 1 -->
-                            <div class="card p-3 list-card">
-                                <div class="d-flex justify-content-between align-items-start mb-2">
-                                    <div class="text-xs text-danger font-weight-bold">
-                                        <i class="fas fa-file-pdf mr-2"></i> Diario de debates.pdf
-                                    </div>
-                                    <div class="btn-group">
-                                        <button class="btn btn-link btn-xs text-muted" type="button"><i
-                                                class="fas fa-edit"></i></button>
-                                        <button class="btn btn-link btn-xs text-muted" type="button"><i
-                                                class="fas fa-trash"></i></button>
+                            @if ($sesion->diario_pdf)
+                                <div class="card p-3 list-card">
+                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                        <div class="text-xs text-danger font-weight-bold">
+                                            <a href="{{url('storage/'.substr($sesion->diario_pdf,7))}}" target="_blank"><i class="fas fa-file-pdf mr-2"></i> Diario de debaes.pdf</a>
+                                        </div>
+                                        <div class="btn-group">
+                                            <button class="btn btn-link btn-xs text-muted" type="button"><i
+                                                    class="fas fa-edit"></i></button>
+                                            <button class="btn btn-link btn-xs text-muted" type="button"><i
+                                                    class="fas fa-trash"></i></button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            @endif
+                           
                         </div>
                         
                     </div>
@@ -340,7 +353,8 @@
                         <div class="card-header border-0 bg-light d-flex justify-content-between align-items-center">
                             <h3 class="card-title text-sm font-weight-bold text-uppercase">Respuesta a los exhortos</h3>
                             <div class="card-tools ml-auto">
-                                <button class="btn btn-sm btn-outline-primary font-weight-bold" type="button">
+                                <button class="btn btn-sm btn-outline-primary font-weight-bold" data-toggle="modal"
+                                    data-target="#archivoModal" data-tipo_archivo="EXHORTO" type="button" id="btn_exhortos" onclick="tipo_archivo(this)">
                                     <i class="fas fa-plus mr-1"></i> Añadir
                                 </button>
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
@@ -348,20 +362,22 @@
                             </div>
                         </div>
                         <div class="card-body px-3 py-3">
-                            <!-- Item Card 1 -->
-                            <div class="card p-3 list-card">
-                                <div class="d-flex justify-content-between align-items-start mb-2">
-                                    <div class="text-xs text-danger font-weight-bold">
-                                        <i class="fas fa-file-pdf mr-2"></i> Exhortos.pdf
-                                    </div>
-                                    <div class="btn-group">
-                                        <button class="btn btn-link btn-xs text-muted" type="button"><i
-                                                class="fas fa-edit"></i></button>
-                                        <button class="btn btn-link btn-xs text-muted" type="button"><i
-                                                class="fas fa-trash"></i></button>
+                            @if ($sesion->exhortos_pdf)
+                                <div class="card p-3 list-card">
+                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                        <div class="text-xs text-danger font-weight-bold">
+                                            <a href="{{url('storage/'.substr($sesion->exhortos_pdf,7))}}" target="_blank"><i class="fas fa-file-pdf mr-2"></i> Exhortos.pdf</a>
+                                        </div>
+                                        <div class="btn-group">
+                                            <button class="btn btn-link btn-xs text-muted" type="button"><i
+                                                    class="fas fa-edit"></i></button>
+                                            <button class="btn btn-link btn-xs text-muted" type="button"><i
+                                                    class="fas fa-trash"></i></button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            @endif
+                            
                         </div>
                         
                     </div>
