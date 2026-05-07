@@ -8,6 +8,7 @@ use App\Models\VotoAsunto;
 use App\Models\SesionDet;
 use App\Models\SesionAsunto;
 use App\Models\Sesiones;
+use App\Models\Asunto;
 use App\Models\Asistencias;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
@@ -282,24 +283,30 @@ class VotacionController extends Controller
     {
         try {
             
-            $dictamen = SesionDet::find($id);
-            $sesion = Sesiones::find($dictamen->id_sesion);
             
             if ($tipo == "general") {
+                $dictamen = SesionDet::find($id);
+
                $votaciones = DB::table('users')
                 ->select('users.name','users.appaterno','users.apmaterno','users.id','votaciones.votacion')
                 ->join('votaciones','votaciones.id_user','=', 'users.id')
                 ->join('sesion_dets','sesion_dets.id','=','votaciones.id_dictamen')
                 ->where('votaciones.id_dictamen','=',$id)
                 ->orderBy('votaciones.id', 'desc')->get();
+                $sesion = Sesiones::find($dictamen->id_sesion);
+
             }
             if ($tipo == "asunto") {
-               $votaciones = DB::table('users')
-                ->select('users.name','users.appaterno','users.apmaterno','users.id','voto_asuntos.votacion')
-                ->join('voto_asuntos','voto_asuntos.id_user','=', 'users.id')
-                ->join('sesion_asuntos','sesion_asuntos.id','=','voto_asuntos.id_sesion_asunto')
-                ->where('voto_asuntos.id_sesion_asunto','=',$id)
-                ->orderBy('voto_asuntos.id', 'desc')->get();
+                $asunto_sesion = SesionAsunto::find($id);
+                $dictamen = Asunto::find($asunto_sesion->id_asunto);
+                $votaciones = DB::table('users')
+                    ->select('users.name','users.appaterno','users.apmaterno','users.id','voto_asuntos.votacion')
+                    ->join('voto_asuntos','voto_asuntos.id_user','=', 'users.id')
+                    ->join('sesion_asuntos','sesion_asuntos.id','=','voto_asuntos.id_sesion_asunto')
+                    ->where('voto_asuntos.id_sesion_asunto','=',$id)
+                    ->orderBy('voto_asuntos.id', 'desc')->get();
+                $sesion = Sesiones::find($asunto_sesion->id_sesion);
+
             }
 
             $total = $votaciones->count();
