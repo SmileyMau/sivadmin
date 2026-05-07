@@ -61,21 +61,12 @@
                             <div class="dropdown-menu p-2" role="menu">
                                 <a class="btn-report mb-1" href="" type="button" data-toggle="modal" data-target="#faltanteModal"  wire:click="verFaltantes({{ $sesion_det->id }}, '{{ $sesion_det->tipo_registro }}')">Faltantes</a>
 
-                                <form method="post" action="{{ route('Reporte.votaciones', $sesion_det->id) }}" class="" target="_blank">
+                                <form method="post" action="{{ route('Reporte.votaciones', ['id' => $sesion_det->id,'tipo' => $sesion_det->tipo_registro]) }}" class="" target="_blank">
                                     @method('post')
                                     @csrf
                                     <button class="dropdown-item btn-ver mb-1">Reporte PDF</button>
                                 </form>
-                                <form method="post" action="{{route ('Votaciones.showvota', $sesion_det->id)}}" class="" target="_blank">
-                                    @method('post')
-                                    @csrf
-                                    <button class="dropdown-item btn-ver mb-1">Total de votos</button>
-                                </form>
-                                    <form method="post" action="{{route ('Votaciones.showvotaeco', $sesion_det->id)}}" class="" target="_blank">
-                                    @method('post')
-                                    @csrf
-                                    <button class="dropdown-item btn-ver mb-1">Votos por diputado</button>
-                                </form>
+
                                 @if ($sesion_det->status == 'A')
                                     <form method="post" action="{{ route('sesiones.detdestroy', $sesion_det->id) }}" class="form_cancelar">
                                         @method('delete')

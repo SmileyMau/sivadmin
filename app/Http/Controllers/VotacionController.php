@@ -278,20 +278,32 @@ class VotacionController extends Controller
         }
     }
 
-    public function report($id)
+    public function report($id,$tipo)
     {
         try {
+            
             $dictamen = SesionDet::find($id);
             $sesion = Sesiones::find($dictamen->id_sesion);
-            $votaciones = DB::table('users')
-            ->select('users.name','users.appaterno','users.apmaterno','users.id','votaciones.votacion')
-            ->join('votaciones','votaciones.id_user','=', 'users.id')
-            ->join('sesion_dets','sesion_dets.id','=','votaciones.id_dictamen')
-            ->where('votaciones.id_dictamen','=',$id)
-            ->orderBy('votaciones.id', 'desc')->get();
-            //dd($afavor,$encontra,$abstencion,$total);
+            
+            if ($tipo == "general") {
+               $votaciones = DB::table('users')
+                ->select('users.name','users.appaterno','users.apmaterno','users.id','votaciones.votacion')
+                ->join('votaciones','votaciones.id_user','=', 'users.id')
+                ->join('sesion_dets','sesion_dets.id','=','votaciones.id_dictamen')
+                ->where('votaciones.id_dictamen','=',$id)
+                ->orderBy('votaciones.id', 'desc')->get();
+            }
+            if ($tipo == "asunto") {
+               $votaciones = DB::table('users')
+                ->select('users.name','users.appaterno','users.apmaterno','users.id','voto_asuntos.votacion')
+                ->join('voto_asuntos','voto_asuntos.id_user','=', 'users.id')
+                ->join('sesion_asuntos','sesion_asuntos.id','=','voto_asuntos.id_sesion_asunto')
+                ->where('voto_asuntos.id_sesion_asunto','=',$id)
+                ->orderBy('voto_asuntos.id', 'desc')->get();
+            }
+
             $total = $votaciones->count();
-            //dd($total);
+
             $pdf = PDF::loadView('reportes.votacion', compact('votaciones','total','dictamen','sesion'));
             return $pdf->stream();
             //return view('reportes.votacion', compact('votaciones','total','dictamen'));

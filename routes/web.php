@@ -77,7 +77,7 @@ Route::resource('Guion', 'App\Http\Controllers\GionController')->middleware('aut
 Route::get('Guion/texto/guion', 'App\Http\Controllers\GionController@texto')->name('Guion.texto');
 
 Route::post('Reporte/{id}/asistencias', 'App\Http\Controllers\AsistenciaController@report')->name('Reporte.asistencias')->middleware('auth');
-Route::post('Reporte/{id}/votaciones', 'App\Http\Controllers\VotacionController@report')->name('Reporte.votaciones')->middleware('auth');
+Route::post('Reporte/{id}/{tipo}/votaciones', 'App\Http\Controllers\VotacionController@report')->name('Reporte.votaciones')->middleware('auth');
 
 Route::resource('Asuntos', 'App\Http\Controllers\AsuntoController')->middleware('auth');
 Route::patch('Asuntos/{id}/add-diputado', 'App\Http\Controllers\AsuntoController@store_diputado')->name('asuntos.store_diputado')->middleware('auth');
