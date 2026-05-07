@@ -21,6 +21,7 @@ Route::get('login', 'App\Http\Controllers\UserController@index')->name('login')-
 
 Route::get('logout', function () {
    Auth::logout();
+    return redirect()->route('login');
 })->name('logout')->middleware('auth');
 
 Route::post('login', [UserController::class,'login']);

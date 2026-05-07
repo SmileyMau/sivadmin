@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  
   <title>SIV | Admin</title>
 
   <!-- Google Font: Source Sans Pro -->
@@ -18,6 +19,7 @@
   <link rel="stylesheet" href="{{asset('css/style.css')}}">
 
   <link rel="stylesheet" href="{{asset('admintle/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css')}}">
+  <link rel="icon" href="{{asset('/img/logo_poder_legis.png')}}" type="image/png" sizes="16x16">
   @yield('css')
   
   @livewireStyles
@@ -40,11 +42,11 @@
       <!-- Navbar Search -->
       <li class="nav-item">
       <a class="nav-link" data-toggle="dropdown" href="#">
-          <i class="far "></i>
+          <i class="right fas fa-angle-down "></i>
           <span class="badge badge-danger navbar-badge"></span>
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-          <a href="" class="dropdown-item">
+          <a href="{{route('logout')}}" class="dropdown-item">
             <!-- Message Start -->
             <div class="media">
               <div class="media-body">
@@ -146,24 +148,24 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
-              <li class="nav-item">
+              <!--<li class="nav-item">
                 <a href="{{route('Tipo.index')}}" class="nav-link">
                   <i class="nav-icon fas fa-copy"></i>
                   <p>Cargos</p>
                 </a>
-              </li>
+              </li>-->
               <li class="nav-item">
                 <a href="{{route('Tipo_Asunto.index')}}" class="nav-link">
                   <i class="nav-icon fas fa-copy"></i>
                   <p>Tipo de Asunto</p>
                 </a>
               </li>
-              <li class="nav-item">
+              <!--<li class="nav-item">
                 <a href="{{route('Tipo.index')}}" class="nav-link">
                   <i class="nav-icon fas fa-copy"></i>
                   <p>Comisiones</p>
                 </a>
-              </li>
+              </li>-->
               <li class="nav-item user-panel">
                 <a href="{{route('Tipo.index')}}" class="nav-link">
                   <i class="nav-icon fas fa-copy"></i>
@@ -202,9 +204,6 @@
               </li>
             </ul>
           </li>
-          <li class="nav-header ">SL</li>
-          
-
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
