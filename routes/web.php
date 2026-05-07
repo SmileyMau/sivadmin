@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
 use App\Http\Controllers\UserController;
 /*
 |--------------------------------------------------------------------------
@@ -47,6 +46,8 @@ Route::patch('/sesiones/{id}/updictamen', 'App\Http\Controllers\SesionController
 Route::patch('/sesiones/{id}/{tipo}/ac', 'App\Http\Controllers\SesionController@ac')->name('sesiones.ac')->middleware('auth');
 Route::patch('/sesiones/{id}/acsesion', 'App\Http\Controllers\SesionController@acsesion')->name('sesiones.acsesion')->middleware('auth');
 Route::delete('/sesiones/{id}/detdestroy', 'App\Http\Controllers\SesionController@detdestroy')->name('sesiones.detdestroy')->middleware('auth');
+Route::delete('/sesiones/{id}/asuntodetdestroy', 'App\Http\Controllers\SesionController@asuntodetdestroy')->name('sesiones.asuntodetdestroy')->middleware('auth');
+Route::delete('/sesiones/{id}/{tipo}/destroy-archivo', 'App\Http\Controllers\SesionController@destroy_archivo')->name('sesiones.destroy_archivo')->middleware('auth');
 //-------
 
 Route::get('Asistencias', 'App\Http\Controllers\AsistenciaController@show_asis')->name('Asistencia.Asistencias');
@@ -73,7 +74,7 @@ Route::resource('Tipo_Asunto', 'App\Http\Controllers\TipoAsuntoController')->mid
 
 
 Route::resource('Guion', 'App\Http\Controllers\GionController')->middleware('auth');
-Route::get('Guion/texto/guion', 'App\Http\Controllers\GionController@texto')->name('Guion.texto')->middleware('auth');
+Route::get('Guion/texto/guion', 'App\Http\Controllers\GionController@texto')->name('Guion.texto');
 
 Route::post('Reporte/{id}/asistencias', 'App\Http\Controllers\AsistenciaController@report')->name('Reporte.asistencias')->middleware('auth');
 Route::post('Reporte/{id}/votaciones', 'App\Http\Controllers\VotacionController@report')->name('Reporte.votaciones')->middleware('auth');
@@ -81,3 +82,5 @@ Route::post('Reporte/{id}/votaciones', 'App\Http\Controllers\VotacionController@
 Route::resource('Asuntos', 'App\Http\Controllers\AsuntoController')->middleware('auth');
 Route::patch('Asuntos/{id}/add-diputado', 'App\Http\Controllers\AsuntoController@store_diputado')->name('asuntos.store_diputado')->middleware('auth');
 Route::delete('Asuntos/{id}/destroy-diputado', 'App\Http\Controllers\AsuntoController@destroy_diputado')->name('asuntos.destroy_diputado')->middleware('auth');
+
+

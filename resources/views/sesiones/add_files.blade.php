@@ -8,7 +8,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Informacion y Archivos de la Sesión -- </h1>
+                    <h1 class="m-0">Informacion y Archivos de {{ $sesion->descripcion }}</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -32,7 +32,7 @@
                             <h3 class="card-title text-sm font-weight-bold text-uppercase">Dictámenes</h3>
                             <div class="card-tools ml-auto">
                                 <button class="btn btn-sm btn-outline-primary font-weight-bold" data-toggle="modal"
-                                    data-target="#dictamenModal" type="button">
+                                    data-target="#dictamenModal"  type="button">
                                     <i class="fas fa-plus mr-1"></i> Añadir
                                 </button>
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
@@ -43,13 +43,15 @@
                             @foreach ($dictamenes as $dictamen)
                             <div class="card p-3 list-card">
                                 <div class="d-flex justify-content-between align-items-start mb-2">
-                                    <span class="badge badge-primary " style="font-size: 10px;">#{{ $dictamen->id
-                                        }}</span>
+                                    <span class="badge badge-primary " style="font-size: 10px;">#{{ $dictamen->id}}</span>
                                     <div class="btn-group">
-                                        <button class="btn btn-link btn-xs text-muted" type="button"><i
-                                                class="fas fa-edit"></i></button>
-                                        <button class="btn btn-link btn-xs text-muted" type="button"><i
-                                                class="fas fa-trash"></i></button>
+                                        <form action="{{ route('sesiones.asuntodetdestroy', $dictamen->id_sesion_asunto) }}" class="form_cancelar" method="POST">
+                                            @method('delete')
+                                            @csrf
+                                            <button class="btn btn-link btn-xs text-muted" type="submit"><i
+                                                    class="fas fa-trash"></i></button>
+                                        </form>
+
                                     </div>
                                 </div>
                                 <h5 class="text-xs font-weight-bold mb-1">{{ $dictamen->titulo }}</h5>
@@ -84,10 +86,12 @@
                                     <span class="badge badge-primary " style="font-size: 10px;">#{{ $iniciativa->id
                                         }}</span>
                                     <div class="btn-group">
-                                        <button class="btn btn-link btn-xs text-muted" type="button"><i
-                                                class="fas fa-edit"></i></button>
-                                        <button class="btn btn-link btn-xs text-muted" type="button"><i
-                                                class="fas fa-trash"></i></button>
+                                        <form action="{{ route('sesiones.asuntodetdestroy', $iniciativa->id_sesion_asunto) }}" class="form_cancelar" method="POST">
+                                            @method('delete')
+                                            @csrf
+                                            <button class="btn btn-link btn-xs text-muted" type="submit"><i
+                                                    class="fas fa-trash"></i></button>
+                                        </form>
                                     </div>
                                 </div>
                                 <h5 class="text-xs font-weight-bold mb-1">{{ $iniciativa->titulo }}</h5>
@@ -122,7 +126,7 @@
 
                         </div>
                     </div>
-                    <div class="card card-outline card-celsh">
+                    <!--<div class="card card-outline card-celsh">
                         <div class="card-top-border"></div>
                         <div class="card-header border-0 bg-light d-flex justify-content-between align-items-center">
                             <h3 class="card-title text-sm font-weight-bold text-uppercase">Informes</h3>
@@ -136,7 +140,6 @@
                             </div>
                         </div>
                         <div class="card-body px-3 py-3">
-                            <!-- Item Card 1 -->
                             <div class="card p-3 list-card">
                                 <div class="d-flex justify-content-between align-items-start mb-2">
                                     <div class="text-xs text-danger font-weight-bold">
@@ -153,51 +156,64 @@
                             </div>
 
                         </div>
-                    </div>
+                    </div>-->
                     <div class="card card-outline card-celsh">
                         <div class="card-top-border"></div>
                         <div class="card-header border-0 bg-light d-flex justify-content-between align-items-center">
                             <h3 class="card-title text-sm font-weight-bold text-uppercase">Comunicaciones Oficiales</h3>
                             <div class="card-tools ml-auto">
-                                <button class="btn btn-sm btn-outline-primary font-weight-bold" data-toggle="modal"
-                                    data-target="#dictamenModal" type="button">
-                                    <i class="fas fa-plus mr-1"></i> Añadir
-                                </button>
+                                @if (!$sesion->com_estado_pdf || !$sesion->com_federal_pdf)
+                                    <button class="btn btn-sm btn-outline-primary font-weight-bold" data-toggle="modal"
+                                        data-target="#archivocomModal" type="button">
+                                        <i class="fas fa-plus mr-1"></i> Añadir
+                                    </button>
+                                @endif
+                               
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
                                         class="fas fa-plus"></i></button>
                             </div>
                         </div>
                         <div class="card-body px-3 py-3">
                             <!-- Item Card 1 -->
-                            <div class="card p-3 list-card">
-                                <div class="d-flex justify-content-between align-items-start mb-2">
-                                    <div class="text-xs text-danger font-weight-bold">
-                                        <i class="fas fa-file-pdf mr-2"></i> Comunicaciones Oficiales.pdf
-                                    </div>
-                                    <div class="btn-group">
-                                        <button class="btn btn-link btn-xs text-muted" type="button"><i
-                                                class="fas fa-edit"></i></button>
-                                        <button class="btn btn-link btn-xs text-muted" type="button"><i
-                                                class="fas fa-trash"></i></button>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                            <div class="card p-3 list-card">
-                                <div class="d-flex justify-content-between align-items-start mb-2">
-                                    <div class="text-xs text-danger font-weight-bold">
-                                        <i class="fas fa-file-pdf mr-2"></i> Comunicaciones Oficiales.pdf
-                                    </div>
-                                    <div class="btn-group">
-                                        <button class="btn btn-link btn-xs text-muted" type="button"><i
-                                                class="fas fa-edit"></i></button>
-                                        <button class="btn btn-link btn-xs text-muted" type="button"><i
-                                                class="fas fa-trash"></i></button>
+                            @if ($sesion->com_estado_pdf)
+                                <div class="card p-3 list-card">
+                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                        <div class="text-xs text-danger font-weight-bold">
+                                            <a href="{{ Storage::url($sesion->com_estado_pdf) }}" target="_blank">
+                                                <i class="fas fa-file-pdf mr-2"></i> Comunicaciones Oficiales procedentes de los Poderes Ejecutivos y Judicial del Estado, así como la Auditoría Superior del Estado y de los Municipios del Estado..pdf
+                                            </a>
+                                        </div>
+                                        <div class="btn-group">
+                                            <form action="{{ route('sesiones.destroy_archivo', [$sesion->id, 'com_estado_pdf']) }}" method="POST">
+                                                @method('delete')
+                                                @csrf
+                                                <button class="btn btn-link btn-xs text-muted" type="submit"><i class="fas fa-trash"></i></button>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
+                            @endif
 
-                            </div>
+                            @if ($sesion->com_federal_pdf)
+                                <div class="card p-3 list-card">
+                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                        <div class="text-xs text-danger font-weight-bold">
+                                            <a href="{{ Storage::url($sesion->com_federal_pdf) }}" target="_blank">
+                                                <i class="fas fa-file-pdf mr-2"></i> Comunicaciones Oficiales de los Poderes Federales, de los Estados, del Distrito Federal y de los Municipios de otra Entidades Federativas.pdf
+                                            </a>
+                                        </div>
+                                        <div class="btn-group">
+                                            <form action="{{ route('sesiones.destroy_archivo', [$sesion->id, 'com_federal_pdf']) }}" method="POST">
+                                                @method('delete')
+                                                @csrf
+                                                <button class="btn btn-link btn-xs text-muted" type="submit"><i class="fas fa-trash"></i></button>
+                                            </form>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            @endif
+
 
                         </div>
                     </div>
@@ -208,6 +224,7 @@
                         <div class="card-header border-0 bg-light d-flex justify-content-between align-items-center">
                             <h3 class="card-title text-sm font-weight-bold text-uppercase">Acuerdos Económicos</h3>
                             <div class="card-tools ml-auto">
+                                
                                 <button class="btn btn-sm btn-outline-primary font-weight-bold" data-toggle="modal"
                                     data-target="#dictamenModal" type="button">
                                     <i class="fas fa-plus mr-1"></i> Añadir
@@ -223,10 +240,12 @@
                                     <span class="badge badge-primary " style="font-size: 10px;">#{{ $acuerdo->id
                                         }}</span>
                                     <div class="btn-group">
-                                        <button class="btn btn-link btn-xs text-muted" type="button"><i
-                                                class="fas fa-edit"></i></button>
-                                        <button class="btn btn-link btn-xs text-muted" type="button"><i
-                                                class="fas fa-trash"></i></button>
+                                        <form action="{{ route('sesiones.asuntodetdestroy', $acuerdo->id_sesion_asunto) }}" class="form_cancelar" method="POST">
+                                            @method('delete')
+                                            @csrf
+                                            <button class="btn btn-link btn-xs text-muted" type="submit"><i
+                                                    class="fas fa-trash"></i></button>
+                                        </form>
                                     </div>
                                 </div>
                                 <h5 class="text-xs font-weight-bold mb-1">{{ $acuerdo->titulo }}</h5>
@@ -259,13 +278,14 @@
                             @foreach ($asuntos_generales as $asuntos_g)
                             <div class="card p-3 list-card">
                                 <div class="d-flex justify-content-between align-items-start mb-2">
-                                    <span class="badge badge-primary " style="font-size: 10px;">#{{ $asuntos_g->id
-                                        }}</span>
+                                    <span class="badge badge-primary " style="font-size: 10px;">#{{ $asuntos_g->id}}</span>
                                     <div class="btn-group">
-                                        <button class="btn btn-link btn-xs text-muted" type="button"><i
-                                                class="fas fa-edit"></i></button>
-                                        <button class="btn btn-link btn-xs text-muted" type="button"><i
-                                                class="fas fa-trash"></i></button>
+                                        <form action="{{ route('sesiones.asuntodetdestroy', $asuntos_g->id_sesion_asunto) }}" class="form_cancelar" method="POST">
+                                            @method('delete')
+                                            @csrf
+                                            <button class="btn btn-link btn-xs text-muted" type="submit"><i
+                                                    class="fas fa-trash"></i></button>
+                                        </form>
                                     </div>
                                 </div>
                                 <h5 class="text-xs font-weight-bold mb-1">{{ $asuntos_g->titulo }}</h5>
@@ -285,10 +305,13 @@
                         <div class="card-header border-0 bg-light d-flex justify-content-between align-items-center">
                             <h3 class="card-title text-sm font-weight-bold text-uppercase">Acta de la sesión</h3>
                             <div class="card-tools ml-auto">
-                                <button class="btn btn-sm btn-outline-primary font-weight-bold" data-toggle="modal"
-                                    data-target="#archivoModal" data-tipo_archivo="ACTA" type="button" id="btn_acta" onclick="tipo_archivo(this)">
-                                    <i class="fas fa-plus mr-1"></i> Añadir
-                                </button>
+                                @if (!$sesion->acta_pdf)
+                                    <button class="btn btn-sm btn-outline-primary font-weight-bold" data-toggle="modal"
+                                        data-target="#archivoModal" data-tipo_archivo="ACTA" data-texto="Añadir acta de la sesión" type="button" id="btn_acta" onclick="tipo_archivo(this)">
+                                        <i class="fas fa-plus mr-1"></i> Añadir
+                                    </button>
+                                @endif
+
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
                                         class="fas fa-plus"></i></button>
                             </div>
@@ -302,10 +325,11 @@
                                             
                                         </div>
                                         <div class="btn-group">
-                                            <button class="btn btn-link btn-xs text-muted" type="button"><i
-                                                    class="fas fa-edit"></i></button>
-                                            <button class="btn btn-link btn-xs text-muted" type="button"><i
-                                                    class="fas fa-trash"></i></button>
+                                           <form action="{{ route('sesiones.destroy_archivo', [$sesion->id, 'acta_pdf']) }}" method="POST">
+                                                @method('delete')
+                                                @csrf
+                                                <button class="btn btn-link btn-xs text-muted" type="submit"><i class="fas fa-trash"></i></button>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -319,10 +343,13 @@
                         <div class="card-header border-0 bg-light d-flex justify-content-between align-items-center">
                             <h3 class="card-title text-sm font-weight-bold text-uppercase">Diario de debates</h3>
                             <div class="card-tools ml-auto">
-                                <button class="btn btn-sm btn-outline-primary font-weight-bold" data-toggle="modal"
-                                    data-target="#archivoModal" data-tipo_archivo="DIARIO" type="button" id="btn_diario" onclick="tipo_archivo(this)">
-                                    <i class="fas fa-plus mr-1"></i> Añadir
-                                </button>
+                                @if (!$sesion->diario_pdf)
+                                    <button class="btn btn-sm btn-outline-primary font-weight-bold" data-toggle="modal"
+                                        data-target="#archivoModal" data-tipo_archivo="DIARIO" data-texto="Añadir diario de debates" type="button" id="btn_diario" onclick="tipo_archivo(this)">
+                                        <i class="fas fa-plus mr-1"></i> Añadir
+                                    </button>
+                                @endif
+                                
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
                                         class="fas fa-plus"></i></button>
                             </div>
@@ -336,10 +363,11 @@
                                             <a href="{{url('storage/'.substr($sesion->diario_pdf,7))}}" target="_blank"><i class="fas fa-file-pdf mr-2"></i> Diario de debaes.pdf</a>
                                         </div>
                                         <div class="btn-group">
-                                            <button class="btn btn-link btn-xs text-muted" type="button"><i
-                                                    class="fas fa-edit"></i></button>
-                                            <button class="btn btn-link btn-xs text-muted" type="button"><i
-                                                    class="fas fa-trash"></i></button>
+                                            <form action="{{ route('sesiones.destroy_archivo', [$sesion->id, 'diario_pdf']) }}" method="POST">
+                                                @method('delete')
+                                                @csrf
+                                                <button class="btn btn-link btn-xs text-muted" type="submit"><i class="fas fa-trash"></i></button>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -353,10 +381,13 @@
                         <div class="card-header border-0 bg-light d-flex justify-content-between align-items-center">
                             <h3 class="card-title text-sm font-weight-bold text-uppercase">Respuesta a los exhortos</h3>
                             <div class="card-tools ml-auto">
-                                <button class="btn btn-sm btn-outline-primary font-weight-bold" data-toggle="modal"
-                                    data-target="#archivoModal" data-tipo_archivo="EXHORTO" type="button" id="btn_exhortos" onclick="tipo_archivo(this)">
-                                    <i class="fas fa-plus mr-1"></i> Añadir
-                                </button>
+                                @if (!$sesion->exhortos_pdf)
+                                    <button class="btn btn-sm btn-outline-primary font-weight-bold" data-toggle="modal"
+                                        data-target="#archivoModal" data-tipo_archivo="EXHORTO"  data-texto="Añadir respuesta a exhorto" type="button" id="btn_exhortos" onclick="tipo_archivo(this)">
+                                        <i class="fas fa-plus mr-1"></i> Añadir
+                                    </button>
+                                @endif
+                                
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
                                         class="fas fa-plus"></i></button>
                             </div>
@@ -369,10 +400,11 @@
                                             <a href="{{url('storage/'.substr($sesion->exhortos_pdf,7))}}" target="_blank"><i class="fas fa-file-pdf mr-2"></i> Exhortos.pdf</a>
                                         </div>
                                         <div class="btn-group">
-                                            <button class="btn btn-link btn-xs text-muted" type="button"><i
-                                                    class="fas fa-edit"></i></button>
-                                            <button class="btn btn-link btn-xs text-muted" type="button"><i
-                                                    class="fas fa-trash"></i></button>
+                                           <form action="{{ route('sesiones.destroy_archivo', [$sesion->id, 'exhortos_pdf']) }}" method="POST">
+                                                @method('delete')
+                                                @csrf
+                                                <button class="btn btn-link btn-xs text-muted" type="submit"><i class="fas fa-trash"></i></button>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>

@@ -67,6 +67,7 @@ class SesionController extends Controller
                 'fecha_fin' => null,
                 'asistencia' => 'C',
                 'status' => 'A',
+                'publico' => 'N',
             ]);
 
             //crea un nuevo regsitro en la tabal de sesiones_dets segun la catidad de dictamenes agregados
@@ -324,6 +325,32 @@ class SesionController extends Controller
         }
     }
 
+    public function asuntodetdestroy($id)
+    {
+        try {
+            $sesion_asunto = SesionAsunto::find($id);
+
+            if ($sesion_asunto->status == 'N') {
+                $votaciones = VotoAsunto::where('id_sesion_asunto','=',$id)->first();
+                //dd($votaciones);
+                if ($votaciones == null) {
+                    $asunto = Asunto::find($sesion_asunto->id_asunto);
+                    $asunto->asignado = 'N';
+                    $asunto->save();
+                    $sesion_asunto = SesionAsunto::destroy($id);
+                    return back()->with('success','El asunto se elimino corectamente.');
+                }else{
+                    return back()->with('error','El asunto cuenta con votos.');   
+                }
+            }else{
+                return back()->with('error','El dictamen se enctentra activo.');
+            }
+            return back()->with('success','La sesion se elimino correctamente.');
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
     public function asistencia($id)
     {
         try {
@@ -497,7 +524,7 @@ class SesionController extends Controller
             ->join('sesion_asuntos','sesion_asuntos.id_sesion','sesiones.id')
             ->join('asuntos','asuntos.id','sesion_asuntos.id_asunto')
             ->join('users','users.id','asuntos.id_user')
-            ->select('users.name','users.appaterno','users.apmaterno','asuntos.titulo','asuntos.descripcion','asuntos.id','asuntos.archivo')
+            ->select('users.name','users.appaterno','users.apmaterno','asuntos.titulo','asuntos.descripcion','asuntos.id','asuntos.archivo','sesion_asuntos.id as id_sesion_asunto')
             ->where('sesiones.id','=',$id)
             ->where('asuntos.id_tipo','=','2')
             ->get();
@@ -506,7 +533,7 @@ class SesionController extends Controller
             ->join('sesion_asuntos','sesion_asuntos.id_sesion','sesiones.id')
             ->join('asuntos','asuntos.id','sesion_asuntos.id_asunto')
             ->join('users','users.id','asuntos.id_user')
-            ->select('users.name','users.appaterno','users.apmaterno','asuntos.titulo','asuntos.descripcion','asuntos.id','asuntos.archivo')
+            ->select('users.name','users.appaterno','users.apmaterno','asuntos.titulo','asuntos.descripcion','asuntos.id','asuntos.archivo','sesion_asuntos.id as id_sesion_asunto')
             ->where('sesiones.id','=',$id)
             ->where('asuntos.id_tipo','=','3')
             ->get();
@@ -515,7 +542,7 @@ class SesionController extends Controller
             ->join('sesion_asuntos','sesion_asuntos.id_sesion','sesiones.id')
             ->join('asuntos','asuntos.id','sesion_asuntos.id_asunto')
             ->join('users','users.id','asuntos.id_user')
-            ->select('users.name','users.appaterno','users.apmaterno','asuntos.titulo','asuntos.descripcion','asuntos.id','asuntos.archivo')
+            ->select('users.name','users.appaterno','users.apmaterno','asuntos.titulo','asuntos.descripcion','asuntos.id','asuntos.archivo','sesion_asuntos.id as id_sesion_asunto')
             ->where('sesiones.id','=',$id)
             ->where('asuntos.id_tipo','=','1')
             ->get();
@@ -524,7 +551,7 @@ class SesionController extends Controller
             ->join('sesion_asuntos','sesion_asuntos.id_sesion','sesiones.id')
             ->join('asuntos','asuntos.id','sesion_asuntos.id_asunto')
             ->join('users','users.id','asuntos.id_user')
-            ->select('users.name','users.appaterno','users.apmaterno','asuntos.titulo','asuntos.descripcion','asuntos.id','asuntos.archivo')
+            ->select('users.name','users.appaterno','users.apmaterno','asuntos.titulo','asuntos.descripcion','asuntos.id','asuntos.archivo','sesion_asuntos.id as id_sesion_asunto')
             ->where('sesiones.id','=',$id)
             ->where('asuntos.id_tipo','=','10')
             ->get();
@@ -538,7 +565,7 @@ class SesionController extends Controller
     public function store_archivo(Request $request, $id)
     {
         try {
-            //dd($request->tipo_archivo);
+            //dd($request);
             $sesion = Sesiones::find($id);
             switch ($request->tipo_archivo) {
                 case "ACTA":
@@ -553,12 +580,36 @@ class SesionController extends Controller
                     $sesion->exhortos_pdf = $request->file('archivo')->store('public/exhortos');
                     $sesion->save();   
                     break;
-                
+                case "COMUNICACION_E":
+                    $sesion->com_estado_pdf = $request->file('archivo')->store('public/comunicaciones');
+                    $sesion->save();   
+                    break;
+                case "COMUNICACION_F":
+                    $sesion->com_federal_pdf = $request->file('archivo')->store('public/comunicaciones');
+                    $sesion->save();   
+                    break;
                 default:
                     # code...
                     break;
            }
             return back()->with('success','El dictamen se agregó exitosamente');
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
+    function destroy_archivo($id,$archivo){
+        try {
+            //dd($id,$archivo);
+            $sesion = Sesiones::find($id);
+            $fileDestroy = Sesiones::findOrFail($id); 
+            $pathAnex = storage_path('app/').$fileDestroy->$archivo;
+            if(File::exists($pathAnex)){
+                unlink($pathAnex); 
+                $sesion->$archivo = null;
+                $sesion->save();
+                return back()->with('success','El archivo se eliminó correctamente.');
+            }
         } catch (\Throwable $th) {
             throw $th;
         }

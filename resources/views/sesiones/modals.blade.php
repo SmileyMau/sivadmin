@@ -3,7 +3,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="">Añadir Dictamen</h5>
+                <h5 class="modal-title" id="">Añadir asunto</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -61,7 +61,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="">Añadir acta de la sesiòn anterior</h5>
+                <h5 class="modal-title" id="h5_titulo"></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -80,6 +80,57 @@
                     </div>
                     <div class="form-group" style="display: none;">
                         <input type="hidden" id="input_tipo_archivo" name="tipo_archivo" required  readonly onmousedown="return false;"  value="ACTA">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-success">Guardar</button>
+
+                    </div>
+                </form>
+            </div>
+        </div>     
+    </div>
+</div>
+
+
+<!-- Modal de suber acta de lasesion -->
+<div class="modal fade card-primary" id="archivocomModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="">Añadir comunicaciones oficiales</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="card-body">
+                <form method="post" action="{{route('sesiones.store_archivo',$sesion->id)}}" enctype="multipart/form-data">
+                    @method('post')
+                    @csrf
+                    <div class="mt-3">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><b>Tipo de comunicación</b></span>
+                            </div>
+                            <select name="tipo_archivo" id="" class="form-control">
+                                <option value="">Seleccionar..</option>
+                                @if (!$sesion->com_estado_pdf )
+                                    <option value="COMUNICACION_E" >Poderes Ejecutivos y Judicial del Estado, así como la Auditoría Superior del Estado y de los Municipios del Estado.</option>
+                                @endif
+                                @if (!$sesion->com_federal_pdf)
+                                    <option value="COMUNICACION_F">Poderes Federales, de los Estados, del Distrito Federal y de los Municipios de otra Entidades Federativas.</option>
+                                @endif
+                            
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><b>Archivo</b></span>
+                            </div>
+                            <input type="file" class="form-control" accept="application/pdf" name="archivo" id="" placeholder="Orden del dia" required>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
@@ -124,8 +175,10 @@
 
   function tipo_archivo(option) {
     var data_tipo = $('#' + option.id).attr('data-tipo_archivo');
-    console.log(data_tipo);
+    var data_texto = $('#' + option.id).attr('data-texto');
+    console.log(data_texto);
     $('#input_tipo_archivo').val(data_tipo);
+    $("#h5_titulo").text(data_texto);
     
 
   }

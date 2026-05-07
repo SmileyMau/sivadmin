@@ -127,7 +127,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Main content -->
     <div class="container">
         <div class="card">
-            <div class="p-4">
+            <div class="p-4 " style="font-size: 44px">
                 {!! $guion->texto !!}
 
             </div>
@@ -164,10 +164,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="{{asset('/admintle/dist/js/adminlte.min.js')}}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{asset('/admintle/dist/js/demo.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pusher-js@8.3.0/dist/web/pusher.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/laravel-echo@1.16.1/dist/echo.iife.js"></script>
 </body>
 <script>
   $(function () {
     //setInterval("location.reload()",5000);
   });
+
   </script>
 </html>

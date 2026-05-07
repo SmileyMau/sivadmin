@@ -23,6 +23,7 @@ class Sesiones extends Model
         'com_federal_pdf',
         'exhortos_pdf',
         'status',
+        'publico',
     ];
 
     public function asistencias()
