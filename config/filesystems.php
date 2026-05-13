@@ -41,6 +41,15 @@ return [
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
         ],
+        'nube_ftp' => [
+            'driver' => 'ftp',
+            'host' => env('FTP_HOST'),
+            'username' => env('FTP_USERNAME'),
+            'password' => env('FTP_PASSWORD'),
+            'port' => (int) env('FTP_PORT', 21),
+            'root' => '', // Dejar vacío porque en cPanel ya definiste la ruta al crear la cuenta
+            'passive' => true,
+        ],
 
         's3' => [
             'driver' => 's3',

@@ -66,8 +66,9 @@ class SesionController extends Controller
                 'fecha_ini' => null,
                 'fecha_fin' => null,
                 'asistencia' => 'C',
+                'link' => 'N/A',
                 'status' => 'A',
-                'publico' => 'N',
+                'publico' => 'N', 
             ]);
 
             //crea un nuevo regsitro en la tabal de sesiones_dets segun la catidad de dictamenes agregados
@@ -249,13 +250,15 @@ class SesionController extends Controller
             $sesion->no_sesion = $request->no_sesion;
             $sesion->descripcion = $request->titulo;
             $sesion->fecha = $request->fecha;
-
-            $pathAnex = storage_path('app/').$fileDestroy->orden_pdf;
-            if(File::exists($pathAnex)){
-                //dd($pathAnex);
-                unlink($pathAnex); 
-            }
+            if ($request->file('orden_pdf')) {
+                $pathAnex = storage_path('app/').$fileDestroy->orden_pdf;
+                if(File::exists($pathAnex)){
+                    //dd($pathAnex);
+                    unlink($pathAnex); 
+                }
             $sesion->orden_pdf = $request->file('orden_pdf')->store('public/Ordenes');
+            }
+            
             $sesion->save();
             return back()->with('success','La sesión se modificó correctamente.');
         } catch (\Throwable $th) {

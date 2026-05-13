@@ -19,6 +19,7 @@ class Sesiones extends Model
         'orden_pdf',
         'acta_pdf',
         'diario_pdf',
+        'link',
         'com_estado_pdf',
         'com_federal_pdf',
         'exhortos_pdf',

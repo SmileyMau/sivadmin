@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\DB;
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,7 +15,23 @@ use App\Http\Controllers\UserController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('test-db-serv', function () {
+$dictamenes = DB::connection('mysql_secondary')
+                ->table('sesiones')
+                ->get();
+                dd($dictamenes);
+})->name('logout')->middleware('auth');
 
+
+
+Route::get('/probar-ftp', function () {
+    try {
+        Storage::disk('nube_ftp')->put('prueba.txt', 'Hola desde el sistema local');
+        return "¡Conexión exitosa! Archivo subido.";
+    } catch (\Exception $e) {
+        return "Error: " . $e->getMessage();
+    }
+});
 
 /*Route::get('login', function () {
     return view('login');

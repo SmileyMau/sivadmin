@@ -230,18 +230,18 @@ class VotacionController extends Controller
                     $asistencias = null;
                     $total_asis = null;
                 }
-                
-            }else {
-                $asistencias = null;
-                $total_asis = null;
-            }
-           
-            if ($sesion->id_tipo == 3) {
-                dd('entro');
+                if ($sesion->id_tipo == 3) {
+                //dd('entro');
                 return view('autoall2', compact('asistencias','afavor','encontra','abstencion','total','dictamen','date','total_asis','sesion','votaciones'));
             }else {
                 return view('autoall', compact('asistencias','afavor','encontra','abstencion','total','dictamen','date','total_asis','sesion','votaciones','asunto'));
             }
+            }else {
+                $sesion = Sesiones::first();
+                return view('view_message',compact('sesion'));
+            }
+           
+            
             //return view('autoall', compact('asistencias','afavor','encontra','abstencion','total','dictamen','date','total_asis','sesion','votaciones'));
         } catch (\Throwable $th) {
             throw $th;

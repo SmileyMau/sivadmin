@@ -80,7 +80,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="nav-icon fas fa-copy"> Orden del dia</i></span>
                                         </div>
-                                        <input type="file" class="form-control" accept="application/pdf" name="orden_pdf" id="" placeholder="Orden del dia" required>
+                                        <input type="file" class="form-control" accept="application/pdf" name="orden_pdf" id="" placeholder="Orden del dia" >
                                     </div>
                                 </div>
                                 <div class="modal-footer">

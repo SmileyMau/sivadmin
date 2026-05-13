@@ -1,0 +1,217 @@
+:root {
+    /* Institutional Protocol Theme Colors */
+    --primary: #0f172a;
+    --on-primary: #ffffff;
+    --surface: #f7f9fb;
+    --on-surface: #191c1e;
+    --on-surface-variant: #45464d;
+    --surface-container: #eceef0;
+    --surface-container-low: #f2f4f6;
+    --surface-container-lowest: #ffffff;
+    --outline: #76777d;
+    --outline-variant: #c6c6cd;
+    --secondary: #515f74;
+    
+    /* Typography */
+    --font-headline: 'Public Sans', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    
+    /* Spacing */
+    --margin-desktop: 40px;
+    --gutter: 24px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--surface);
+    color: var(--on-surface);
+    font-family: var(--font-body);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    line-height: 1.5;
+}
+
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    vertical-align: middle;
+}
+
+main {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 48px var(--margin-desktop);
+}
+
+.container {
+    max-width: 1024px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 48px;
+}
+
+@media (min-width: 768px) {
+    .container {
+        flex-direction: row;
+    }
+}
+
+/* Illustration Section */
+.illustration-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+@media (min-width: 768px) {
+    .illustration-container {
+        width: 50%;
+    }
+}
+
+.image-wrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    max-width: 400px;
+    background-color: var(--surface-container-lowest);
+    border: 1px solid var(--outline-variant);
+    border-radius: 8px;
+    padding: 32px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    mix-blend-mode: multiply;
+    opacity: 0.9;
+}
+
+/* Content Section */
+.content-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+}
+
+@media (min-width: 768px) {
+    .content-container {
+        width: 50%;
+    }
+}
+
+.status-badge {
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--secondary);
+}
+
+.status-badge span:last-child {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.headline {
+    font-family: var(--font-headline);
+    font-size: 32px;
+    line-height: 40px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--on-surface);
+    margin-bottom: 16px;
+}
+
+.body-text {
+    font-size: 18px;
+    line-height: 28px;
+    color: var(--on-surface-variant);
+    margin-bottom: 40px;
+}
+
+.button-group {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+@media (min-width: 640px) {
+    .button-group {
+        width: auto;
+        flex-direction: row;
+    }
+}
+
+.btn-refresh {
+    background-color: var(--primary);
+    color: var(--on-primary);
+    padding: 16px 32px;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: opacity 0.2s ease;
+    text-decoration: none;
+}
+
+.btn-refresh:hover {
+    opacity: 0.9;
+}
+
+.btn-refresh .material-symbols-outlined {
+    font-variation-settings: 'wght' 600;
+}
+
+/* Administrative Note */
+.admin-note {
+    margin-top: 48px;
+    padding: 16px;
+    background-color: var(--surface-container-low);
+    border-left: 4px solid var(--outline);
+    border-radius: 0 8px 8px 0;
+    width: 100%;
+    display: flex;
+    gap: 16px;
+}
+
+.admin-note-content p:first-child {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--on-surface);
+    margin-bottom: 4px;
+}
+
+.admin-note-content p:last-child {
+    font-size: 16px;
+    line-height: 24px;
+    color: var(--on-surface-variant);
+}
+
+.admin-note .material-symbols-outlined {
+    color: var(--outline);
+}
