@@ -29,7 +29,8 @@
 
                             @method('patch')
                             @csrf
-                            <button type="submit" class="btn 
+                            @if ($sesion->status != 'P')
+                                 <button type="submit" class="btn 
                                 @if ($sesion->status == 'A')
                                     btn-reasig
                                 @endif
@@ -43,8 +44,13 @@
                                     @if ($sesion->status == 'N')
                                         CERRADA
                                     @endif
+                                    
                                 </i>
                             </button>
+                            @else
+                                <i>PUBLICO</i>
+                            @endif
+                           
                         </form>
                     </td>
                         <td  class="text-center">
@@ -53,8 +59,9 @@
                                     <i class="fas fa-align-center"></i>
                                 </button>
                                 <div class="dropdown-menu p-2" role="menu">
-                                    <a class="dropdown-item btn-ver mb-1" href="{{ route('sesiones.show', $sesion->id) }}">Ver</a>
-                                    @if ($sesion->status == 'A')
+                                    @if ($sesion->status != 'P')
+                                        <a class="dropdown-item btn-ver mb-1" href="{{ route('sesiones.show', $sesion->id) }}">Ver</a>
+
                                         <a class="dropdown-item btn-editar mb-1" href="{{ route('sesiones.edit', $sesion->id) }}">Editar</a>
                                     @endif
                                     <form method="post" action="{{ route('sesiones.asistencia', $sesion->id) }}" class="">
@@ -63,13 +70,19 @@
                                         <button class="dropdown-item btn-report mb-1">Asistencias</button>
                                     </form>
                                     <hr>
-                                    <a class="dropdown-item mb-1 btn-report" href="{{ route('sesiones.add_files', $sesion->id) }}">Agregar Archivos</a>
+                                    
 
-                                    @if ($sesion->status == 'A')
+                                    @if ($sesion->status != 'P' )
+                                        <a class="dropdown-item mb-1 btn-report" href="{{ route('sesiones.add_files', $sesion->id) }}">Agregar Archivos</a>
                                         <form method="post" action="{{ route('sesiones.destroy', $sesion->id) }}" class="form_cancelar">
                                             @method('delete')
                                             @csrf
                                             <button class="dropdown-item btn-eliminar mb-1">Eliminar</button>
+                                        </form>
+                                        <form method="post" action="{{ route('sesiones.publicar', $sesion->id) }}" class="form_aprobar">
+                                            @method('patch')
+                                            @csrf
+                                            <button class="dropdown-item btn-aprobar mb-1">Publicar</button>
                                         </form>
                                     @endif
                                 </div>

@@ -124,13 +124,45 @@
                             </select>
                         </div>
                     </div>
+                    <div class="form-group" style="display: none;">
+                        <input type="hidden" id="input_tipo_archivo" name="tipo_archivo" required  readonly onmousedown="return false;"  value="ACTA">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-success">Guardar</button>
+
+                    </div>
+                </form>
+            </div>
+        </div>     
+    </div>
+</div>
+
+
+<!-- Modal de suber acta de lasesion -->
+<div class="modal fade card-primary" id="linkModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="">Añadir link de sesión en vivo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="card-body">
+                <form method="post" action="{{route('sesiones.store_archivo',$sesion->id)}}" enctype="multipart/form-data">
+                    @method('post')
+                    @csrf
                     <div class="mt-3">
                         <div class="input-group">
                             <div class="input-group-prepend">
-                                <span class="input-group-text"><b>Archivo</b></span>
+                                <span class="input-group-text"><b>Link</b></span>
                             </div>
-                            <input type="file" class="form-control" accept="application/pdf" name="archivo" id="" placeholder="Orden del dia" required>
+                            <input type="text" name="link" id=""  class="form-control"> 
                         </div>
+                    </div>
+                    <div class="form-group" style="display: none;">
+                        <input type="hidden" id="input_tipo_archivo" name="tipo_archivo" required  readonly onmousedown="return false;"  value="LINK">
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>

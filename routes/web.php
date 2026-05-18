@@ -65,6 +65,7 @@ Route::post('/sesiones/{id}/store-archivo', 'App\Http\Controllers\SesionControll
 Route::patch('/sesiones/{id}/updictamen', 'App\Http\Controllers\SesionController@updatedet')->name('sesiones.updatedet')->middleware('auth');
 Route::patch('/sesiones/{id}/{tipo}/ac', 'App\Http\Controllers\SesionController@ac')->name('sesiones.ac')->middleware('auth');
 Route::patch('/sesiones/{id}/acsesion', 'App\Http\Controllers\SesionController@acsesion')->name('sesiones.acsesion')->middleware('auth');
+Route::patch('/sesiones/{id}/publicar', 'App\Http\Controllers\SesionController@publicar')->name('sesiones.publicar')->middleware('auth');
 Route::delete('/sesiones/{id}/detdestroy', 'App\Http\Controllers\SesionController@detdestroy')->name('sesiones.detdestroy')->middleware('auth');
 Route::delete('/sesiones/{id}/asuntodetdestroy', 'App\Http\Controllers\SesionController@asuntodetdestroy')->name('sesiones.asuntodetdestroy')->middleware('auth');
 Route::delete('/sesiones/{id}/{tipo}/destroy-archivo', 'App\Http\Controllers\SesionController@destroy_archivo')->name('sesiones.destroy_archivo')->middleware('auth');

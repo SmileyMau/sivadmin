@@ -217,6 +217,45 @@
 
                         </div>
                     </div>
+
+                    <div class="card card-outline card-celsh">
+                        <div class="card-top-border"></div>
+                        <div class="card-header border-0 bg-light d-flex justify-content-between align-items-center">
+                            <h3 class="card-title text-sm font-weight-bold text-uppercase">Link de la sesion en vivo</h3>
+                            <div class="card-tools ml-auto">
+                                @if (!$sesion->link)
+                                    <button class="btn btn-sm btn-outline-primary font-weight-bold" data-toggle="modal"
+                                        data-target="#linkModal" data-tipo_archivo="LINK" data-texto="Añadir diario de debates" type="button" id="btn_link" onclick="tipo_archivo(this)">
+                                        <i class="fas fa-plus mr-1"></i> Añadir
+                                    </button>
+                                @endif
+                                
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
+                                        class="fas fa-plus"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-body px-3 py-3">
+                            <!-- Item Card 1 -->
+                            @if ($sesion->link)
+                                <div class="card p-3 list-card">
+                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                        <div class="text-xs text-danger font-weight-bold">
+                                            <a href="{{$sesion->link}}" target="_blank"><i class="fa fa-play mr-2"></i> Sesión en vivo</a>
+                                        </div>
+                                        <div class="btn-group">
+                                            <form action="{{ route('sesiones.destroy_archivo', [$sesion->id, 'link']) }}" method="POST">
+                                                @method('delete')
+                                                @csrf
+                                                <button class="btn btn-link btn-xs text-muted" type="submit"><i class="fas fa-trash"></i></button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                           
+                        </div>
+                        
+                    </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="card card-outline card-celsh">
@@ -409,10 +448,10 @@
                                     </div>
                                 </div>
                             @endif
-                            
                         </div>
-                        
                     </div>
+
+                    
                 </div>
             </div>
         </div>

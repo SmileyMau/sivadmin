@@ -267,6 +267,32 @@
 <script src="{{asset('admintle/dist/js/demo.js')}}"></script>
 <script>
 
+
+  $(function() {
+    $('.form_aprobar').submit(function (event) {
+      event.preventDefault();
+      Swal.fire({
+        title: "¿Desea publicar la sesión?",
+        text: "No podra editar la sesión",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Publicar",
+        confirmButtonColor: "#008f4c",
+        cancelButtonText: "Cancelar",
+        reverseButtons: true
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.submit();
+        } else if (result.dismiss === "cancel") {
+          icon: 'error',
+          Toast.fire({
+            icon: 'error',
+            title: 'Se canceló la operación.'
+          })
+        }
+      });
+    });
+  });
     
   $(function() {
     $('.form_cancelar').submit(function (event) {

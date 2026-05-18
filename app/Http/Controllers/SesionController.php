@@ -591,6 +591,10 @@ class SesionController extends Controller
                     $sesion->com_federal_pdf = $request->file('archivo')->store('public/comunicaciones');
                     $sesion->save();   
                     break;
+                case "LINK":
+                    $sesion->link = $request->link;
+                    $sesion->save();   
+                    break;
                 default:
                     # code...
                     break;
@@ -603,16 +607,34 @@ class SesionController extends Controller
 
     function destroy_archivo($id,$archivo){
         try {
-            //dd($id,$archivo);
-            $sesion = Sesiones::find($id);
-            $fileDestroy = Sesiones::findOrFail($id); 
-            $pathAnex = storage_path('app/').$fileDestroy->$archivo;
-            if(File::exists($pathAnex)){
-                unlink($pathAnex); 
-                $sesion->$archivo = null;
+           $sesion = Sesiones::find($id);
+            if ($archivo == 'link') {
+                $sesion->link = null;
                 $sesion->save();
-                return back()->with('success','El archivo se eliminó correctamente.');
+                return back()->with('success','El link se eliminó correctamente.');
+            }else {
+                $fileDestroy = Sesiones::findOrFail($id); 
+                $pathAnex = storage_path('app/').$fileDestroy->$archivo;
+                if(File::exists($pathAnex)){
+                    unlink($pathAnex); 
+                    $sesion->$archivo = null;
+                    $sesion->save();
+                    return back()->with('success','El archivo se eliminó correctamente.');
+                }
             }
+            
+            
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
+    function publicar($id) {
+        try {
+            $sesion = Sesiones::find($id);
+            $sesion->status = "P";
+            $sesion->save();
+            return back()->with('success','La sesión se publicó correctamente.');
         } catch (\Throwable $th) {
             throw $th;
         }
