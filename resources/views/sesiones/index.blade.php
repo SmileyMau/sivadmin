@@ -60,7 +60,7 @@
               </ul>
             </div>
           <div class="card-body">
-          <form method="post" action="{{route('sesiones.store')}}" enctype="multipart/form-data">
+          <form method="post" action="{{route('sesiones.store')}}" enctype="multipart/form-data" id="miFormulario">
             @method('post')
               @csrf
               <div class="tab-content" id="custom-tabs-two-tabContent">
@@ -164,7 +164,7 @@
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-success">Guardar</button>
+                    <button type="submit" id="btn-guardar" class="btn btn-success">Guardar</button>
                   </div>
                 </div>
 

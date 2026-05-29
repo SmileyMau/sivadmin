@@ -12,7 +12,7 @@
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Lista de Sesiones</a></li>
+                        <li class="breadcrumb-item"><a href="{{route('sesiones.index')}}">Lista de Sesiones</a></li>
                         <li class="breadcrumb-item active">Informacion y Archivos</li>
                     </ol>
                 </div><!-- /.col -->
@@ -256,6 +256,42 @@
                         </div>
                         
                     </div>
+
+                    <div class="card card-outline card-celsh">
+                        <div class="card-top-border"></div>
+                        <div class="card-header border-0 bg-light d-flex justify-content-between align-items-center">
+                            <h3 class="card-title text-sm font-weight-bold text-uppercase">Orden del dia</h3>
+                            <div class="card-tools ml-auto">
+                                @if (!$sesion->ordenpublic_pdf)
+                                    <button class="btn btn-sm btn-outline-primary font-weight-bold" data-toggle="modal"
+                                        data-target="#archivoModal" data-tipo_archivo="ORDEN_PUBLICO"  data-texto="Añadir orden del dia" type="button" id="btn_orden" onclick="tipo_archivo(this)">
+                                        <i class="fas fa-plus mr-1"></i> Añadir
+                                    </button>
+                                @endif
+                                
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
+                                        class="fas fa-plus"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-body px-3 py-3">
+                            @if ($sesion->ordenpublic_pdf)
+                                <div class="card p-3 list-card">
+                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                        <div class="text-xs text-danger font-weight-bold">
+                                            <a href="{{url('storage/'.substr($sesion->ordenpublic_pdf,7))}}" target="_blank"><i class="fas fa-file-pdf mr-2"></i> Orden del dia.pdf</a>
+                                        </div>
+                                        <div class="btn-group">
+                                           <form action="{{ route('sesiones.destroy_archivo', [$sesion->id, 'ordenpublic_pdf']) }}" method="POST">
+                                                @method('delete')
+                                                @csrf
+                                                <button class="btn btn-link btn-xs text-muted" type="submit"><i class="fas fa-trash"></i></button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="card card-outline card-celsh">
@@ -440,6 +476,42 @@
                                         </div>
                                         <div class="btn-group">
                                            <form action="{{ route('sesiones.destroy_archivo', [$sesion->id, 'exhortos_pdf']) }}" method="POST">
+                                                @method('delete')
+                                                @csrf
+                                                <button class="btn btn-link btn-xs text-muted" type="submit"><i class="fas fa-trash"></i></button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="card card-outline card-celsh">
+                        <div class="card-top-border"></div>
+                        <div class="card-header border-0 bg-light d-flex justify-content-between align-items-center">
+                            <h3 class="card-title text-sm font-weight-bold text-uppercase">Asistencias</h3>
+                            <div class="card-tools ml-auto">
+                                @if (!$sesion->asistencia_pdf)
+                                    <button class="btn btn-sm btn-outline-primary font-weight-bold" data-toggle="modal"
+                                        data-target="#archivoModal" data-tipo_archivo="ASISTENCIA"  data-texto="Añadir asistencia" type="button" id="btn_asistencias" onclick="tipo_archivo(this)">
+                                        <i class="fas fa-plus mr-1"></i> Añadir
+                                    </button>
+                                @endif
+                                
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
+                                        class="fas fa-plus"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-body px-3 py-3">
+                            @if ($sesion->asistencia_pdf)
+                                <div class="card p-3 list-card">
+                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                        <div class="text-xs text-danger font-weight-bold">
+                                            <a href="{{url('storage/'.substr($sesion->asistencia_pdf,7))}}" target="_blank"><i class="fas fa-file-pdf mr-2"></i> Asistencias.pdf</a>
+                                        </div>
+                                        <div class="btn-group">
+                                           <form action="{{ route('sesiones.destroy_archivo', [$sesion->id, 'asistencia_pdf']) }}" method="POST">
                                                 @method('delete')
                                                 @csrf
                                                 <button class="btn btn-link btn-xs text-muted" type="submit"><i class="fas fa-trash"></i></button>

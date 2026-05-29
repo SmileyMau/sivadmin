@@ -256,6 +256,9 @@
 <script src="{{ asset('/vendor/ckeditor/ckeditor.js') }}"></script>
 <script src="{{ asset('admintle/plugins/bs-custom-file-input/bs-custom-file-input.min.js')}}"></script>
 
+<script src="{{asset('js/app.js')}}"></script>
+
+
 @yield('userjs')
 
 @livewireScripts

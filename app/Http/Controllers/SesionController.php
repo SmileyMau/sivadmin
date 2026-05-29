@@ -595,6 +595,14 @@ class SesionController extends Controller
                     $sesion->link = $request->link;
                     $sesion->save();   
                     break;
+                case "ASISTENCIA":
+                    $sesion->asistencia_pdf = $request->file('archivo')->store('public/asistencias');
+                    $sesion->save();   
+                    break;
+                case "ORDEN_PUBLICO":
+                    $sesion->ordenpublic_pdf = $request->file('archivo')->store('public/ordenes_publicos');
+                    $sesion->save();   
+                    break;
                 default:
                     # code...
                     break;
