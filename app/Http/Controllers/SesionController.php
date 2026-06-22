@@ -640,7 +640,7 @@ class SesionController extends Controller
     function publicar($id) {
         try {
             $sesion = Sesiones::find($id);
-            $sesion->status = "P";
+            $sesion->publico = "A";
             $sesion->save();
             return back()->with('success','La sesión se publicó correctamente.');
         } catch (\Throwable $th) {

@@ -29,7 +29,7 @@
 
                             @method('patch')
                             @csrf
-                            @if ($sesion->status != 'P')
+                            @if ($sesion->status != 'P' && $sesion->publico != 'A')
                                  <button type="submit" class="btn 
                                 @if ($sesion->status == 'A')
                                     btn-reasig
