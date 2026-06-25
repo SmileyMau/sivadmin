@@ -59,8 +59,9 @@
                                     <i class="fas fa-align-center"></i>
                                 </button>
                                 <div class="dropdown-menu p-2" role="menu">
+                                    <a class="dropdown-item btn-ver mb-1" href="{{ route('sesiones.show', $sesion->id) }}">Ver</a>
                                     @if ($sesion->status != 'P')
-                                        <a class="dropdown-item btn-ver mb-1" href="{{ route('sesiones.show', $sesion->id) }}">Ver</a>
+                                        
 
                                         <a class="dropdown-item btn-editar mb-1" href="{{ route('sesiones.edit', $sesion->id) }}">Editar</a>
                                     @endif
