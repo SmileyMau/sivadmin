@@ -556,7 +556,7 @@ class SesionController extends Controller
             ->join('users','users.id','asuntos.id_user')
             ->select('users.name','users.appaterno','users.apmaterno','asuntos.titulo','asuntos.descripcion','asuntos.id','asuntos.archivo','sesion_asuntos.id as id_sesion_asunto')
             ->where('sesiones.id','=',$id)
-            ->where('asuntos.id_tipo','=','10')
+            ->where('asuntos.id_tipo','=','12')
             ->get();
 
             return view('sesiones.add_files', compact('asuntos','sesion','dictamenes','acuerdos','iniciativas','sesion_dets','sesion_dets_acuerdo','asuntos_generales','tipo_asuntos'));
