@@ -48,4 +48,9 @@ class User extends Authenticatable
         return $this->hasMany(Asistencias::class ,'id_user', 'id');
     }
 
+    public function asuntos_detalles()
+    {
+        return $this->hasMany(AsuntoDetalle::class, 'id_user');
+    }
+
 }

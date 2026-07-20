@@ -133,7 +133,7 @@
                     <div class="card card-outline card-celsh">
                         <div class="card-top-border"></div>
                         <div class="card-header border-0 bg-light d-flex justify-content-between align-items-center">
-                            <h3 class="card-title text-sm font-weight-bold text-uppercase">Informes</h3>
+                            <h3 class="card-title text-sm font-weight-bold text-uppercase">Diputación</h3>
                             
                             <div class="card-tools ml-auto">
                                <button class="btn btn-sm btn-outline-primary font-weight-bold" data-toggle="modal" data-target="#diputadoModal" type="button">
@@ -204,7 +204,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="">Añadir Acuerdo Economico</h5>
+                <h5 class="modal-title" id="">Añadir Diputado</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>

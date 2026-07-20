@@ -516,7 +516,14 @@ class SesionController extends Controller
             $tipo_asuntos = TipoAsunto::all();
             $asuntos = Asunto::where('asignado','=','N')->get();
 
+            $link_youtube = $sesion->link;
+            preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $link_youtube, $match);
+            $idVideo = $match[1] ?? null;
+            //dd($idVideo);
 
+            if ($idVideo) {
+                $link_youtube = "https://www.youtube.com/embed/" . $idVideo;
+            }
             /*$dictamenes = DB::table('asuntos')
             ->join('users','users.id','dictamens.id_user')
             ->join('sesion_dets','sesion_dets.id','dictamens.id_sesion_detalle')
@@ -559,7 +566,7 @@ class SesionController extends Controller
             ->where('asuntos.id_tipo','=','12')
             ->get();
 
-            return view('sesiones.add_files', compact('asuntos','sesion','dictamenes','acuerdos','iniciativas','sesion_dets','sesion_dets_acuerdo','asuntos_generales','tipo_asuntos'));
+            return view('sesiones.add_files', compact('link_youtube','asuntos','sesion','dictamenes','acuerdos','iniciativas','sesion_dets','sesion_dets_acuerdo','asuntos_generales','tipo_asuntos'));
         } catch (\Throwable $th) {
             throw $th;
         }

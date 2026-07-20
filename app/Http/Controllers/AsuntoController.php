@@ -175,14 +175,12 @@ class AsuntoController extends Controller
             $users = User::where('status','=',"A")-> get();
             $diputados = AsuntoDetalle::where('id_asunto', $id)->get();
             $tipo_asuntos = TipoAsunto::all();
-            $diputadosLibres = DB::table('users')
-            ->leftJoin('asunto_detalles', 'users.id', '=', 'asunto_detalles.id_user')
-            ->whereNull('asunto_detalles.id_user')
-            ->where('users.status', '=', 'A')
-            ->where('users.rol', '=', 'D')
-            ->select('users.*')
-            ->get();
-            //dd($diputadosLibres);
+            $diputadosLibres = User::where('status', '=', "A")
+            ->where('rol', '=', 'D')
+            ->whereDoesntHave('asuntos_detalles', function ($query) use ($id) {
+                $query->where('id_asunto', $id);
+            })->get();
+            //dd($diputadosLibres, $id);
             return view('asuntos.edit', compact('asunto', 'users', 'diputados', 'tipo_asuntos','diputadosLibres'));
         } catch (\Throwable $th) {
             $errorMessage = 'Error en funcion edit del controlador AsuntoController';

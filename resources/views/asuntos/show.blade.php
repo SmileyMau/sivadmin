@@ -58,7 +58,7 @@
                     <div class="card card-outline card-celsh">
                         <div class="card-top-border"></div>
                         <div class="card-header border-0 bg-light d-flex justify-content-between align-items-center">
-                            <h3 class="card-title text-sm font-weight-bold text-uppercase">Informes</h3>
+                            <h3 class="card-title text-sm font-weight-bold text-uppercase">Diputación</h3>
                             <div class="card-tools ml-auto">
                                
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i></button>
