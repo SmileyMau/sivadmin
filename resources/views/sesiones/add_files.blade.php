@@ -121,9 +121,28 @@
                             </div>
                         </div>
                         <div class="card-body px-3 py-3">
-                            <!-- Item Card 1 -->
-
-
+                           @foreach ($acuerdos_junta as $acuerdo_junta)
+                            <div class="card p-3 list-card">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <span class="badge badge-primary " style="font-size: 10px;">#{{ $acuerdo_junta->id}}</span>
+                                    <div class="btn-group">
+                                        <form action="{{ route('sesiones.asuntodetdestroy', $acuerdo_junta->id_sesion_asunto) }}" class="form_cancelar" method="POST">
+                                            @method('delete')
+                                            @csrf
+                                            <button class="btn btn-link btn-xs text-muted" type="submit"><i
+                                                    class="fas fa-trash"></i></button>
+                                        </form>
+                                    </div>
+                                </div>
+                                <h5 class="text-xs font-weight-bold mb-1">{{ $acuerdo_junta->titulo }}</h5>
+                                <p class="text-xs text-muted mb-3">{{ $acuerdo_junta->descripcion }} </p>
+                                <div class="text-xs text-danger font-weight-bold">
+                                    <i class="fas fa-file-pdf mr-2"></i> <a
+                                        href="{{url('storage/'.substr($acuerdo_junta->archivo,7))}}" target="_blank">Ver
+                                        PDF</a>
+                                </div>
+                            </div>
+                            @endforeach
                         </div>
                     </div>
                     <!--<div class="card card-outline card-celsh">

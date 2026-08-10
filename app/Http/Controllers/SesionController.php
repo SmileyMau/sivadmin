@@ -566,7 +566,16 @@ class SesionController extends Controller
             ->where('asuntos.id_tipo','=','12')
             ->get();
 
-            return view('sesiones.add_files', compact('link_youtube','asuntos','sesion','dictamenes','acuerdos','iniciativas','sesion_dets','sesion_dets_acuerdo','asuntos_generales','tipo_asuntos'));
+            $acuerdos_junta = DB::table('sesiones')
+            ->join('sesion_asuntos','sesion_asuntos.id_sesion','sesiones.id')
+            ->join('asuntos','asuntos.id','sesion_asuntos.id_asunto')
+            ->join('users','users.id','asuntos.id_user')
+            ->select('users.name','users.appaterno','users.apmaterno','asuntos.titulo','asuntos.descripcion','asuntos.id','asuntos.archivo','sesion_asuntos.id as id_sesion_asunto')
+            ->where('sesiones.id','=',$id)
+            ->where('asuntos.id_tipo','=','13')
+            ->get();
+
+            return view('sesiones.add_files', compact('acuerdos_junta','link_youtube','asuntos','sesion','dictamenes','acuerdos','iniciativas','sesion_dets','sesion_dets_acuerdo','asuntos_generales','tipo_asuntos'));
         } catch (\Throwable $th) {
             throw $th;
         }
