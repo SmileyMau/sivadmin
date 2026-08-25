@@ -172,8 +172,8 @@
                   <p>Tipos de Sesion</p>
                 </a>
               </li>
-            </li>
-          </ul>
+            </ul>
+          </li>
 
           <li class="nav-item">
             <a href="#" class="nav-link">
@@ -200,6 +200,29 @@
                 <a href="{{route('Guion.index')}}" class="nav-link">
                   <i class="nav-icon fas fa-book"></i>
                   <p>Guion</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+
+            <div class="info">
+              <a href="#" class="d-block">TRANSPARENCIA</a>
+            </div>
+          </div>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-table"></i>
+              <p>
+                CATALOGOS
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{route('TipoArchivo.index')}}" class="nav-link">
+                  <i class="nav-icon fas fa-copy"></i>
+                  <p>Tipo de Archivo</p>
                 </a>
               </li>
             </ul>

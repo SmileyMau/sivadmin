@@ -86,6 +86,9 @@
                                             <button class="dropdown-item btn-aprobar mb-1">Publicar</button>
                                         </form>
                                     @endif
+
+                                    <hr>
+                                    <a class="dropdown-item mb-1 btn-report" href="{{ route('sesiones.show_add_transparencia', $sesion->id) }}">Archivos Transparencia</a>
                                 </div>
                             </div>
                         </td>

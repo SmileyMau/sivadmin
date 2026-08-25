@@ -53,6 +53,7 @@ Route::get('/sesiones/editdictamen', 'App\Http\Controllers\SesionController@edit
 Route::get('/sesiones/verdictamen', 'App\Http\Controllers\SesionController@showdet')->name('sesiones.showdet')->middleware('auth');
 Route::get('/sesiones/{id}/descargar', 'App\Http\Controllers\SesionController@descargar')->name('sesiones.descargar')->middleware('auth');
 Route::get('/sesiones/{id}/add', 'App\Http\Controllers\SesionController@add_files')->name('sesiones.add_files')->middleware('auth');
+Route::get('/sesiones/{id}/show_add_transparencia', 'App\Http\Controllers\SesionController@show_add_transparencia')->name('sesiones.show_add_transparencia')->middleware('auth');
 Route::post('/sesiones/{id}/detstore', 'App\Http\Controllers\SesionController@detstore')->name('sesiones.detstore')->middleware('auth');
 Route::post('/sesiones/{id}/asistencia', 'App\Http\Controllers\SesionController@asistencia')->name('sesiones.asistencia')->middleware('auth');
 Route::post('/sesiones/{id}/onasist', 'App\Http\Controllers\SesionController@on_asist')->name('sesiones.onasist')->middleware('auth');
@@ -62,6 +63,7 @@ Route::post('/sesiones/{id}/report_part', 'App\Http\Controllers\SesionController
 Route::post('/sesiones/store-dictamen', 'App\Http\Controllers\SesionController@store_dictamen')->name('sesiones.store_dictamen')->middleware('auth');
 Route::post('/sesiones/store-acuerdo', 'App\Http\Controllers\SesionController@store_acuerdo')->name('sesiones.store_acuerdo')->middleware('auth');
 Route::post('/sesiones/{id}/store-archivo', 'App\Http\Controllers\SesionController@store_archivo')->name('sesiones.store_archivo')->middleware('auth');
+Route::post('/sesiones/{id}/store_archivo_transparencia', 'App\Http\Controllers\SesionController@store_archivo_transparencia')->name('sesiones.store_archivo_transparencia')->middleware('auth');
 Route::patch('/sesiones/{id}/updictamen', 'App\Http\Controllers\SesionController@updatedet')->name('sesiones.updatedet')->middleware('auth');
 Route::patch('/sesiones/{id}/{tipo}/ac', 'App\Http\Controllers\SesionController@ac')->name('sesiones.ac')->middleware('auth');
 Route::patch('/sesiones/{id}/acsesion', 'App\Http\Controllers\SesionController@acsesion')->name('sesiones.acsesion')->middleware('auth');
@@ -69,6 +71,7 @@ Route::patch('/sesiones/{id}/publicar', 'App\Http\Controllers\SesionController@p
 Route::delete('/sesiones/{id}/detdestroy', 'App\Http\Controllers\SesionController@detdestroy')->name('sesiones.detdestroy')->middleware('auth');
 Route::delete('/sesiones/{id}/asuntodetdestroy', 'App\Http\Controllers\SesionController@asuntodetdestroy')->name('sesiones.asuntodetdestroy')->middleware('auth');
 Route::delete('/sesiones/{id}/{tipo}/destroy-archivo', 'App\Http\Controllers\SesionController@destroy_archivo')->name('sesiones.destroy_archivo')->middleware('auth');
+Route::delete('/sesiones/{id}/destroy_archivo_transparencia', 'App\Http\Controllers\SesionController@destroy_archivo_transparencia')->name('sesiones.destroy_archivo_transparencia')->middleware('auth');
 //-------
 
 Route::get('Asistencias', 'App\Http\Controllers\AsistenciaController@show_asis')->name('Asistencia.Asistencias');
@@ -103,5 +106,7 @@ Route::post('Reporte/{id}/{tipo}/votaciones', 'App\Http\Controllers\VotacionCont
 Route::resource('Asuntos', 'App\Http\Controllers\AsuntoController')->middleware('auth');
 Route::patch('Asuntos/{id}/add-diputado', 'App\Http\Controllers\AsuntoController@store_diputado')->name('asuntos.store_diputado')->middleware('auth');
 Route::delete('Asuntos/{id}/destroy-diputado', 'App\Http\Controllers\AsuntoController@destroy_diputado')->name('asuntos.destroy_diputado')->middleware('auth');
+
+Route::resource('TipoArchivo', 'App\Http\Controllers\TipoArchivoController')->middleware('auth');
 
 

@@ -14,6 +14,8 @@ use App\Models\User;
 use App\Models\Dictamen;
 use App\Models\AcuerdoEconomico;
 use App\Models\TipoAsunto;
+use App\Models\TipoArchivoTransparencia;
+use App\Models\ArchivosTransparencia;
 use App\Models\Asunto;
 use Illuminate\Support\Facades\DB;
 use Storage;
@@ -180,6 +182,22 @@ class SesionController extends Controller
         }
     }
 
+    public function store_archivo_transparencia(Request $request, $id)
+    {
+        try {
+            //dd($request);
+            $archivo = ArchivosTransparencia::create([
+                'id_sesion' => $id,
+                'id_tipo_archivo' => $request->id_tipo_archivo,
+                'archivo' => $request->file('archivo')->store('public/Archivos_Transparencia'),
+                'descripcion' => $request->descripcion,
+            ]);
+            return back()->with('success','El archivo se agregó exitosamente');
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
     /**
      * Muestra el contenido de la sesion, junto  con los dictamenes
      */
@@ -206,6 +224,21 @@ class SesionController extends Controller
         try {
             $sesion_det = SesionDet::find($id);
             return view('sesiones.show', compact('sesion_det'));
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
+    public function show_add_transparencia($id)
+    {
+        try {
+            $sesion = Sesiones::find($id);
+            $archivos = ArchivosTransparencia::where('id_sesion','=',$id)->get();
+            $tipo_archivos = TipoArchivoTransparencia::whereDoesntHave('archivos', function ($query) use ($id) {
+                $query->where('id_sesion', $id); 
+            })
+            ->get();
+            return view('sesiones.show_transparencia', compact('sesion', 'archivos', 'tipo_archivos'));
         } catch (\Throwable $th) {
             throw $th;
         }
@@ -648,6 +681,22 @@ class SesionController extends Controller
             }
             
             
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
+    function destroy_archivo_transparencia($id){
+        try {
+            $archivo = ArchivosTransparencia::find($id);
+            $fileDestroy = ArchivosTransparencia::findOrFail($id); 
+            $pathAnex = storage_path('app/').$fileDestroy->archivo;
+            //dd($fileDestroy);
+            if(File::exists($pathAnex)){
+                unlink($pathAnex); 
+                $archivo->delete();
+                return back()->with('success','El archivo se eliminó correctamente.');
+            }
         } catch (\Throwable $th) {
             throw $th;
         }
